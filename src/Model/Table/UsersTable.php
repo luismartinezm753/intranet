@@ -30,7 +30,7 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         $this->table('users');
-        $this->displayField('username');
+        $this->displayField('nombre');
         $this->primaryKey('id');
         $this->belongsTo('Grados', [
             'foreignKey' => 'grado_id',
@@ -110,6 +110,10 @@ class UsersTable extends Table
             ->notEmpty('telefono');
             
         $validator
+            ->add('rol', 'inList', [
+                'rule' => ['inList', ['Alumno', 'Monitor', 'Instructor']],
+                'message' => 'Seleccione un Rol valido'
+            ])
             ->requirePresence('rol', 'create')
             ->notEmpty('rol');
             
@@ -127,23 +131,13 @@ class UsersTable extends Table
             ])
             ->add('nombre',[
                 'pattern'=>[
-                    'rule'=>'[a-zA-Z]+',
-                    'message'=>'Nombre invalido',
+                    'rule'=>['custom', '/^[a-z][a-z ]*$/i'],
+                    'message'=>'Solo letras',
                 ]
             ])
             ->requirePresence('nombre', 'create')
             ->notEmpty('nombre');
-            
-        $validator
-            ->add('apellido', [
-                'length' => [
-                    'rule' => ['minLength', 2],
-                    'message' => 'Apellido invalido',
-                ]
-            ])
-            ->requirePresence('apellido', 'create')
-            ->notEmpty('apellido');
-            
+    
         $validator
             ->requirePresence('referencia', 'create')
             ->notEmpty('referencia');
@@ -170,7 +164,7 @@ class UsersTable extends Table
             ])
             ->add('nombre_apoderado',[
                 'pattern'=>[
-                    'rule'=>'[a-zA-Z]+',
+                    'rule'=>['custom', '/^[a-z][a-z ]*$/i'],
                     'message'=>'Nombre invalido',
                 ]
             ])
@@ -208,8 +202,7 @@ class UsersTable extends Table
             
         $validator
             ->add('id_user_referencia', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('id_user_referencia', 'create')
-            ->notEmpty('id_user_referencia');
+            ->allowEmpty('id_user_referencia');
             
         $validator
             ->allowEmpty('observaciones');
