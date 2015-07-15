@@ -24,7 +24,7 @@ class GradosTable extends Table
     public function initialize(array $config)
     {
         $this->table('grados');
-        $this->displayField('id');
+        $this->displayField('grado');
         $this->primaryKey('id');
         $this->hasMany('Users', [
             'foreignKey' => 'grado_id'
@@ -60,5 +60,11 @@ class GradosTable extends Table
             ->notEmpty('duracion_mes');
 
         return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['grado']));
+        return $rules;
     }
 }

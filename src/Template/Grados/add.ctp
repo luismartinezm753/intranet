@@ -7,16 +7,16 @@
     </ul>
 </div>
 <div class="grados form large-10 medium-9 columns">
-    <?= $this->Form->create($grado) ?>
+    <?= $this->Form->create($grado, ['enctype' => 'multipart/form-data']) ?>
     <fieldset>
         <legend><?= __('Add Grado') ?></legend>
         <?php
             echo $this->Form->input('grado');
-            echo $this->Form->input('programa');
-            echo $this->Form->input('video');
-            echo $this->Form->input('duracion_mes');
+            echo $this->Form->file('programa');
+            echo $this->Form->input('video', ['label'=>'Link del video']);
+            echo $this->Form->input('duracion_mes',['label'=>'Duración en Meses']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Agregar')) ?>
     <?= $this->Form->end() ?>
 </div>

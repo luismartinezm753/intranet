@@ -46,7 +46,7 @@ class GradosController extends AppController
     public function add()
     {
         $grado = $this->Grados->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);
             if ($this->Grados->save($grado)) {
                 $this->Flash->success(__('The grado has been saved.'));
