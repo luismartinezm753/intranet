@@ -29,18 +29,14 @@
             <p><?= h($user->username) ?></p>
             <h6 class="subheader"><?= __('Email') ?></h6>
             <p><?= h($user->email) ?></p>
-            <h6 class="subheader"><?= __('Password') ?></h6>
-            <p><?= h($user->password) ?></p>
             <h6 class="subheader"><?= __('Telefono') ?></h6>
             <p><?= h($user->telefono) ?></p>
             <h6 class="subheader"><?= __('Rol') ?></h6>
             <p><?= h($user->rol) ?></p>
             <h6 class="subheader"><?= __('Grado') ?></h6>
-            <p><?= $user->has('grado') ? $this->Html->link($user->grado->id, ['controller' => 'Grados', 'action' => 'view', $user->grado->id]) : '' ?></p>
+            <p><?= $user->has('grado') ? $this->Html->link($user->grado->grado, ['controller' => 'Grados', 'action' => 'view', $user->grado->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Nombre') ?></h6>
             <p><?= h($user->nombre) ?></p>
-            <h6 class="subheader"><?= __('Apellido') ?></h6>
-            <p><?= h($user->apellido) ?></p>
             <h6 class="subheader"><?= __('Referencia') ?></h6>
             <p><?= h($user->referencia) ?></p>
             <h6 class="subheader"><?= __('Estado') ?></h6>

@@ -39,6 +39,7 @@ class AppController extends Controller
     {
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authorize' => ['Controller'],
             'loginRedirect' => [
                 'controller' => 'Users',
                 'action' => 'index'
@@ -52,6 +53,17 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['add']);
+        $this->Auth->allow(['']);
+    }
+
+    public function isAuthorized($user)
+    {
+        // Admin can access every action
+        if (isset($user['rol']) && $user['rol'] === 'Instructor') {
+            return true;
+        }
+
+        // Default deny
+        return false;
     }
 }

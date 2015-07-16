@@ -44,7 +44,7 @@
             echo $this->Form->input('id_user_referencia', ['label'=>'Quien Paga']);
             echo $this->Form->input('observaciones', ['empty' => true, 'default' => 'No tiene observaciones']);
             echo $this->Form->input('fecha_cambio_password', ['empty' => true, 'default' => '']);
-            echo $this->Form->input('foto');
+            echo $this->Form->file('foto');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Agregar')) ?>

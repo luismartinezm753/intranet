@@ -48,14 +48,18 @@ class GradosTable extends Table
             ->notEmpty('grado');
             
         $validator
+            ->add('programa','extension',['rule'=>['extension','pdf']])
+            ->add('programa','size',['rule'=>['fileSize','4MB']])
             ->requirePresence('programa', 'create')
             ->notEmpty('programa');
             
         $validator
+            ->add('vide','url',['rule'=>'url'])
             ->allowEmpty('video');
             
         $validator
             ->add('duracion_mes', 'valid', ['rule' => 'numeric'])
+            ->add('duracion_mes', 'gtzero', ['rule'=>['comparison','>=',0]])
             ->requirePresence('duracion_mes', 'create')
             ->notEmpty('duracion_mes');
 

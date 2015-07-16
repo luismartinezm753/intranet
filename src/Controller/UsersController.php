@@ -53,6 +53,7 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+            
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -79,6 +80,9 @@ class UsersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+            $filename = WWW_ROOT.'files'.DS.'images'.DS.$this->request->data['id'].$this->request->data['foto']['name'];
+            move_uploaded_file($this->request->data['foto']['tmp_name'],$filename);
+            $user->set('foto',$filename);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -116,7 +120,7 @@ class UsersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['logout']);
     }
 
     public function login()
@@ -125,9 +129,14 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                if ($this->Auth->user('rol') == 'Alumno') {
+                    $this->redirect('users'.DS.'view'.DS.$this->Auth->user('id'));
+                }else{
+                    return $this->redirect($this->Auth->redirectUrl());
+                }
+            }else{
+                $this->Flash->error(__('Usario o contraseña invalidos!'));    
             }
-            $this->Flash->error(__('Usario o contraseña invalidos!'));
         }
     }
 

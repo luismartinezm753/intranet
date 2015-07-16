@@ -197,6 +197,7 @@ class UsersTable extends Table
             
         $validator
             ->add('monto_paga', 'valid', ['rule' => 'numeric'])
+            ->add('monto_paga', 'gtzero', ['rule'=>['comparison','>=',0]])
             ->requirePresence('monto_paga', 'create')
             ->notEmpty('monto_paga');
             
@@ -212,6 +213,8 @@ class UsersTable extends Table
             ->allowEmpty('fecha_cambio_password');
             
         $validator
+            ->add('foto','extension',['rule'=>['extension',['gif', 'jpeg', 'png', 'jpg']]])
+            ->add('foto','size',['rule'=>['fileSize','1MB']])
             ->allowEmpty('foto');
 
         return $validator;

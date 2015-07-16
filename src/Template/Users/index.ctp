@@ -23,10 +23,10 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('username') ?></th>
-            <th><?= $this->Paginator->sort('email') ?></th>
+            <th><?= $this->Paginator->sort('nombre') ?></th>
             <th><?= $this->Paginator->sort('telefono') ?></th>
             <th><?= $this->Paginator->sort('rol') ?></th>
-            <th><?= $this->Paginator->sort('fecha_ing') ?></th>
+            <th><?= $this->Paginator->sort('fecha de ingreso') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -34,7 +34,7 @@
     <?php foreach ($users as $user): ?>
         <tr>
             <td><?= h($user->username) ?></td>
-            <td><?= h($user->email) ?></td>
+            <td><?= h($user->nombre) ?></td>
             <td><?= h($user->telefono) ?></td>
             <td><?= h($user->rol) ?></td>
             <td><?= h($user->fecha_ing) ?></td>

@@ -43,16 +43,19 @@ class GradosController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add(){
         $grado = $this->Grados->newEntity();
         if ($this->request->is('post') || $this->request->is('put')) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);
+            //debug($grado);die;
+            $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
+            move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
+            $grado->set('programa',$filename);
             if ($this->Grados->save($grado)) {
-                $this->Flash->success(__('The grado has been saved.'));
+                $this->Flash->success(__('Nuevo Grado Agregado'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The grado could not be saved. Please, try again.'));
+                $this->Flash->error(__('No se pudo agregar el grado, intente de nuevo'));
             }
         }
         $this->set(compact('grado'));
@@ -73,6 +76,9 @@ class GradosController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);
+            $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
+            move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
+            $grado->set('programa',$filename);
             if ($this->Grados->save($grado)) {
                 $this->Flash->success(__('The grado has been saved.'));
                 return $this->redirect(['action' => 'index']);
