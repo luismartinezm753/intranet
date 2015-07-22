@@ -50,6 +50,7 @@ class PagosTable extends Table
             
         $validator
             ->add('monto', 'valid', ['rule' => 'numeric'])
+            ->add('monto', 'gtzero', ['rule'=>['comparison','>=',0]])
             ->requirePresence('monto', 'create')
             ->notEmpty('monto');
             
@@ -66,6 +67,10 @@ class PagosTable extends Table
             ->notEmpty('fecha_pago');
             
         $validator
+            ->add('forma_pago', 'inList', [
+                'rule' => ['inList', ['Efectivo','Transferencia','Cheque']],
+                'message' => 'Forma de pago invalida'
+            ])
             ->requirePresence('forma_pago', 'create')
             ->notEmpty('forma_pago');
 

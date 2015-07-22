@@ -41,6 +41,12 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+        if($this->getRole() == 'Instructor') {
+            // set the view variable here
+            $this->set('is_admin', 1);
+        }else{
+            $this->set('is_admin',0);
+        }
     }
 
     /**
@@ -75,14 +81,17 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        if($this->getRole() == 'Instructor') {
+            // set the view variable here
+            $this->set('is_admin', 1);
+        }else{
+            $this->set('is_admin',0);
+        }
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $filename = WWW_ROOT.'files'.DS.'images'.DS.$this->request->data['id'].$this->request->data['foto']['name'];
-            move_uploaded_file($this->request->data['foto']['tmp_name'],$filename);
-            $user->set('foto',$filename);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -115,11 +124,7 @@ class UsersController extends AppController
     }
 
     public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        // Allow users to register and logout.
-        // You should not add the "login" action to allow list. Doing so would
-        // cause problems with normal functioning of AuthComponent.
+    { 
         $this->Auth->allow(['logout']);
     }
 
@@ -143,5 +148,25 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function isAuthorized($user)
+    {
+        $userid=$this->Auth->user('id');
+        //debug($this->request->params);
+        if ($user['rol']=='Instructor') {
+            return true;
+        }else if ($user['rol']!='Instructor') {
+            $action = $this->request->params['action'];
+            if (in_array($action, ['edit', 'view'])) {
+                return true;
+            }
+            return false;
+        }
+        return parent::isAuthorized($user);
+    }
+
+    public function getRole(){
+        return $this->Auth->user('rol');
     }
 }

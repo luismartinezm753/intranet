@@ -111,7 +111,7 @@ class UsersTable extends Table
             
         $validator
             ->add('rol', 'inList', [
-                'rule' => ['inList', ['Alumno', 'Monitor', 'Instructor']],
+                'rule' => ['inList', ['Instructor','Monitor','Alumno']],
                 'message' => 'Seleccione un Rol valido'
             ])
             ->requirePresence('rol', 'create')

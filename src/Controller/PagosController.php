@@ -107,4 +107,20 @@ class PagosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function isAuthorized($user)
+    {
+        $userid=$this->Auth->user('id');
+        //debug($this->request->params);
+        if ($user['rol']=='Instructor') {
+            return true;
+        }else if ($user['rol']!='Instructor') {
+            $action = $this->request->params['action'];
+            if (in_array($action, ['view'])) {
+                return true;
+            }
+            return false;
+        }
+        return parent::isAuthorized($user);
+    }
 }

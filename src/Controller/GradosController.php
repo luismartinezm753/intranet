@@ -108,4 +108,18 @@ class GradosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->params['action'];
+        if ($user['rol']=='Instructor') {
+            return true;
+        }else if ($user['rol']!='Instructor') {
+            if (in_array($action, ['view'])) {
+                return true;
+            }
+            return false;
+        }
+        return parent::isAuthorized($user);
+    }
 }

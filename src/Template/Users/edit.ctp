@@ -1,12 +1,16 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('View User'), ['action' => 'view',$user->id]) ?> </li>
+        <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
         ?></li>
+        <li><?= $this->Html->link(__('New Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Grados'), ['controller' => 'Grados', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Grado'), ['controller' => 'Grados', 'action' => 'add']) ?></li>
@@ -19,9 +23,8 @@
         <li><?= $this->Html->link(__('List Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
+        <?php } ?>
     </ul>
 </div>
 <div class="users form large-10 medium-9 columns">
@@ -29,31 +32,30 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->input('username');
+            echo $this->Form->input('nombre', ['label'=>'Nombre Completo']);
+            echo $this->Form->input('fecha_nac',['label'=>'Fecha de Nacimiento']);
+            echo $this->Form->input('username',['label'=>'Nombre de Usuario']);
             echo $this->Form->input('email');
-            echo $this->Form->input('password');
+            echo $this->Form->input('password', ['label'=>'Contraseña']);
             echo $this->Form->input('telefono');
-            echo $this->Form->input('rol');
-            echo $this->Form->input('fecha_ing');
-            echo $this->Form->input('grado_id', ['options' => $grados]);
-            echo $this->Form->input('nombre');
-            echo $this->Form->input('apellido');
-            echo $this->Form->input('referencia');
-            echo $this->Form->input('estado');
-            echo $this->Form->input('fecha_ult_acenso', ['empty' => true, 'default' => '']);
-            echo $this->Form->input('fecha_nac');
-            echo $this->Form->input('nombre_apoderado');
-            echo $this->Form->input('telefono_apoderado');
+            echo $this->Form->input('rol', ['options' =>['Alumno'=>'Alumno', 'Monitor'=>'Monitor','Instructor'=>'Instructor']]);
+            echo $this->Form->input('fecha_ing',['label'=>'Fecha de Ingreso']);
             echo $this->Form->input('profesion');
-            echo $this->Form->input('nota_salud');
-            echo $this->Form->input('llevar_a');
-            echo $this->Form->input('monto_paga');
-            echo $this->Form->input('id_user_referencia');
-            echo $this->Form->input('observaciones');
+            echo $this->Form->input('grado_id', ['options' => $grados]);
+            echo $this->Form->input('referencia');
+            echo $this->Form->input('estado', ['options' =>['Activo','Inactivo']]);
+            echo $this->Form->input('fecha_ult_acenso', ['label'=>'Fecha último ascenso','empty' => true, 'default' => '']);
+            echo $this->Form->input('nombre_apoderado', ['empty' => true, 'default' => 'No tiene Apoderado']);
+            echo $this->Form->input('telefono_apoderado',  ['empty' => true, 'default' => '']);
+            echo $this->Form->input('nota_salud',['label'=>'Información de Salud', 'empty' => true, 'default' => 'No presenta Complicaciones']);
+            echo $this->Form->input('llevar_a', ['label'=>'En caso de Emergencia', 'empty' => true, 'default' => '']);
+            echo $this->Form->input('monto_paga',['label'=>'Mensualidad']);
+            echo $this->Form->input('id_user_referencia', ['label'=>'Quien Paga']);
+            echo $this->Form->input('observaciones', ['empty' => true, 'default' => 'No tiene observaciones']);
             echo $this->Form->input('fecha_cambio_password', ['empty' => true, 'default' => '']);
-            echo $this->Form->input('foto');
+            echo $this->Form->file('foto');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Guardar Cambios')) ?>
     <?= $this->Form->end() ?>
 </div>

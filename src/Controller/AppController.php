@@ -27,6 +27,10 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    public $components = array(
+        'UserPermissions.UserPermissions'
+    );
+
 
     /**
      * Initialization hook method.
@@ -53,17 +57,6 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['']);
-    }
-
-    public function isAuthorized($user)
-    {
-        // Admin can access every action
-        if (isset($user['rol']) && $user['rol'] === 'Instructor') {
-            return true;
-        }
-
-        // Default deny
-        return false;
+        $this->Auth->allow(['login']);
     }
 }
