@@ -57,6 +57,16 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['login']);
+        $this->Auth->allow(['']);
+    }
+
+    public function isAuthorized($user)
+    {
+        // Admin can access every action
+        if (isset($user['role']) && $user['role'] === 'Instructor') {
+            return true;
+        }
+        // Default deny
+        return false;
     }
 }

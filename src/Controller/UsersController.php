@@ -12,6 +12,9 @@ use Cake\Network\Exception\NotFoundException;
  */
 class UsersController extends AppController
 {
+    public $components = array(
+        'UserPermissions.UserPermissions'
+    );
 
     /**
      * Index method
@@ -59,17 +62,29 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            
+            addAutomaticValues($user);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario ha sido agregado'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('No se pudo guardar el usuario, intente de nuevo.'));
             }
         }
         $grados = $this->Users->Grados->find('list', ['limit' => 200]);
+        $id_users_ref = $this->Users->Users->find('list',['limit'=>200]);
         $this->set(compact('user', 'grados'));
+        $this->set(compact('user', 'id_users_ref'));
         $this->set('_serialize', ['user']);
+    }
+    public function addAutomaticValues($user)
+    {
+        if (!isset($this->request->data['id_users_referencia'])) {
+                $result=$this->Users->find('all')->last();
+                $user->set('id_users_referencia',$result['id']+1);
+        }
+        if (!isset($this->request->data['fecha_ult_acenso'])) {
+            $user->set('id_users_referencia',$this->request->data['fecha_ing']);
+        }
     }
 
     /**
@@ -92,6 +107,7 @@ class UsersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+            addAutomaticValues($user);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -100,7 +116,9 @@ class UsersController extends AppController
             }
         }
         $grados = $this->Users->Grados->find('list', ['limit' => 200]);
+        $id_users_ref = $this->Users->Users->find('list',['limit'=>200]);
         $this->set(compact('user', 'grados'));
+        $this->set(compact('user', 'id_users_ref'));
         $this->set('_serialize', ['user']);
     }
 
@@ -125,7 +143,34 @@ class UsersController extends AppController
 
     public function beforeFilter(Event $event)
     { 
-        $this->Auth->allow(['logout']);
+        parent::beforeFilter($event);
+        //default user_type if not logged
+        $user_type = $this->getRole();
+        $id=$this->Auth->user('id');
+        $url='';
+        if (isset($id)) {
+            $url='/users/view/'.$id;
+        }
+        //pass user type to the plugin
+        $rules = array(
+            'user_type' => $user_type,
+            'redirect' => $url,//'/users/view/'.$this->Auth->user('id'),
+            'message' => 'No puedes ver esta pagina!',
+            'action' =>  $this->request->params['action'],
+            'controller' =>  $this->request->params['controller'],
+            'groups' => array(
+                'guest' => array('login','logout'),
+                'Instructor' => array('*'), 
+                'Monitor' => array('login','logout','edit','view','index'),
+                'Alumno' => array('logout','login','view','edit')
+            ),
+            'views' => array(
+                'edit' => 'checkEdit',
+                'view' => 'checkView',
+            ),
+        );
+
+        $this->UserPermissions->allow($rules);
     }
 
     public function login()
@@ -134,7 +179,7 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                if ($this->Auth->user('rol') == 'Alumno') {
+                if ($this->Auth->user('rol') != 'Instructor') {
                     $this->redirect('users'.DS.'view'.DS.$this->Auth->user('id'));
                 }else{
                     return $this->redirect($this->Auth->redirectUrl());
@@ -150,23 +195,27 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function isAuthorized($user)
-    {
-        $userid=$this->Auth->user('id');
-        //debug($this->request->params);
-        if ($user['rol']=='Instructor') {
-            return true;
-        }else if ($user['rol']!='Instructor') {
-            $action = $this->request->params['action'];
-            if (in_array($action, ['edit', 'view'])) {
-                return true;
-            }
-            return false;
-        }
-        return parent::isAuthorized($user);
-    }
-
     public function getRole(){
         return $this->Auth->user('rol');
+    }
+
+    public function checkEdit()
+    {
+        if ($this->Auth->user('rol') == 'Instructor') {
+            return true;
+        }
+        return $this->Auth->user('id') == $this->request->params['pass'][0];
+    }
+
+    public function isAuthorized($user)
+    {
+        return true;
+    }
+    public function checkView()
+    {
+        if ($this->Auth->user('rol')!= 'Alumno') {
+            return true;
+        }
+        return $this->Auth->user('id') == $this->request->params['pass'][0];
     }
 }

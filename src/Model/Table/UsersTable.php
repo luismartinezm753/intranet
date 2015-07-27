@@ -36,6 +36,13 @@ class UsersTable extends Table
             'foreignKey' => 'grado_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'id_user_referencia',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Users', [
+            'foreignKey' => 'id_user_referencia'
+        ]);
         $this->hasMany('Clases', [
             'foreignKey' => 'user_id'
         ]);

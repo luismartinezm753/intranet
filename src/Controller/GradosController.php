@@ -47,7 +47,6 @@ class GradosController extends AppController
         $grado = $this->Grados->newEntity();
         if ($this->request->is('post') || $this->request->is('put')) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);
-            //debug($grado);die;
             $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
             move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
             $grado->set('programa',$filename);
