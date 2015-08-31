@@ -1,25 +1,25 @@
 <div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
+    <h3><?= __('Acciones') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
-        <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Editar Usuario'), ['action' => 'edit', $user->id]) ?> </li>
+        <li><?= $this->Html->link(__('Nuevo pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
         <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
-        <li><?= $this->Html->link(__('New Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Grados'), ['controller' => 'Grados', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Grado'), ['controller' => 'Grados', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Clases'), ['controller' => 'Clases', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Clase'), ['controller' => 'Clases', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Convenios Usuarios'), ['controller' => 'ConveniosUsuarios', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Convenios Usuario'), ['controller' => 'ConveniosUsuarios', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Desvinculaciones'), ['controller' => 'Desvinculaciones', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Desvinculacione'), ['controller' => 'Desvinculaciones', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('List Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Users'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Clase'), ['controller' => 'Clases', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Convenios Usuarios'), ['controller' => 'ConveniosUsuarios', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Convenios Usuario'), ['controller' => 'ConveniosUsuarios', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Desvinculaciones'), ['controller' => 'Desvinculaciones', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Desvinculacione'), ['controller' => 'Desvinculaciones', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Agregar Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?> </li>
         <?php } ?>
     </ul>
 </div>
@@ -47,28 +47,24 @@
             <p><?= h($user->nombre_apoderado) ?></p>
             <h6 class="subheader"><?= __('Telefono Apoderado') ?></h6>
             <p><?= h($user->telefono_apoderado) ?></p>
-            <h6 class="subheader"><?= __('Profesion') ?></h6>
+            <h6 class="subheader"><?= __('Profesión') ?></h6>
             <p><?= h($user->profesion) ?></p>
             <h6 class="subheader"><?= __('Llevar A') ?></h6>
             <p><?= h($user->llevar_a) ?></p>
         </div>
         <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($user->id) ?></p>
-            <h6 class="subheader"><?= __('Monto Paga') ?></h6>
+            <h6 class="subheader"><?= __('Mensualidad') ?></h6>
             <p><?= $this->Number->format($user->monto_paga) ?></p>
-            <h6 class="subheader"><?= __('Id User Referencia') ?></h6>
-            <p><?= $this->Number->format($user->id_user_referencia) ?></p>
+            <h6 class="subheader"><?= __('Pagado por') ?></h6>
+            <p><?= h($user->id_user_referencia) ?></p>
         </div>
         <div class="large-2 columns dates end">
-            <h6 class="subheader"><?= __('Fecha Ing') ?></h6>
+            <h6 class="subheader"><?= __('Fecha de Ingreso') ?></h6>
             <p><?= h($user->fecha_ing) ?></p>
-            <h6 class="subheader"><?= __('Fecha Ult Acenso') ?></h6>
+            <h6 class="subheader"><?= __('Fecha ultimo ascenso') ?></h6>
             <p><?= h($user->fecha_ult_acenso) ?></p>
-            <h6 class="subheader"><?= __('Fecha Nac') ?></h6>
+            <h6 class="subheader"><?= __('Fecha Nacimiento') ?></h6>
             <p><?= h($user->fecha_nac) ?></p>
-            <h6 class="subheader"><?= __('Fecha Cambio Password') ?></h6>
-            <p><?= h($user->fecha_cambio_password) ?></p>
         </div>
     </div>
     <div class="row texts">
@@ -92,51 +88,7 @@
 </div>
 <div class="related row">
     <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Clases') ?></h4>
-    <?php if (!empty($user->clases)): ?>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('Sede Id') ?></th>
-            <th><?= __('Horario Id') ?></th>
-            <th><?= __('User Id') ?></th>
-            <th><?= __('Instructor Id') ?></th>
-            <th><?= __('Ayudante1 Id') ?></th>
-            <th><?= __('Ayudante2 Id') ?></th>
-            <th><?= __('Fecha Inicio') ?></th>
-            <th><?= __('Fecha Termino') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-        <?php foreach ($user->clases as $clases): ?>
-        <tr>
-            <td><?= h($clases->id) ?></td>
-            <td><?= h($clases->sede_id) ?></td>
-            <td><?= h($clases->horario_id) ?></td>
-            <td><?= h($clases->user_id) ?></td>
-            <td><?= h($clases->instructor_id) ?></td>
-            <td><?= h($clases->ayudante1_id) ?></td>
-            <td><?= h($clases->ayudante2_id) ?></td>
-            <td><?= h($clases->fecha_inicio) ?></td>
-            <td><?= h($clases->fecha_termino) ?></td>
-
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Clases', 'action' => 'view', $clases->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Clases', 'action' => 'edit', $clases->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Clases', 'action' => 'delete', $clases->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clases->id)]) ?>
-
-            </td>
-        </tr>
-
-        <?php endforeach; ?>
-    </table>
-    <?php endif; ?>
-    </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Convenios Usuarios') ?></h4>
+    <h4 class="subheader"><?= __('Convenios') ?></h4>
     <?php if (!empty($user->convenios_usuarios)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
@@ -152,51 +104,12 @@
             <td><?= h($conveniosUsuarios->convenio_id) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'ConveniosUsuarios', 'action' => 'view', $conveniosUsuarios->id]) ?>
+                <?= $this->Html->link(__('Ver'), ['controller' => 'ConveniosUsuarios', 'action' => 'view', $conveniosUsuarios->id]) ?>
+                <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'ConveniosUsuarios', 'action' => 'edit', $conveniosUsuarios->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'ConveniosUsuarios', 'action' => 'edit', $conveniosUsuarios->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'ConveniosUsuarios', 'action' => 'delete', $conveniosUsuarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $conveniosUsuarios->id)]) ?>
-
-            </td>
-        </tr>
-
-        <?php endforeach; ?>
-    </table>
-    <?php endif; ?>
-    </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Desvinculaciones') ?></h4>
-    <?php if (!empty($user->desvinculaciones)): ?>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('User Id') ?></th>
-            <th><?= __('Fecha Egreso') ?></th>
-            <th><?= __('Motivo') ?></th>
-            <th><?= __('Descripcion') ?></th>
-            <th><?= __('Monto Deuda') ?></th>
-            <th><?= __('Observaciones') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-        <?php foreach ($user->desvinculaciones as $desvinculaciones): ?>
-        <tr>
-            <td><?= h($desvinculaciones->id) ?></td>
-            <td><?= h($desvinculaciones->user_id) ?></td>
-            <td><?= h($desvinculaciones->fecha_egreso) ?></td>
-            <td><?= h($desvinculaciones->motivo) ?></td>
-            <td><?= h($desvinculaciones->descripcion) ?></td>
-            <td><?= h($desvinculaciones->monto_deuda) ?></td>
-            <td><?= h($desvinculaciones->observaciones) ?></td>
-
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Desvinculaciones', 'action' => 'view', $desvinculaciones->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Desvinculaciones', 'action' => 'edit', $desvinculaciones->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Desvinculaciones', 'action' => 'delete', $desvinculaciones->id], ['confirm' => __('Are you sure you want to delete # {0}?', $desvinculaciones->id)]) ?>
+                <?= $this->Form->postLink(__('Borrar'), ['controller' => 'ConveniosUsuarios', 'action' => 'delete', $conveniosUsuarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $conveniosUsuarios->id)]) ?>
+                <?php endif;?>
 
             </td>
         </tr>
@@ -208,7 +121,7 @@
 </div>
 <div class="related row">
     <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Historial Alumnos') ?></h4>
+    <h4 class="subheader"><?= __('Historial') ?></h4>
     <?php if (!empty($user->historial_alumnos)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
@@ -230,12 +143,12 @@
             <td><?= h($historialAlumnos->logro) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'HistorialAlumnos', 'action' => 'view', $historialAlumnos->id]) ?>
+                <?= $this->Html->link(__('Ver'), ['controller' => 'HistorialAlumnos', 'action' => 'view', $historialAlumnos->id]) ?>
+                <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'HistorialAlumnos', 'action' => 'edit', $historialAlumnos->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'HistorialAlumnos', 'action' => 'edit', $historialAlumnos->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'HistorialAlumnos', 'action' => 'delete', $historialAlumnos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $historialAlumnos->id)]) ?>
-
+                <?= $this->Form->postLink(__('Borrar'), ['controller' => 'HistorialAlumnos', 'action' => 'delete', $historialAlumnos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $historialAlumnos->id)]) ?>
+                <?php endif; ?>
             </td>
         </tr>
 
@@ -246,24 +159,20 @@
 </div>
 <div class="related row">
     <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Pagos') ?></h4>
+    <h4 class="subheader"><?= __('Pagos Realizados') ?></h4>
     <?php if (!empty($user->pagos)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('User Id') ?></th>
             <th><?= __('Mes') ?></th>
             <th><?= __('Monto') ?></th>
             <th><?= __('Año') ?></th>
             <th><?= __('Observacion') ?></th>
-            <th><?= __('Fecha Pago') ?></th>
-            <th><?= __('Forma Pago') ?></th>
+            <th><?= __('Fecha de Pago') ?></th>
+            <th><?= __('Forma de Pago') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
         <?php foreach ($user->pagos as $pagos): ?>
         <tr>
-            <td><?= h($pagos->id) ?></td>
-            <td><?= h($pagos->user_id) ?></td>
             <td><?= h($pagos->mes) ?></td>
             <td><?= h($pagos->monto) ?></td>
             <td><?= h($pagos->año) ?></td>
@@ -272,12 +181,12 @@
             <td><?= h($pagos->forma_pago) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Pagos', 'action' => 'view', $pagos->id]) ?>
+                <?= $this->Html->link(__('Ver'), ['controller' => 'Pagos', 'action' => 'view', $pagos->id]) ?>
+                <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Pagos', 'action' => 'edit', $pagos->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Pagos', 'action' => 'edit', $pagos->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Pagos', 'action' => 'delete', $pagos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagos->id)]) ?>
-
+                <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Pagos', 'action' => 'delete', $pagos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagos->id)]) ?>
+                <?php endif; ?>
             </td>
         </tr>
 
@@ -288,25 +197,23 @@
 </div>
 <div class="related row">
     <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Pedidos') ?></h4>
+    <h4 class="subheader"><?= __('Pedidos') ?></h4>
     <?php if (!empty($user->pedidos)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th><?= __('Id') ?></th>
-            <th><?= __('User Id') ?></th>
-            <th><?= __('Producto Id') ?></th>
+            <th><?= __('Producto') ?></th>
             <th><?= __('Fecha Pedido') ?></th>
             <th><?= __('Fecha Pago') ?></th>
             <th><?= __('Cantidad') ?></th>
             <th><?= __('Valor') ?></th>
             <th><?= __('Monto Pagado') ?></th>
-            <th><?= __('Fecha Entrega') ?></th>
+            <th><?= __('Fecha de Entrega') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
         <?php foreach ($user->pedidos as $pedidos): ?>
         <tr>
             <td><?= h($pedidos->id) ?></td>
-            <td><?= h($pedidos->user_id) ?></td>
             <td><?= h($pedidos->producto_id) ?></td>
             <td><?= h($pedidos->fecha_pedido) ?></td>
             <td><?= h($pedidos->fecha_pago) ?></td>
@@ -316,12 +223,12 @@
             <td><?= h($pedidos->fecha_entrega) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Pedidos', 'action' => 'view', $pedidos->id]) ?>
+                <?= $this->Html->link(__('Ver'), ['controller' => 'Pedidos', 'action' => 'view', $pedidos->id]) ?>
+                <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Pedidos', 'action' => 'edit', $pedidos->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Pedidos', 'action' => 'edit', $pedidos->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Pedidos', 'action' => 'delete', $pedidos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pedidos->id)]) ?>
-
+                <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Pedidos', 'action' => 'delete', $pedidos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pedidos->id)]) ?>
+                <?php endif; ?>
             </td>
         </tr>
 

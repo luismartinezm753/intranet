@@ -42,6 +42,9 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Grados', 'Clases', 'ConveniosUsuarios', 'Desvinculaciones', 'HistorialAlumnos', 'Pagos', 'Pedidos']
         ]);
+        $UserRef= $this->Users->get($user->id_user_referencia);
+        $nameUserRef=$UserRef->nombre;
+        $user->set('id_user_referencia',$nameUserRef);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
         if($this->getRole() == 'Instructor') {
@@ -62,7 +65,7 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            addAutomaticValues($user);
+            $this->addAutomaticValues($user);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('El usuario ha sido agregado'));
                 return $this->redirect(['action' => 'index']);
@@ -80,10 +83,10 @@ class UsersController extends AppController
     {
         if (!isset($this->request->data['id_users_referencia'])) {
                 $result=$this->Users->find('all')->last();
-                $user->set('id_users_referencia',$result['id']+1);
+                $user->set('id_user_referencia',$result['id']+1);
         }
         if (!isset($this->request->data['fecha_ult_acenso'])) {
-            $user->set('id_users_referencia',$this->request->data['fecha_ing']);
+            $user->set('fecha_ult_acenso',$this->request->data['fecha_ing']);
         }
     }
 
