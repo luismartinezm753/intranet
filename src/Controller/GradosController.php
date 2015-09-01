@@ -31,11 +31,24 @@ class GradosController extends AppController
      */
     public function view($id = null)
     {
+        if($this->Auth->user('rol') == 'Instructor') {
+            // set the view variable here
+            $this->set('is_admin', 1);
+        }else{
+            $this->set('is_admin',0);
+        }
         $grado = $this->Grados->get($id, [
             'contain' => ['Users']
         ]);
         $this->set('grado', $grado);
         $this->set('_serialize', ['grado']);
+    }
+    public function downloadFile($path)
+    {
+        $this->response->file($path);
+    // Return response object to prevent controller from trying to render
+    // a view.
+        return $this->response;
     }
 
     /**

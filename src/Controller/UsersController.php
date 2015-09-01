@@ -39,6 +39,12 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        if($this->getRole() == 'Instructor') {
+            // set the view variable here
+            $this->set('is_admin', 1);
+        }else{
+            $this->set('is_admin',0);
+        }
         $user = $this->Users->get($id, [
             'contain' => ['Grados', 'Clases', 'ConveniosUsuarios', 'Desvinculaciones', 'HistorialAlumnos', 'Pagos', 'Pedidos']
         ]);
@@ -62,6 +68,12 @@ class UsersController extends AppController
      */
     public function add()
     {
+        if($this->getRole() == 'Instructor') {
+            // set the view variable here
+            $this->set('is_admin', 1);
+        }else{
+            $this->set('is_admin',0);
+        }
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);

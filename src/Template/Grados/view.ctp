@@ -1,12 +1,15 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Acciones') ?></h3>
     <ul class="side-nav">
+        <li><?= $this->Html->link(__('Nuevo pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
+        <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
         <li><?= $this->Html->link(__('Editar Grado'), ['action' => 'edit', $grado->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Borrar Grado'), ['action' => 'delete', $grado->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grado->id)]) ?> </li>
         <li><?= $this->Html->link(__('Lista de Grados'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('Nuevo Grado'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('Lista Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('Nuevo Usuario'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <?php } ?>
     </ul>
 </div>
 <div class="grados view large-10 medium-9 columns">
@@ -16,9 +19,9 @@
             <h6 class="subheader"><?= __('Grado') ?></h6>
             <p><?= h($grado->grado) ?></p>
             <h6 class="subheader"><?= __('Programa') ?></h6>
-            <p><?= h($grado->programa) ?></p>
+            <p><?= $this->Html->link('Descargar Programa', ['controller' => 'Grados', 'action' => 'downloadFile', $grado->programa]) ?></p>
             <h6 class="subheader"><?= __('Video') ?></h6>
-            <p><?= h($grado->video) ?></p>
+            <iframe width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Duracion en Meses') ?></h6>
@@ -26,6 +29,7 @@
         </div>
     </div>
 </div>
+<?php if( isset($is_admin) && $is_admin == 1 ): ?>
 <div class="related row">
     <div class="column large-12">
     <h4 class="subheader"><?= __('Usuarios') ?></h4>
@@ -36,7 +40,6 @@
             <th><?= __('Username') ?></th>
             <th><?= __('Email') ?></th>
             <th><?= __('Nombre') ?></th>
-            <th><?= __('Estado') ?></th>
             <th><?= __('Fecha Ult Acenso') ?></th>
             <th><?= __('Fecha Nac') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
@@ -47,7 +50,6 @@
             <td><?= h($users->username) ?></td>
             <td><?= h($users->email) ?></td>
             <td><?= h($users->nombre) ?></td>
-            <td><?= h($users->estado) ?></td>
             <td><?= h($users->fecha_ult_acenso) ?></td>
             <td><?= h($users->fecha_nac) ?></td>
 
@@ -66,3 +68,4 @@
     <?php endif; ?>
     </div>
 </div>
+<?php endif; ?>
