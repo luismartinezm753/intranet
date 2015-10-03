@@ -28,7 +28,7 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
     public $components = array(
-        'UserPermissions.UserPermissions'
+        'UserPermissions.UserPermissions',
     );
 
 
@@ -57,7 +57,7 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['']);
+        $this->Auth->allow(['verify','changePassword']);
     }
 
     public function isAuthorized($user)

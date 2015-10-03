@@ -45,6 +45,8 @@ class User extends Entity
         'historial_alumnos' => true,
         'pagos' => true,
         'pedidos' => true,
+        'password2'=>true,
+        'password'=>true,
     ];
 
     protected function _setPassword($value)

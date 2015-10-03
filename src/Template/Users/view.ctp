@@ -21,6 +21,7 @@
         <li><?= $this->Html->link(__('Lista de Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?> </li>
         <?php } ?>
+        <li><?= $this->Html->link(__('Salir'), ['action' => 'logout']) ?></li>
     </ul>
 </div>
 <div class="users view large-10 medium-9 columns">

@@ -62,7 +62,39 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
     }
-
+    public function validationPassword(Validator $validator)
+    {
+        $validator
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 6],
+                    'message' => 'El largo minimo es 6',
+                ]
+            ])
+            ->add('password',[
+                'match'=>[
+                    'rule'=> ['compareWith','password2'],
+                    'message'=>'Los campos no coinciden',
+                ]
+            ])
+            ->notEmpty('password');
+        $validator
+            ->add('password2', [
+                'length' => [
+                    'rule' => ['minLength', 6],
+                    'message' => 'El largo minimo es 6',
+                ]
+            ])
+            ->add('password2',[
+                'match'=>[
+                    'rule'=> ['compareWith','password'],
+                    'message'=>'Los campos no coinciden',
+                ]
+            ])
+            ->notEmpty('password2');
+            
+            return $validator;
+    }
     /**
      * Default validation rules.
      *
@@ -99,7 +131,6 @@ class UsersTable extends Table
             ])
             ->requirePresence('password', 'create')
             ->notEmpty('password');
-            
         $validator
             ->add('telefono', [
                 'length' => [

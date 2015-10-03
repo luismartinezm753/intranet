@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Email\Email;
+use Cake\Validation\Validator;
+use Cake\I18n\Time;
 
 /**
  * Users Controller
@@ -79,6 +82,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $this->addAutomaticValues($user);
             if ($this->Users->save($user)) {
+                $this->sendRegisterNotify($user);
                 $this->Flash->success(__('El usuario ha sido agregado'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -100,6 +104,37 @@ class UsersController extends AppController
         if (!isset($this->request->data['fecha_ult_acenso'])) {
             $user->set('fecha_ult_acenso',$this->request->data['fecha_ing']);
         }
+        $user->set('estado',0);
+        $user->set('password',$this->generatePassword());
+        $user->set('token',$this->generatePassword());
+    }
+    public function generatePassword()
+    {
+        $bytes=openssl_random_pseudo_bytes(7,$cstrong);
+        $pass=bin2hex($bytes);
+        $special="!#$%&/@+*";
+        $lenSpecial=strlen($special);
+        $lenPass=strlen($pass);
+        $finalPass=$pass;
+        for ($i=0; $i <$lenSpecial-4 ; $i++) { 
+            $symbol=substr($special, rand(0,$lenSpecial-1),1);
+            $finalPass = substr_replace($finalPass, $symbol, rand(0,$lenPass-1), 0);
+        }
+        return $finalPass;
+    }
+    public function sendRegisterNotify($user)
+    {
+        //$hash =$user['token'];
+        $hash = $user['id'];
+        $url= 'http://localhost:8765/users/verify/'.$hash.'/'.$user['username'];
+        $email = new Email();
+        $email->transport('mailjet');
+        $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
+                  ->to([$user['email'] => 'My Website'])
+                  ->subject('Bienvenido!')                   
+                  ->send('Bienvenido estimada/o '.$user['nombre'].":\n
+                        Para activar tu cuenta de intranet has click en el siguiente link:\n".$url.
+                        "\nSaluda atentamente Kenpo Martinez");
     }
 
     /**
@@ -174,7 +209,7 @@ class UsersController extends AppController
             'action' =>  $this->request->params['action'],
             'controller' =>  $this->request->params['controller'],
             'groups' => array(
-                'guest' => array('login','logout'),
+                'guest' => array('login','logout','verify','changePassword'),
                 'Instructor' => array('*'), 
                 'Monitor' => array('login','logout','edit','view','index'),
                 'Alumno' => array('logout','login','view','edit')
@@ -193,14 +228,60 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
-                $this->Auth->setUser($user);
-                if ($this->Auth->user('rol') != 'Instructor') {
-                    $this->redirect('users'.DS.'view'.DS.$this->Auth->user('id'));
+                if ($user['estado']==0) {
+                    debug($user);die;
+                    $this->Flash->error(__('Su cuenta no esta Activa!')); 
                 }else{
-                    return $this->redirect($this->Auth->redirectUrl());
+                    $this->Auth->setUser($user);
+                    if ($this->Auth->user('rol') != 'Instructor') {
+                        $this->redirect('users'.DS.'view'.DS.$this->Auth->user('id'));
+                    }else{
+                        return $this->redirect($this->Auth->redirectUrl());
+                    }
                 }
             }else{
                 $this->Flash->error(__('Usario o contraseña invalidos!'));    
+            }
+        }
+    }
+
+    public function changePassword($id)
+    {        
+        $user_data=$this->Users->get($id);
+        if (!empty($this->request->data)) {
+           $user = $this->Users->patchEntity($user_data, [
+                    'password' => $this->request->data['password1'],
+                    'password2' => $this->request->data['password2']                  
+                    ],
+                    ['validate' => 'password']
+                );
+            $time = Time::now();
+            $user->set('fecha_cambio_password',$time);
+            if ($this->Users->save($user)) {
+                $this->Flash->success('Contraseña Actualizada');
+                $this->redirect('/users/login');
+            } else {
+                $this->Flash->error('No se pudo actualizar la contraseña!');
+            }
+        }
+    }
+    public function verify()
+    {
+        if (!empty($this->request->params)) {
+            $token=$this->request->params['pass'][1];
+            $id=$this->request->params['pass'][0];
+            $user=$this->Users->get($id);
+            if ($user->estado == 0) {
+                if (strcmp($user->token, $token)) {
+                    $user->set('estado',1);
+                    $this->Users->save($user);
+                    $this->Flash->success('Tu cuenta ha sido activada, por favor ingrese su contraseña!');
+                    $this->redirect('/users/changePassword/'.$id);                
+                }
+            }else{
+                $this->Flash->success('Tu cuenta ya ha sido activda');
+                $this->redirect('/users/login');
+
             }
         }
     }

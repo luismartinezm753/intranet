@@ -1,7 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Acciones') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Agregar User'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('Agregar Usuario'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?></li>
@@ -16,6 +16,7 @@
         <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('Agregar Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('Salir'), ['action' => 'logout']) ?></li>
     </ul>
 </div>
 <div class="users index large-10 medium-9 columns">
