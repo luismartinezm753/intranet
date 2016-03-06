@@ -40,6 +40,7 @@ use Cake\Routing\Router;
  *
  */
 Router::defaultRouteClass('Route');
+Router::extensions('json', 'xml');
 
 Router::scope('/', function ($routes) {
     /**
@@ -72,6 +73,7 @@ Router::scope('/', function ($routes) {
      */
     $routes->fallbacks('InflectedRoute');
 });
+
 
 /**
  * Load all plugin routes.  See the Plugin documentation on

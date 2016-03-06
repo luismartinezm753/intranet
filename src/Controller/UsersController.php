@@ -7,6 +7,7 @@ use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Email\Email;
 use Cake\Validation\Validator;
 use Cake\I18n\Time;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -18,6 +19,12 @@ class UsersController extends AppController
     public $components = array(
         'UserPermissions.UserPermissions'
     );
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
 
     /**
      * Index method
@@ -32,6 +39,7 @@ class UsersController extends AppController
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
     }
+
 
     /**
      * View method
@@ -134,7 +142,7 @@ class UsersController extends AppController
                   ->subject('Bienvenido!')                   
                   ->send('Bienvenido estimada/o '.$user['nombre'].":\n
                         Para activar tu cuenta de intranet has click en el siguiente link:\n".$url.
-                        "\nSaluda atentamente Kenpo Martinez");
+                        "\nSaluda atentamente\n Kenpo Martinez");
     }
 
     /**
@@ -284,6 +292,59 @@ class UsersController extends AppController
 
             }
         }
+    }
+
+    public function studentsToExam(){
+        //$this->request->allowMethod('ajax');
+        if ($this->request->is(array('post'))){
+            $day = $this->request->data('fecha_examen')['day'];
+            $month= $this->request->data('fecha_examen')['month'];
+            $year= $this->request->data('fecha_examen')['year'];
+            $this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);
+        }
+        //$this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);    
+        /*if($this->request->is('ajax')) {
+            $day = $this->request->data('day');
+            $month = $this->request->data('month');
+            $year = $this->request->data('year');
+            $users = TableRegistry::get('Users');
+            $query=$users->find();
+            $diff=$query->func()->dateDiff([
+                'date'=>$date,
+                'fecha_ult_acenso' => 'literal'
+            ]);
+            $query->select(['nombre','Grados.grado','diff' => $diff])
+                ->matching('Grados', function ($q) use ($date){
+                    return $q->where(['Grados.duracion_mes >= DATEDIFF(2016-01-11,users.fecha_ult_acenso)']);
+                });
+            $data = $query->toArray();
+            echo $data;
+            //echo $query;
+            $this->set(compact('data'));
+            $this->set('_serialize', 'data');          
+        }*/
+    }
+    public function displayStudentsToExam($day,$month,$year){
+        Time::setToStringFormat('yyyy-MM-dd');
+        $date = Time::now();
+        $date->setDate($year, $month, $day);
+        $users = TableRegistry::get('Users');
+        $query=$users->find();
+        $diff=$query->func()->dateDiff([
+            'date'=>$date,
+            'fecha_ult_acenso' => 'literal'
+        ]);
+        $query->select(['nombre','Grados.grado','diff' => $diff,'tiempo_grado'=>'Grados.duracion_mes'])
+            ->matching('Grados', function ($q) use ($diff){
+                return $q->where([" Grados.duracion_mes*30 <" => $diff
+                ]);
+        });
+        $result=$query->toArray();
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
+        if ($this->request->is(array('post'))){
+             $this->redirect('/users/studentsToExam');
+        }  
     }
 
     public function logout()
