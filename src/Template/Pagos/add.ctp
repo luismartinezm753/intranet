@@ -1,15 +1,15 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('List Pagos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('Lista de Pagos'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Lista de Usuarios'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Nuevo Usuario'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </div>
 <div class="pagos form large-10 medium-9 columns">
     <?= $this->Form->create($pago) ?>
     <fieldset>
-        <legend><?= __('Add Pago') ?></legend>
+        <legend><?= __('Agregar Pago') ?></legend>
         <?php
             echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('mes', ['type' => 'month']);

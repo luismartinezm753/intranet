@@ -2,6 +2,7 @@
     <h3><?= __('Acciones') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('Lista de Usuarios'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Fechas de Examen'), ['action' => 'studentsToExam']) ?></li>
         <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?></li>

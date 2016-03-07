@@ -5,6 +5,7 @@
         <li><?= $this->Html->link(__('Nuevo pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
         <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
+        <li><?= $this->Html->link(__('Fechas de Examen'), ['action' => 'studentsToExam']) ?></li>
         <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('Lista de Users'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('Agregar User'), ['action' => 'add']) ?> </li>

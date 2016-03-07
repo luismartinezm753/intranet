@@ -302,27 +302,6 @@ class UsersController extends AppController
             $year= $this->request->data('fecha_examen')['year'];
             $this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);
         }
-        //$this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);    
-        /*if($this->request->is('ajax')) {
-            $day = $this->request->data('day');
-            $month = $this->request->data('month');
-            $year = $this->request->data('year');
-            $users = TableRegistry::get('Users');
-            $query=$users->find();
-            $diff=$query->func()->dateDiff([
-                'date'=>$date,
-                'fecha_ult_acenso' => 'literal'
-            ]);
-            $query->select(['nombre','Grados.grado','diff' => $diff])
-                ->matching('Grados', function ($q) use ($date){
-                    return $q->where(['Grados.duracion_mes >= DATEDIFF(2016-01-11,users.fecha_ult_acenso)']);
-                });
-            $data = $query->toArray();
-            echo $data;
-            //echo $query;
-            $this->set(compact('data'));
-            $this->set('_serialize', 'data');          
-        }*/
     }
     public function displayStudentsToExam($day,$month,$year){
         Time::setToStringFormat('yyyy-MM-dd');

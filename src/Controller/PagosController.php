@@ -107,6 +107,16 @@ class PagosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    public function studentsDelay(){
+        if ($this->request->is(array('post'))){
+            $month= $this->request->data('fecha_examen')['month'];
+            $year= $this->request->data('fecha_examen')['year'];
+            $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
+        }
+    }
+    public function displayStudentsDelay($month,$year){
+        
+    }
 
     public function isAuthorized($user)
     {
