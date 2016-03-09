@@ -109,13 +109,64 @@ class PagosController extends AppController
     }
     public function studentsDelay(){
         if ($this->request->is(array('post'))){
-            $month= $this->request->data('fecha_examen')['month'];
-            $year= $this->request->data('fecha_examen')['year'];
+            $month= $this->request->data('mes')['month'];
+            $year= $this->request->data('año')['year'];
             $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
         }
     }
     public function displayStudentsDelay($month,$year){
-        
+        $query = $this->Pagos->find();
+        $query->select(['users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga']);
+        $query->rightjoin(
+            ['users','pagos'],
+            ['pagos.user_id = users.id']);
+        $query->where(['OR'=>['pagos.mes IS NULL',['AND'=>['pagos.mes <'=>$month,'pagos.año >='=>$year]]]]);
+        $result=$query->toArray();
+        debug($result);die;
+        $result=$this->calculateDebtAndMonths($result);
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
+        if ($this->request->is(array('post'))){
+             $this->redirect('/pagos/studentsDelay');
+        } 
+        /*SELECT users.username, pagos.mes,pagos.año FROM users LEFT JOIN pagos ON users.id = pagos.user_id 
+        WHERE (pagos.año>=2016 AND pagos.mes<3) OR pagos.mes IS NULL*/
+    }
+
+    public function calculateDebtAndMonths($result,$month,$year){
+        foreach ($result as $payment) {
+            if (is_null($payment['pagos']['mes'])){
+                $payment['pagos']['mes'] = 'No registra pagos';
+                $payment['pagos']['años'] ='No registra pagos';
+            }else{
+                $payment['pagos']['mes']=$this->getMonthName($payment['pagos']['mes']);
+
+            }
+        }
+        return $result;
+    }
+
+    public function calculateDebt($payment,$month,$year){
+        $deuda=[];
+
+    }
+
+    public function getMonthName($month){
+        $months = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+        return $months[$month-1];
     }
 
     public function isAuthorized($user)
