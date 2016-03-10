@@ -32,6 +32,11 @@ foreach ($result as $student) {
 }
 ?>
 </div>
+<div>
+    <?php 
+
+    ?>
+</div>
 </table>
 <br>
 <div class="users form large-9 medium-9 columns">

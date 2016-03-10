@@ -21,9 +21,7 @@
     </ul>
 </div>
 <div class="users form large-9 medium-9 columns">
-	<?= $this->Html->script('js');?>
     <?= $this->Form->create('Users'); ?>
-        <!--<?= $url = $this->Url->build(['controller' => 'Users', 'action' => 'studentsToExamAjax', 'ext' => 'json']); ?>-->
         <?= $this->Form->input('fecha_examen',['type'=>'date' ,'label'=>'Seleccione un fecha']); ?>
     <?= $this->Form->button('Ver',['controller' => 'Users', 'action' => 'displayStudentsToExam']); ?>
     <?= $this->Form->end(); ?>

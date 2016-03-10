@@ -31,6 +31,16 @@ class PagosTable extends Table
             'joinType' => 'INNER'
         ]);
     }
+    public function validationDates(Validator $validator)
+    {
+        $validator
+            ->requirePresence('mes_pago')
+            ->notEmpty('mes_pago', 'Seleccione un mes');
+        $validator
+            ->requirePresence('año_pago')
+            ->notEmpty('año_pago', 'Seleccione un año');
+        return $validator;
+    }
 
     /**
      * Default validation rules.

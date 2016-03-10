@@ -23,5 +23,7 @@ class Pago extends Entity
         'fecha_pago' => true,
         'forma_pago' => true,
         'user' => true,
+        'mes_pago'=>true,
+        'año_pago'=>true
     ];
 }

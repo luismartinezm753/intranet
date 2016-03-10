@@ -300,7 +300,15 @@ class UsersController extends AppController
             $day = $this->request->data('fecha_examen')['day'];
             $month= $this->request->data('fecha_examen')['month'];
             $year= $this->request->data('fecha_examen')['year'];
-            $this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);
+            $validator=new Validator();
+            $validator
+            ->notEmpty('fecha_examen', 'Seleccione una fecha')
+            ->add('fecha_examen', 'valid', ['rule' => 'date']);
+            $errors = $validator->errors($this->request->data());
+            if (!empty($errors)) {
+                $this->Flash->error('Complete los campos');
+            }else
+                $this->redirect('/users/displayStudentsToExam/'.$day.'/'.$month.'/'.$year);
         }
     }
     public function displayStudentsToExam($day,$month,$year){
@@ -319,6 +327,7 @@ class UsersController extends AppController
                 ]);
         });
         $result=$query->toArray();
+        debug($result);die;
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
         if ($this->request->is(array('post'))){
@@ -326,8 +335,7 @@ class UsersController extends AppController
         }  
     }
 
-    public function logout()
-    {
+    public function logout(){
         return $this->redirect($this->Auth->logout());
     }
 
