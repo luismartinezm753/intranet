@@ -1,9 +1,9 @@
 <table>
-<?php 
+<?php
 echo $this->Html->tableHeaders(['Nombre','Ultimo Pago Registrado','Email','Monto Adeudado','Número de Meses','Enviar Notificación']);
 foreach ($result as $payment) {
 	echo $this->Html->tableCells([
-    	[$payment['users']['nombre'], $payment['pagos']['mes']." ".$payment['pagos']['año'], $payment['users']['email'], $payment['pagos']['deuda'],$payment['pagos']['meses_deuda'],'Enviar mail']
+    	[$payment['users']['nombre'], $payment['pagos']['mes']." ".$payment['pagos']['año'], $payment['users']['email'], $payment['pagos']['deuda'],$payment['pagos']['meses_deuda'],$this->Html->link('Enviar Mail',['controller' => 'Pagos', 'action' => 'sendEmailPayment',json_encode($payment),$month,$year])]
 	]);
 	//echo $student;
 }

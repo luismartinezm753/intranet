@@ -138,6 +138,8 @@ class PagosController extends AppController
         $result=$query->toArray();
         $result=$this->calculateDebtAndMonths($result,$month,$year);
         $this->set(compact('result'));
+        $this->set(compact('month'));
+        $this->set(compact('year'));
         $this->set('_serialize', 'result');
         if ($this->request->is(array('post'))){
             $this->redirect('/pagos/studentsDelay');
@@ -153,7 +155,6 @@ class PagosController extends AppController
             $numberStudents++;
             if (is_null($payment['pagos']['mes'])){
                 $payment['pagos']['mes'] = 'No registra pagos';
-                $payment['pagos']['año'] ='No registra pagos';
                 $total_debt=$total_debt+$this->calculateDebt($payment,$month,$year);
             }else{
                 $total_debt=$total_debt+$this->calculateDebt($payment,$month,$year);
@@ -200,12 +201,23 @@ class PagosController extends AppController
         return $months[$month-1];
     }
 
-    public function sendEmailPayment()
-    {
-        # code...
+    public function sendEmailPayment($payment,$month,$year){
+        $user=json_decode($payment, true);
+        //debug($user);die;
+        $email = new Email();
+        $email->transport('mailjet');
+        $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
+                  ->to([$user['users']['email'] => 'My Website'])
+                  ->subject('Deuda Mensualidad')                   
+                  ->send('Estimado '.$user['users']['nombre'].":\n
+        Registras una morosidad de ".$user['pagos']['meses_deuda']." meses, por favor cancele a la brevedad su deuda.\n Ante cualquier duda escribanos a kenpo.martinez@gmail.com\n
+        Saluda atte\n Kenpo Martinez");
+        $this->autoRender = false;
+        $this->Flash->success(__('Email de notificación enviado.'));
+        return $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
+        //return $this->redirect('/pagos/studentsDelay');
     }
-    public function exportToExcel()
-    {
+    public function exportToExcel(){
         # code...
     }
 
