@@ -4,7 +4,14 @@ use Cake\Validation\Validator;
 use App\Controller\AppController;
 use Cake\I18n\Time;
 use Cake\Network\Email\Email;
+/** Include path **/
+ini_set('include_path', ini_get('include_path').';../Classes/');
 
+/** PHPExcel */
+include 'C:\xampp\htdocs\intranet\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
+
+/** PHPExcel_Writer_Excel2007 */
+include 'C:\xampp\htdocs\intranet\vendor\phpoffice\phpexcel\Classes\PHPExcel/Writer/Excel2007.php';
 
 /**
  * Pagos Controller
@@ -128,7 +135,12 @@ class PagosController extends AppController
                 $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
         }
     }
-    public function displayStudentsDelay($month,$year){
+
+    /**
+     * @param $month
+     * @param $year
+     */
+    public function displayStudentsDelay($month, $year){
         $query = $this->Pagos->find();
         $query->select(['users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
         $query->rightjoin(
@@ -217,8 +229,8 @@ class PagosController extends AppController
         return $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
         //return $this->redirect('/pagos/studentsDelay');
     }
-    public function exportToExcel(){
-        # code...
+    public function exportToExcel($month,$year){
+
     }
 
     public function isAuthorized($user)

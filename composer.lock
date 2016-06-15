@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef2254b87b67630e4f4e3b4655ece177",
+    "hash": "c031e6bbd5ba431aab6bb70acceba1b7",
+    "content-hash": "a574fc927510ace6135521e42200f28e",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -433,6 +434,63 @@
             "time": "2014-09-26 02:52:02"
         },
         {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2015-05-01 07:00:55"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -537,12 +595,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Config.git",
-                "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374"
+                "url": "https://github.com/symfony/config.git",
+                "reference": "d2d2b288abab05abc1f00a33c61c74ef9441ac61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/58ded81f1f582a87c528ef3dae9a859f78b5f374",
+                "url": "https://api.github.com/repos/symfony/config/zipball/d2d2b288abab05abc1f00a33c61c74ef9441ac61",
                 "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374",
                 "shasum": ""
             },
@@ -587,12 +645,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
+                "url": "https://github.com/symfony/console.git",
                 "reference": "564398bc1f33faf92fc2ec86859983d30eb81806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/564398bc1f33faf92fc2ec86859983d30eb81806",
+                "url": "https://api.github.com/repos/symfony/console/zipball/564398bc1f33faf92fc2ec86859983d30eb81806",
                 "reference": "564398bc1f33faf92fc2ec86859983d30eb81806",
                 "shasum": ""
             },
@@ -644,12 +702,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Filesystem.git",
+                "url": "https://github.com/symfony/filesystem.git",
                 "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
                 "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3",
                 "shasum": ""
             },

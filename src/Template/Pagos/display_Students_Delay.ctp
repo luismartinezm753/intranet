@@ -20,3 +20,8 @@ foreach ($result as $payment) {
     <?= $this->Form->button('Escoger Otra Fecha',['controller' => 'Pagos', 'action' => 'studentsDelay']); ?>
     <?= $this->Form->end(); ?>
 </div>
+<div >
+	<?= $this->Form->create('Pagos'); ?>
+	<?= $this->Form->button('Exportar a Excel',['controller' => 'Pagos', 'action' => 'exportToExcel',$month,$year]); ?>
+	<?= $this->Form->end(); ?>
+</div>
