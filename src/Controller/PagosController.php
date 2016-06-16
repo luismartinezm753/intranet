@@ -20,6 +20,12 @@ include 'C:\xampp\htdocs\intranet\vendor\phpoffice\phpexcel\Classes\PHPExcel/Wri
  */
 class PagosController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
+
 
     /**
      * Index method
@@ -153,9 +159,6 @@ class PagosController extends AppController
         $this->set(compact('month'));
         $this->set(compact('year'));
         $this->set('_serialize', 'result');
-        if ($this->request->is(array('post'))){
-            $this->redirect('/pagos/studentsDelay');
-        } 
         /*SELECT users.username, pagos.mes,pagos.año FROM users LEFT JOIN pagos ON users.id = pagos.user_id 
         WHERE (pagos.año>=2016 AND pagos.mes<3) OR pagos.mes IS NULL*/
     }
@@ -229,8 +232,20 @@ class PagosController extends AppController
         return $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
         //return $this->redirect('/pagos/studentsDelay');
     }
-    public function exportToExcel($month,$year){
-
+    public function exportToExcel(){
+        $payments=$this->request->data['payments'];
+        $path=WWW_ROOT .'files/csv/morosidades.csv';
+        $file = fopen($path,"w");
+        fputs($file,"sep=,\n");
+        $headers=array('nombre','email','mensualidad','fecha de ingreso','mes ultimo pago','año ultimo pago','deuda','meses de deuda');
+        fputcsv($file,$headers);
+        foreach ($payments as $payment) {
+            fputcsv($file,array_merge($payment['users'],$payment['pagos']));
+        }
+        fclose($file);
+        $this->autoRender = false;
+        $this->response->body($path);
+        return $this->response;
     }
 
     public function isAuthorized($user)
