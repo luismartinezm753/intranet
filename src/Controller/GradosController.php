@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+
 
 /**
  * Grados Controller
@@ -10,6 +12,9 @@ use App\Controller\AppController;
  */
 class GradosController extends AppController
 {
+    public $components = array(
+        'UserPermissions.UserPermissions'
+    );
 
     /**
      * Index method
@@ -43,11 +48,13 @@ class GradosController extends AppController
         $this->set('grado', $grado);
         $this->set('_serialize', ['grado']);
     }
-    public function downloadFile($path)
+    public function downloadFile($id)
     {
-        $this->response->file($path);
-    // Return response object to prevent controller from trying to render
-    // a view.
+        $path=$this->Grados->get($id)->programa;
+        $this->response->file(
+            $path,
+            ['download' => true]
+        );
         return $this->response;
     }
 
@@ -121,13 +128,12 @@ class GradosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function isAuthorized($user)
-    {
+    public function isAuthorized($user){
         $action = $this->request->params['action'];
         if ($user['rol']=='Instructor') {
             return true;
         }else if ($user['rol']!='Instructor') {
-            if (in_array($action, ['view'])) {
+            if (in_array($action, ['view','downloadFile'])) {
                 return true;
             }
             return false;

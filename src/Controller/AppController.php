@@ -43,6 +43,7 @@ class AppController extends Controller
     {
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authError'=>'No estas autorizado a ver esta página',
             'authorize' => ['Controller'],
             'loginRedirect' => [
                 'controller' => 'Users',
@@ -68,5 +69,9 @@ class AppController extends Controller
         }
         // Default deny
         return false;
+    }
+
+    public function getRole(){
+        return $this->Auth->user('rol');
     }
 }

@@ -88,8 +88,11 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $this->addAutomaticValues($user);
+            $user->set('estado',0);
+            $user->set('password',$this->generatePassword());
             if ($this->Users->save($user)) {
+                $this->addAutomaticValues($user);
+                $this->Users->save($user);
                 $this->sendRegisterNotify($user);
                 $this->Flash->success(__('El usuario ha sido agregado'));
                 return $this->redirect(['action' => 'index']);
@@ -105,44 +108,38 @@ class UsersController extends AppController
     }
     public function addAutomaticValues($user)
     {
-        if (!isset($this->request->data['id_users_referencia'])) {
-                $result=$this->Users->find('all')->last();
-                $user->set('id_user_referencia',$result['id']+1);
+        if (empty($this->request->data['id_user_referencia'])) {
+            $user->set('id_user_referencia',$user['id']);
         }
-        if (!isset($this->request->data['fecha_ult_acenso'])) {
-            $user->set('fecha_ult_acenso',$this->request->data['fecha_ing']);
+        if (empty($this->request->data['fecha_ult_acenso']['year'])) {
+            debug($this->request->data['fecha_ult_acenso']);
+            debug($this->request->data['fecha_ing']);
+            $fecha_ult_ascenso = Time::create($this->request->data['fecha_ing']['year'],$this->request->data['fecha_ing']['month'],$this->request->data['fecha_ing']['day']);
+            $user->set('fecha_ult_acenso',$fecha_ult_ascenso);
         }
-        $user->set('estado',0);
-        $user->set('password',$this->generatePassword());
         $user->set('token',$this->generatePassword());
     }
     public function generatePassword()
     {
-        $bytes=openssl_random_pseudo_bytes(7,$cstrong);
+        $bytes=openssl_random_pseudo_bytes(9,$cstrong);
         $pass=bin2hex($bytes);
-        $special="!#$%&/@+*";
-        $lenSpecial=strlen($special);
-        $lenPass=strlen($pass);
-        $finalPass=$pass;
-        for ($i=0; $i <$lenSpecial-4 ; $i++) { 
-            $symbol=substr($special, rand(0,$lenSpecial-1),1);
-            $finalPass = substr_replace($finalPass, $symbol, rand(0,$lenPass-1), 0);
-        }
+        $finalPass=hash('sha512',$pass);
         return $finalPass;
     }
     public function sendRegisterNotify($user)
     {
         //$hash =$user['token'];
-        $hash = $user['id'];
-        $url= 'http://localhost:8765/users/verify/'.$hash.'/'.$user['username'];
+        $hash = $user['token'];
+        $url= 'http://localhost:8765/users/verify/'.$hash;
         $email = new Email();
         $email->transport('mailjet');
+        $email->viewVars(['user'=>$user, 'url'=>$url]);
+        $email->template('welcome');
+        $email->emailFormat('html');
         $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
                   ->to([$user['email'] => 'My Website'])
                   ->subject('Bienvenido!')                   
-                  ->send('Bienvenido estimada/o '.$user['nombre'].":\n
-                        Para activar tu cuenta de intranet has click en el siguiente link:\n".$url.
-                        "\nSaluda atentamente\n Kenpo Martinez");
+                  ->send();
     }
 
     /**
@@ -237,12 +234,11 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 if ($user['estado']==0) {
-                    debug($user);die;
-                    $this->Flash->error(__('Su cuenta no esta Activa!')); 
+                    $this->Flash->error(__('Su cuenta no esta Activa!'));
                 }else{
                     $this->Auth->setUser($user);
                     if ($this->Auth->user('rol') != 'Instructor') {
-                        $this->redirect('users'.DS.'view'.DS.$this->Auth->user('id'));
+                        $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{
                         return $this->redirect($this->Auth->redirectUrl());
                     }
@@ -276,16 +272,13 @@ class UsersController extends AppController
     public function verify()
     {
         if (!empty($this->request->params)) {
-            $token=$this->request->params['pass'][1];
-            $id=$this->request->params['pass'][0];
-            $user=$this->Users->get($id);
+            $token=$this->request->params['pass'][0];
+            $user=$this->Users->find()->where(['token LIKE' => $token])->first();
             if ($user->estado == 0) {
-                if (strcmp($user->token, $token)) {
-                    $user->set('estado',1);
-                    $this->Users->save($user);
-                    $this->Flash->success('Tu cuenta ha sido activada, por favor ingrese su contraseña!');
-                    $this->redirect('/users/changePassword/'.$id);                
-                }
+                $user->set('estado',1);
+                $this->Users->save($user);
+                $this->Flash->success('Tu cuenta ha sido activada, por favor ingrese su contraseña!');
+                $this->redirect('/users/changePassword/'.$user['id']);
             }else{
                 $this->Flash->success('Tu cuenta ya ha sido activda');
                 $this->redirect('/users/login');
@@ -327,7 +320,6 @@ class UsersController extends AppController
                 ]);
         });
         $result=$query->toArray();
-        debug($result);die;
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
         if ($this->request->is(array('post'))){
@@ -337,10 +329,6 @@ class UsersController extends AppController
 
     public function logout(){
         return $this->redirect($this->Auth->logout());
-    }
-
-    public function getRole(){
-        return $this->Auth->user('rol');
     }
 
     public function checkEdit()

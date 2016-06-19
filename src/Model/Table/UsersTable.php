@@ -187,7 +187,7 @@ class UsersTable extends Table
         $validator
             ->add('fecha_ult_acenso', 'valid', ['rule' => 'date'])
             ->allowEmpty('fecha_ult_acenso');
-            
+
         $validator
             ->add('fecha_nac', 'valid', ['rule' => 'date'])
             ->requirePresence('fecha_nac', 'create')

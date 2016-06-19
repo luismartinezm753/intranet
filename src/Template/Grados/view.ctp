@@ -19,7 +19,7 @@
             <h6 class="subheader"><?= __('Grado') ?></h6>
             <p><?= h($grado->grado) ?></p>
             <h6 class="subheader"><?= __('Programa') ?></h6>
-            <p><?= $this->Html->link('Descargar Programa', ['controller' => 'Grados', 'action' => 'downloadFile', $grado->programa]) ?></p>
+            <p><?= $this->Html->link('Descargar Programa', ['controller' => 'Grados', 'action' => 'downloadFile', $grado->id]) ?></p>
             <h6 class="subheader"><?= __('Video') ?></h6>
             <iframe width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe>
         </div>
