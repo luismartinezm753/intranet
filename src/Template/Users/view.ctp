@@ -26,10 +26,10 @@
     </ul>
 </div>
 <div class="users view large-10 medium-9 columns">
-    <h2><?= h($user->id) ?></h2>
+    <h2>Perfil de <?= h($user->nombre) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Username') ?></h6>
+            <h6 class="subheader"><?= __('Nombre de usuario') ?></h6>
             <p><?= h($user->username) ?></p>
             <h6 class="subheader"><?= __('Email') ?></h6>
             <p><?= h($user->email) ?></p>
@@ -39,19 +39,17 @@
             <p><?= h($user->rol) ?></p>
             <h6 class="subheader"><?= __('Grado') ?></h6>
             <p><?= $user->has('grado') ? $this->Html->link($user->grado->grado, ['controller' => 'Grados', 'action' => 'view', $user->grado->id]) : '' ?></p>
-            <h6 class="subheader"><?= __('Nombre') ?></h6>
-            <p><?= h($user->nombre) ?></p>
             <h6 class="subheader"><?= __('Referencia') ?></h6>
             <p><?= h($user->referencia) ?></p>
             <h6 class="subheader"><?= __('Estado') ?></h6>
-            <p><?= h($user->estado) ?></p>
+            <p><?= h($estado) ?></p>
             <h6 class="subheader"><?= __('Nombre Apoderado') ?></h6>
             <p><?= h($user->nombre_apoderado) ?></p>
             <h6 class="subheader"><?= __('Telefono Apoderado') ?></h6>
             <p><?= h($user->telefono_apoderado) ?></p>
             <h6 class="subheader"><?= __('Profesión') ?></h6>
             <p><?= h($user->profesion) ?></p>
-            <h6 class="subheader"><?= __('Llevar A') ?></h6>
+            <h6 class="subheader"><?= __('En caso de emergencia llevar a') ?></h6>
             <p><?= h($user->llevar_a) ?></p>
         </div>
         <div class="large-2 columns numbers end">
@@ -69,9 +67,10 @@
             <p><?= h($user->fecha_nac) ?></p>
         </div>
     </div>
+    <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
     <div class="row texts">
         <div class="columns large-9">
-            <h6 class="subheader"><?= __('Nota Salud') ?></h6>
+            <h6 class="subheader"><?= __('Observaciones de salud') ?></h6>
             <?= $this->Text->autoParagraph(h($user->nota_salud)) ?>
         </div>
     </div>
@@ -81,6 +80,7 @@
             <?= $this->Text->autoParagraph(h($user->observaciones)) ?>
         </div>
     </div>
+    <?php } ?>
     <div class="row texts">
         <div class="columns large-9">
             <h6 class="subheader"><?= __('Foto') ?></h6>

@@ -64,12 +64,19 @@ class UsersController extends AppController
         $user->set('id_user_referencia',$nameUserRef);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+        $this->set('estado',$this->getState($user->estado));
         if($this->getRole() == 'Instructor') {
             // set the view variable here
             $this->set('is_admin', 1);
         }else{
             $this->set('is_admin',0);
         }
+    }
+
+    public function getState($state){
+        $states = array(0=>'Inactivo',1=>'Activo');
+        return $states[$state];
+
     }
 
     /**
