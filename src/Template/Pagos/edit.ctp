@@ -29,6 +29,6 @@
             echo $this->Form->input('observacion');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Guardar')) ?>
     <?= $this->Form->end() ?>
 </div>

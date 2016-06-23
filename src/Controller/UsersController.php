@@ -203,37 +203,6 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function beforeFilter(Event $event)
-    { 
-        parent::beforeFilter($event);
-        //default user_type if not logged
-        $user_type = $this->getRole();
-        $id=$this->Auth->user('id');
-        $url='';
-        if (isset($id)) {
-            $url='/users/view/'.$id;
-        }
-        //pass user type to the plugin
-        $rules = array(
-            'user_type' => $user_type,
-            'redirect' => $url,//'/users/view/'.$this->Auth->user('id'),
-            'message' => 'No puedes ver esta pagina!',
-            'action' =>  $this->request->params['action'],
-            'controller' =>  $this->request->params['controller'],
-            'groups' => array(
-                'guest' => array('login','logout','verify','changePassword'),
-                'Instructor' => array('*'), 
-                'Monitor' => array('login','logout','edit','view','index'),
-                'Alumno' => array('logout','login','view','edit')
-            ),
-            'views' => array(
-                'edit' => 'checkEdit',
-                'view' => 'checkView',
-            ),
-        );
-
-        $this->UserPermissions->allow($rules);
-    }
 
     public function login()
     {
@@ -338,6 +307,31 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
+    public function isAuthorized($user)
+    {
+        $current_user=$this->Auth->user();
+        if (!empty($this->request->params['pass'])){
+            $user=$this->Users->get($this->request->params['pass']);
+        }
+        if ($current_user['rol']=='Instructor') {
+            return true;
+        }else if ($current_user['rol']!='Instructor') {
+            $action = $this->request->params['action'];
+            if (in_array($action, ['view'])) {
+                if ($current_user['id'] == $user['id'] || $current_user['rol']!='Alumno'){
+                    return true;
+                }
+            }
+            if (in_array($action, ['edit'])){
+              if ($current_user['id'] == $user['id']){
+                  return true;
+              }
+            }
+            return false;
+        }
+        return parent::isAuthorized($user);
+    }
+
     public function checkEdit()
     {
         if ($this->Auth->user('rol') == 'Instructor') {
@@ -346,10 +340,6 @@ class UsersController extends AppController
         return $this->Auth->user('id') == $this->request->params['pass'][0];
     }
 
-    public function isAuthorized($user)
-    {
-        return true;
-    }
     public function checkView()
     {
         if ($this->Auth->user('rol')!= 'Alumno') {

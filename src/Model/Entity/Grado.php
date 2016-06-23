@@ -21,4 +21,5 @@ class Grado extends Entity
         'duracion_mes' => true,
         'users' => true,
     ];
+    
 }

@@ -26,4 +26,22 @@ class Pago extends Entity
         'mes_pago'=>true,
         'año_pago'=>true
     ];
+
+    protected function _getMes($mes){
+        $months = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+        return $months[$mes-1];
+    }
 }

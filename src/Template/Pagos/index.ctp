@@ -10,11 +10,10 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('Usuario') ?></th>
             <th><?= $this->Paginator->sort('mes') ?></th>
+            <th><?= $this->Paginator->sort('año') ?></th>
             <th><?= $this->Paginator->sort('monto') ?></th>
-            <th><?= $this->Paginator->sort('observacion') ?></th>
             <th><?= $this->Paginator->sort('fecha_pago') ?></th>
             <th><?= $this->Paginator->sort('forma_pago') ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
@@ -23,13 +22,12 @@
     <tbody>
     <?php foreach ($pagos as $pago): ?>
         <tr>
-            <td><?= $this->Number->format($pago->id) ?></td>
             <td>
                 <?= $pago->has('user') ? $this->Html->link($pago->user->nombre, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?>
             </td>
             <td><?= h($pago->mes) ?></td>
+            <td><?= h($pago->año)?></td>
             <td><?= $this->Number->format($pago->monto) ?></td>
-            <td><?= h($pago->observacion) ?></td>
             <td><?= h($pago->fecha_pago) ?></td>
             <td><?= h($pago->forma_pago) ?></td>
             <td class="actions">

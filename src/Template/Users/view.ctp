@@ -168,7 +168,6 @@
             <th><?= __('Mes') ?></th>
             <th><?= __('Monto') ?></th>
             <th><?= __('Año') ?></th>
-            <th><?= __('Observacion') ?></th>
             <th><?= __('Fecha de Pago') ?></th>
             <th><?= __('Forma de Pago') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
@@ -178,7 +177,6 @@
             <td><?= h($pagos->mes) ?></td>
             <td><?= h($pagos->monto) ?></td>
             <td><?= h($pagos->año) ?></td>
-            <td><?= h($pagos->observacion) ?></td>
             <td><?= h($pagos->fecha_pago) ?></td>
             <td><?= h($pagos->forma_pago) ?></td>
 

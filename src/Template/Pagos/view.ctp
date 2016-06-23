@@ -10,11 +10,11 @@
     </ul>
 </div>
 <div class="pagos view large-10 medium-9 columns">
-    <h2><?= h($pago->id) ?></h2>
+    <h2>Pago de <?= h($pago->mes) ?> del <?= h($pago->año) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Usuario') ?></h6>
-            <p><?= $pago->has('user') ? $this->Html->link($pago->user->id, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?></p>
+            <p><?= $pago->has('user') ? $this->Html->link($pago->user->nombre, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Mes') ?></h6>
             <p><?= h($pago->mes) ?></p>
             <h6 class="subheader"><?= __('Observacion') ?></h6>
@@ -23,8 +23,6 @@
             <p><?= h($pago->forma_pago) ?></p>
         </div>
         <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($pago->id) ?></p>
             <h6 class="subheader"><?= __('Monto') ?></h6>
             <p><?= $this->Number->format($pago->monto) ?></p>
         </div>

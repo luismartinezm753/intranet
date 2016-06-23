@@ -16,6 +16,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\Time;
+
 
 /**
  * Application Controller
@@ -52,7 +54,8 @@ class AppController extends Controller
             'logoutRedirect' => [
                 'controller' => 'Users',
                 'action' => 'login'
-            ]
+            ],
+            'unauthorizedRedirect'=>$this->referer()
         ]);
     }
 
@@ -73,5 +76,23 @@ class AppController extends Controller
 
     public function getRole(){
         return $this->Auth->user('rol');
+    }
+
+    public function getMonthName($month){
+        $months = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+        return $months[$month-1];
     }
 }

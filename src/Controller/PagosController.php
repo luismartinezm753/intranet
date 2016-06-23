@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+use Cake\I18n\Date;
 use Cake\Validation\Validator;
 use App\Controller\AppController;
 use Cake\I18n\Time;
@@ -25,8 +26,7 @@ class PagosController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
     }
-
-
+    
     /**
      * Index method
      *
@@ -67,8 +67,9 @@ class PagosController extends AppController
         $pago = $this->Pagos->newEntity();
         if ($this->request->is('post')) {
             $pago = $this->Pagos->patchEntity($pago, $this->request->data);
+            $pago->set(['año'=>$this->request->data['año']['year'],'mes'=>$this->request->data['mes']['month']]);
             if ($this->Pagos->save($pago)) {
-                $this->Flash->success(__('The pago has been saved.'));
+                $this->Flash->success(__('El pago ha sido guardado'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The pago could not be saved. Please, try again.'));
@@ -159,8 +160,6 @@ class PagosController extends AppController
         $this->set(compact('month'));
         $this->set(compact('year'));
         $this->set('_serialize', 'result');
-        /*SELECT users.username, pagos.mes,pagos.año FROM users LEFT JOIN pagos ON users.id = pagos.user_id 
-        WHERE (pagos.año>=2016 AND pagos.mes<3) OR pagos.mes IS NULL*/
     }
 
     public function calculateDebtAndMonths($result,$month,$year){
@@ -198,24 +197,6 @@ class PagosController extends AppController
         return $debt;
     }
 
-    public function getMonthName($month){
-        $months = [
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre'
-        ];
-        return $months[$month-1];
-    }
-
     public function sendEmailPayment($payment,$month,$year){
         $user=json_decode($payment, true);
         //debug($user);die;
@@ -251,13 +232,17 @@ class PagosController extends AppController
     public function isAuthorized($user)
     {
         $userid=$this->Auth->user('id');
-        //debug($this->request->params);
+        if (!empty($this->request->params['pass'])){
+            $pago=$this->Pagos->get($this->request->params['pass']);
+        }
         if ($user['rol']=='Instructor') {
             return true;
         }else if ($user['rol']!='Instructor') {
             $action = $this->request->params['action'];
             if (in_array($action, ['view'])) {
-                return true;
+                if ($userid == $pago['user_id']){
+                    return true;
+                }
             }
             return false;
         }
