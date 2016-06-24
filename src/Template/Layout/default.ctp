@@ -21,7 +21,8 @@ $cakeDescription = 'Intranet';
     <?= 
         $this->Html->script(array(
         'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-        'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+        'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+        'https://use.fontawesome.com/a8297223fb.js'
     ));
     $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

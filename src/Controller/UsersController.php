@@ -31,13 +31,15 @@ class UsersController extends AppController
      *
      * @return void
      */
-    public function index()
+    public function index($archived=1)
     {
         $this->paginate = [
             'contain' => ['Grados']
         ];
-        $this->set('users', $this->paginate($this->Users));
+        $this->set('users', $this->paginate($this->Users->find('all')
+                            ->where(['estado ='=>$archived])));
         $this->set('_serialize', ['users']);
+        $this->set('archived',$archived);
     }
 
 
@@ -76,7 +78,6 @@ class UsersController extends AppController
     public function getState($state){
         $states = array(0=>'Inactivo',1=>'Activo');
         return $states[$state];
-
     }
 
     /**
@@ -113,6 +114,12 @@ class UsersController extends AppController
         $this->set(compact('user', 'id_users_ref'));
         $this->set('_serialize', ['user']);
     }
+
+    /**
+     * Add values that are not set in the add method
+     * like password, fecha_ult_ascenso, token
+     * @param $user
+     */
     public function addAutomaticValues($user)
     {
         if (empty($this->request->data['id_user_referencia'])) {
@@ -126,6 +133,25 @@ class UsersController extends AppController
         }
         $user->set('token',$this->generatePassword());
     }
+
+    /**
+     * Let archive user, user's archived can't access to the application
+     * @param $id
+     * @return \Cake\Network\Response|null
+     */
+    public function archiveUser($id){
+        $user=$this->Users->get($id);
+        $user->set('estado',0);
+        $this->Users->save($user);
+        $this->autoRender=false;
+        $this->Flash->success(__('El usuario ha sido archivado'));
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Generate a secure password for the user
+     * @return password, the password chosen for the user
+     */
     public function generatePassword()
     {
         $bytes=openssl_random_pseudo_bytes(9,$cstrong);
@@ -133,6 +159,11 @@ class UsersController extends AppController
         $finalPass=hash('sha512',$pass);
         return $finalPass;
     }
+
+    /**
+     * Sends an email with the link to activate the user account
+     * @param $user
+     */
     public function sendRegisterNotify($user)
     {
         //$hash =$user['token'];
@@ -204,6 +235,10 @@ class UsersController extends AppController
     }
 
 
+    /**
+     * Login function
+     * @return \Cake\Network\Response|null
+     */
     public function login()
     {
         if ($this->request->is('post')) {
@@ -310,13 +345,13 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
         $current_user=$this->Auth->user();
-        if (!empty($this->request->params['pass'])){
-            $user=$this->Users->get($this->request->params['pass']);
-        }
         if ($current_user['rol']=='Instructor') {
             return true;
         }else if ($current_user['rol']!='Instructor') {
             $action = $this->request->params['action'];
+            if (!empty($this->request->params['pass'])){
+                $user=$this->Users->get($this->request->params['pass']);
+            }
             if (in_array($action, ['view'])) {
                 if ($current_user['id'] == $user['id'] || $current_user['rol']!='Alumno'){
                     return true;
