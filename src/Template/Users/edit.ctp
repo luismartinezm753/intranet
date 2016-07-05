@@ -1,37 +1,4 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Acciones') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Nuevo Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Ver perfil'), ['action' => 'view',$user->id]) ?> </li>
-        <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-
-        ?></li>
-        <li><?= $this->Html->link(__('Fechas de Examen'), ['action' => 'studentsToExam']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Usuarios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Clase'), ['controller' => 'Clases', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Convenios Usuarios'), ['controller' => 'ConveniosUsuarios', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Convenios Usuario'), ['controller' => 'ConveniosUsuarios', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Desvinculaciones'), ['controller' => 'Desvinculaciones', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Desvinculacione'), ['controller' => 'Desvinculaciones', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
-        <?php } ?>
-        <li><?= $this->Html->link(__('Salir'), ['action' => 'logout']) ?></li>
-
-    </ul>
-</div>
-<div class="users form large-10 medium-9 columns">
+<div class="col-md-6 col-md-offset-2">
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Editar Información') ?></legend>
@@ -60,6 +27,8 @@
             echo $this->Form->file('foto');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Guardar Cambios')) ?>
+    <br>
+    <?= $this->Form->button(__('Guardar Cambios'),['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Cancelar'), ['action' => 'view', $user->id],['class'=>'btn btn-danger']) ?>
     <?= $this->Form->end() ?>
 </div>

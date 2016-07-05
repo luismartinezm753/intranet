@@ -1,12 +1,4 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Lista de Pagos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Usuarios'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Nuevo Usuario'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</div>
-<div class="pagos form large-10 medium-9 columns">
+<div class="pagos form col-lg-offset-2 col-lg-7">
     <?= $this->Form->create($pago) ?>
     <fieldset>
         <legend><?= __('Agregar Pago') ?></legend>

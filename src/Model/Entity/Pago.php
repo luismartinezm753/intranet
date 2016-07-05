@@ -29,6 +29,7 @@ class Pago extends Entity
 
     protected function _getMes($mes){
         $months = [
+            -1=>'',
             'Enero',
             'Febrero',
             'Marzo',

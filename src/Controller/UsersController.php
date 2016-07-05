@@ -200,9 +200,8 @@ class UsersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            addAutomaticValues($user);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Datos actualizados correctamente'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
@@ -324,7 +323,7 @@ class UsersController extends AppController
             'date'=>$date,
             'fecha_ult_acenso' => 'literal'
         ]);
-        $query->select(['nombre','Grados.grado','diff' => $diff,'tiempo_grado'=>'Grados.duracion_mes'])
+        $query->select(['Users.id','nombre','Grados.grado','diff' => $diff,'tiempo_grado'=>'Grados.duracion_mes'])
             ->matching('Grados', function ($q) use ($diff){
                 return $q->where([" Grados.duracion_mes*30 <" => $diff
                 ]);
@@ -334,7 +333,7 @@ class UsersController extends AppController
         $this->set('_serialize', 'result');
         if ($this->request->is(array('post'))){
              $this->redirect('/users/studentsToExam');
-        }  
+        } 
     }
 
     public function logout(){

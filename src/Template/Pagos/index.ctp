@@ -1,13 +1,5 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Nuevo Pago'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Usuarios'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Nuevo Usuario'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</div>
-<div class="pagos index large-10 medium-9 columns">
-    <table cellpadding="0" cellspacing="0">
+<div class="pagos index col-lg-offset-2">
+    <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('Usuario') ?></th>
@@ -48,4 +40,6 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
+    <?= $this->Html->link(_('Agregar Pago'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(_('Ver Morosidades'),['action' => 'studentsDelay'],['class'=>'btn btn-primary']) ?>
 </div>
