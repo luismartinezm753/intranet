@@ -299,7 +299,6 @@ class UsersController extends AppController
     }
 
     public function studentsToExam(){
-        //$this->request->allowMethod('ajax');
         if ($this->request->is(array('post'))){
             $day = $this->request->data('fecha_examen')['day'];
             $month= $this->request->data('fecha_examen')['month'];

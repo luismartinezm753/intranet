@@ -1,26 +1,5 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Acciones') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Fechas de Examen'), ['action' => 'studentsToExam']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Clase'), ['controller' => 'Clases', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Convenios Usuarios'), ['controller' => 'ConveniosUsuarios', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Convenios Usuario'), ['controller' => 'ConveniosUsuarios', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Desvinculaciones'), ['controller' => 'Desvinculaciones', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Desvinculacione'), ['controller' => 'Desvinculaciones', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Salir'), ['action' => 'logout']) ?></li>
-    </ul>
-</div>
-<div class="users index large-10 medium-9 columns">
-    <table cellpadding="0" cellspacing="0">
+<div class="users index large-10 medium-9 columns col-md-offset-1">
+    <table cellpadding="0" cellspacing="0" class="table table-responsive">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('username') ?></th>
@@ -58,10 +37,10 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-    <?= $this->Html->link(_('Agregar Usuario'),['action' => 'add'],['class'=>'button']) ?>
+    <?= $this->Html->link(_('Agregar Usuario'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
     <?php if(abs($archived-1)==0){ ?>
-        <?= $this->Html->link(_('Ver Usuarios Archivados'),['action' => 'index',abs($archived-1)],['class'=>'button']) ?>
+        <?= $this->Html->link(_('Ver Usuarios Inactivos'),['action' => 'index',abs($archived-1)],['class'=>'btn btn-primary']) ?>
     <?php }else{ ?>
-        <?= $this->Html->link(_('Ver Usuarios Activos'),['action' => 'index',abs($archived-1)],['class'=>'button']) ?>
+        <?= $this->Html->link(_('Ver Usuarios Activos'),['action' => 'index',abs($archived-1)],['class'=>'btn btn-primary']) ?>
     <?php } ?>
 </div>

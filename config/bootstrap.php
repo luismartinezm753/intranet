@@ -179,7 +179,6 @@ Request::addDetector('tablet', function ($request) {
  * Plugin::load('Migrations'); //Loads a single plugin named Migrations
  *
  */
-
 Plugin::load('Migrations');
 Plugin::load('UserPermissions', ['autoload' => true]);
 Plugin::load('Ajax');
@@ -203,3 +202,7 @@ DispatcherFactory::add('ControllerFactory');
  * This is needed for matching the auto-localized string output of Time() class when parsing dates.
  */
 Type::build('datetime')->useLocaleParser();
+
+Plugin::load('BootstrapUI', []);
+
+Plugin::load('BootstrapUI', []);

@@ -1,72 +1,98 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Acciones') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Editar Usuario'), ['action' => 'edit', $user->id]) ?> </li>
-        <li><?= $this->Html->link(__('Nuevo pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
-        <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
-        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
-        <li><?= $this->Html->link(__('Fechas de Examen'), ['action' => 'studentsToExam']) ?></li>
-        <li><?= $this->Html->link(__('Agregar Pago'), ['controller' => 'Pagos', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Grados'), ['controller' => 'Grados', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar Grado'), ['controller' => 'Grados', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Clases'), ['controller' => 'Clases', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar Clase'), ['controller' => 'Clases', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Convenios Usuarios'), ['controller' => 'ConveniosUsuarios', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar Convenios Usuario'), ['controller' => 'ConveniosUsuarios', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Desvinculaciones'), ['controller' => 'Desvinculaciones', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar Desvinculacione'), ['controller' => 'Desvinculaciones', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Historial Alumnos'), ['controller' => 'HistorialAlumnos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Agregar Historial Alumno'), ['controller' => 'HistorialAlumnos', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Pagos'), ['controller' => 'Pagos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?> </li>
-        <?php } ?>
-        <li><?= $this->Html->link(__('Salir'), ['action' => 'logout']) ?></li>
-    </ul>
-</div>
-<div class="users view large-10 medium-9 columns">
+<div class="users view large-10 medium-9 columns col-md-offset-2">
     <h2>Perfil de <?= h($user->nombre) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Nombre de usuario') ?></h6>
-            <p><?= h($user->username) ?></p>
-            <h6 class="subheader"><?= __('Email') ?></h6>
-            <p><?= h($user->email) ?></p>
-            <h6 class="subheader"><?= __('Telefono') ?></h6>
-            <p><?= h($user->telefono) ?></p>
-            <h6 class="subheader"><?= __('Rol') ?></h6>
-            <p><?= h($user->rol) ?></p>
-            <h6 class="subheader"><?= __('Grado') ?></h6>
-            <p><?= $user->has('grado') ? $this->Html->link($user->grado->grado, ['controller' => 'Grados', 'action' => 'view', $user->grado->id]) : '' ?></p>
-            <h6 class="subheader"><?= __('Referencia') ?></h6>
-            <p><?= h($user->referencia) ?></p>
-            <h6 class="subheader"><?= __('Estado') ?></h6>
-            <p><?= h($estado) ?></p>
-            <h6 class="subheader"><?= __('Nombre Apoderado') ?></h6>
-            <p><?= h($user->nombre_apoderado) ?></p>
-            <h6 class="subheader"><?= __('Telefono Apoderado') ?></h6>
-            <p><?= h($user->telefono_apoderado) ?></p>
-            <h6 class="subheader"><?= __('Profesión') ?></h6>
-            <p><?= h($user->profesion) ?></p>
-            <h6 class="subheader"><?= __('En caso de emergencia llevar a') ?></h6>
-            <p><?= h($user->llevar_a) ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Mensualidad') ?></h6>
-            <p><?= $this->Number->format($user->monto_paga) ?></p>
-            <h6 class="subheader"><?= __('Pagado por') ?></h6>
-            <p><?= h($user->id_user_referencia) ?></p>
-        </div>
-        <div class="large-2 columns dates end">
-            <h6 class="subheader"><?= __('Fecha de Ingreso') ?></h6>
-            <p><?= h($user->fecha_ing) ?></p>
-            <h6 class="subheader"><?= __('Fecha ultimo ascenso') ?></h6>
-            <p><?= h($user->fecha_ult_acenso) ?></p>
-            <h6 class="subheader"><?= __('Fecha Nacimiento') ?></h6>
-            <p><?= h($user->fecha_nac) ?></p>
-        </div>
-    </div>
+    <div class="col-lg-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Información Personal</strong></div>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th><?= __('Nombre de usuario') ?></th>
+                    <td><?= h($user->username) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Email') ?></th>
+                    <td><?= h($user->email) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Teléfono') ?></th>
+                    <td><?= h($user->telefono) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Rol') ?></th>
+                    <td><?= h($user->rol) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Grado') ?></th>
+                    <td><?= $user->has('grado') ? $this->Html->link($user->grado->grado, ['controller' => 'Grados', 'action' => 'view', $user->grado->id]) : '' ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Referencia') ?></th>
+                    <td><?= h($user->referencia) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Estado') ?></th>
+                    <td><?= h($estado) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Profesión') ?></th>
+                    <td><?= h($user->profesion) ?></td>
+                </tr>
+                <tr>
+                    <th class="subheader"><?= __('Fecha de Ingreso') ?></th>
+                    <td><?= h($user->fecha_ing) ?></td>
+                </tr>
+                <tr>
+                    <th class="subheader"><?= __('Fecha ultimo ascenso') ?></th>
+                    <td><?= h($user->fecha_ult_acenso) ?></td>
+                </tr>
+                <tr>
+                    <th class="subheader"><?= __('Fecha Nacimiento') ?></th>
+                    <td><?= h($user->fecha_nac) ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div><!-- panel-->
+    </div><!--col-lg-8-->
+    <div class="col-lg-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Información de Pago</strong></div>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th><?= __('Mensualidad') ?></th>
+                    <td><?= $this->Number->format($user->monto_paga) ?></td>
+                </tr>
+                <tr>
+                    <th class="subheader"><?= __('Pagado por') ?></th>
+                    <td><?= h($user->id_user_referencia) ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div><!--panel-primary-->
+    </div><!--col-lg-5-->
+        <?php if($user->nombre_apoderado != 'No tiene Apoderado'): ?>
+            <div class="col-lg-7">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><strong>Información Apoderado</strong></div>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th><?= __('Nombre Apoderado') ?></th>
+                            <td><?= h($user->nombre_apoderado) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?= __('Teléfono Apoderado') ?></th>
+                            <td><?= h($user->telefono_apoderado) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?= __('En caso de emergencia llevar a') ?></th>
+                            <td><?= h($user->llevar_a) ?></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--panel-primary-->
+            </div><!--col-lg-6-->
+        <?php endif; ?>
     <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
     <div class="row texts">
         <div class="columns large-9">

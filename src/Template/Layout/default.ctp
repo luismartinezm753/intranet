@@ -22,8 +22,10 @@ $cakeDescription = 'Intranet';
         $this->Html->script(array(
         'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
         'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
-        'https://use.fontawesome.com/a8297223fb.js'
+        'https://use.fontawesome.com/a8297223fb.js',
+        'bootstrap.min.js'
     ));
+
     $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -31,9 +33,8 @@ $cakeDescription = 'Intranet';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    
+    <?= $this->Html->css('bootstrap.min.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -41,9 +42,6 @@ $cakeDescription = 'Intranet';
 </head>
 <body>
     <header>
-        <div class="header-title">
-            <span><?= $this->fetch('title') ?></span>
-        </div>
     </header>
     <div id="container">
 
