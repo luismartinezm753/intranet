@@ -1,7 +1,7 @@
-<div class="pagos form large-10 medium-9 columns">
+<div class="pagos col-lg-offset-2 col-lg-6">
     <?= $this->Form->create($pago) ?>
     <fieldset>
-        <legend><?= __('Edit Pago') ?></legend>
+        <legend><?= __('Editar Pago') ?></legend>
         <?php
             echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('mes', ['type' => 'month']);
@@ -15,6 +15,7 @@
             echo $this->Form->input('observacion');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Guardar')) ?>
+    <?= $this->Form->button(__('Guardar'),['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Cancelar'), ['action' => 'view', $pago->id],['class'=>'btn btn-danger']) ?>
     <?= $this->Form->end() ?>
 </div>

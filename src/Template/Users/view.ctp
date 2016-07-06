@@ -138,6 +138,8 @@
 
             <?php endforeach; ?>
         </table>
+        <?php else:?>
+            <p>No hay pagos registrados</p>
         <?php endif; ?>
         </div>
     </div>

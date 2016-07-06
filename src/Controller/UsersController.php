@@ -248,8 +248,10 @@ class UsersController extends AppController
                 }else{
                     $this->Auth->setUser($user);
                     if ($this->Auth->user('rol') != 'Instructor') {
+                        $this->request->session()->write('User.isAdmin', 0);
                         $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{
+                        $this->request->session()->write('User.isAdmin', 1);
                         return $this->redirect($this->Auth->redirectUrl());
                     }
                 }

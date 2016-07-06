@@ -15,6 +15,7 @@
             echo $this->Form->input('observacion');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Agregar')) ?>
+    <?= $this->Form->button(__('Agregar'),['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Cancelar'), ['action' => 'index'],['class'=>'btn btn-danger']) ?>
     <?= $this->Form->end() ?>
 </div>

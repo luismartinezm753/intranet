@@ -12,10 +12,6 @@
                     <td><?= h($pago->mes) ?></td>
                 </tr>
                 <tr>
-                    <th class="subheader"><?= __('Observacion') ?></th>
-                    <td><?= h($pago->observacion) ?></td>
-                </tr>
-                <tr>
                     <th class="subheader"><?= __('Forma Pago') ?></th>
                     <td><?= h($pago->forma_pago) ?></td>
                 </tr>
@@ -31,6 +27,12 @@
                     <th class="subheader"><?= __('Año') ?></th>
                     <td><?= $this->Text->autoParagraph(h($pago->año)) ?></td>
                 </tr>
+                <?php if ($this->request->session()->read('User.isAdmin')==1):?>
+                    <tr>
+                        <th class="subheader"><?= __('Observacion') ?></th>
+                        <td><?= h($pago->observacion) ?></td>
+                    </tr>
+                <?php endif;?>
             </tbody>
         </table>
     </div>
