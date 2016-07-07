@@ -4,7 +4,7 @@
         <legend><?= __('Agregar Pago') ?></legend>
         <?php
             echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('mes', ['type' => 'month']);
+            echo $this->Form->input('mes', ['type' => 'month','selected'=>'0']);
             echo $this->Form->input('monto');
             echo $this->Form->input('año', ['type' => 'year', [
                 'minYear' => date('Y')-2,

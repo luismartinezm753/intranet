@@ -28,8 +28,11 @@ class Pago extends Entity
     ];
 
     protected function _getMes($mes){
+        if (!isset($mes)){
+            $mes=1;
+        }
         $months = [
-            -1=>'',
+            null=>'',
             'Enero',
             'Febrero',
             'Marzo',

@@ -149,7 +149,7 @@ class PagosController extends AppController
      */
     public function displayStudentsDelay($month, $year){
         $query = $this->Pagos->find();
-        $query->select(['users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
+        $query->select(['users.id','users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
         $query->rightjoin(
             ['users','pagos'],
             ['pagos.user_id = users.id']);
@@ -232,14 +232,14 @@ class PagosController extends AppController
     public function isAuthorized($user)
     {
         $userid=$this->Auth->user('id');
-        if (!empty($this->request->params['pass'])){
-            $pago=$this->Pagos->get($this->request->params['pass']);
-        }
         if ($user['rol']=='Instructor') {
             return true;
         }else if ($user['rol']!='Instructor') {
             $action = $this->request->params['action'];
             if (in_array($action, ['view'])) {
+                if (!empty($this->request->params['pass'])){
+                    $pago=$this->Pagos->get($this->request->params['pass']);
+                }
                 if ($userid == $pago['user_id']){
                     return true;
                 }

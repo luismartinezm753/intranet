@@ -1,4 +1,4 @@
-<div class="pagos index col-lg-offset-2">
+<div class="pagos index col-lg-offset-1 col-lg-10">
     <table class="table table-bordered table-striped">
     <thead>
         <tr>

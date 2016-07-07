@@ -1,4 +1,4 @@
-<div class="users form large-9 medium-9 columns">
+<div class="col-lg-offset-1 col-lg-7">
     <?= $this->Form->create('Pagos',['context' => ['valitador' => 'dates']]); ?>
         <?php echo $this->Form->input('mes_pago', ['type' => 'month','label'=>'Seleccione un mes']);
         echo $this->Form->input('año_pago', ['label'=>'Seleccione un año','type' => 'year', [

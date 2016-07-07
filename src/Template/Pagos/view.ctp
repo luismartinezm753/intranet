@@ -1,4 +1,4 @@
-<div class="pagos view col-lg-offset-2">
+<div class="pagos view col-lg-offset-1">
     <h2>Pago de <?= h($pago->mes) ?> del <?= h($pago->año) ?></h2>
     <div class="col-lg-7">
         <table class="table table-bordered table-striped">
