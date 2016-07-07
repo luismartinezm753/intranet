@@ -24,6 +24,7 @@ class User extends Entity
         'fecha_ing' => true,
         'grado_id' => true,
         'nombre' => true,
+        'apellido'=> true,
         'referencia' => true,
         'estado' => true,
         'fecha_ult_acenso' => true,
@@ -53,5 +54,11 @@ class User extends Entity
     {
         $hasher = new DefaultPasswordHasher();
         return $hasher->hash($value);
+    }
+
+    protected function _getFullName()
+    {
+        return $this->_properties['nombre'] . '  ' .
+        $this->_properties['apellido'];
     }
 }

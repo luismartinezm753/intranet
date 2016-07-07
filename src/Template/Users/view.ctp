@@ -1,6 +1,6 @@
 <div class="col-md-offset-2">
     <div class="users view large-10 medium-9 columns">
-        <h2>Perfil de <?= h($user->nombre) ?></h2>
+        <h2>Perfil de <?= h($user->full_name) ?></h2>
         <div class="col-lg-8">
             <div class="panel panel-primary">
                 <div class="panel-heading"><strong>Información Personal</strong></div>

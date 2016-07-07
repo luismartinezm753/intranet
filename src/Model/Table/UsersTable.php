@@ -30,7 +30,7 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         $this->table('users');
-        $this->displayField('nombre');
+        $this->displayField('full_name');
         $this->primaryKey('id');
         $this->belongsTo('Grados', [
             'foreignKey' => 'grado_id',
@@ -175,6 +175,22 @@ class UsersTable extends Table
             ])
             ->requirePresence('nombre', 'create')
             ->notEmpty('nombre');
+
+        $validator
+            ->add('apellido', [
+                'length' => [
+                    'rule' => ['minLength', 2],
+                    'message' => 'Apellido invalido',
+                ]
+            ])
+            ->add('apellido',[
+                'pattern'=>[
+                    'rule'=>['custom', '/^[a-z][a-z ]*$/i'],
+                    'message'=>'Solo letras',
+                ]
+            ])
+            ->requirePresence('apellido', 'create')
+            ->notEmpty('apellido');
     
         $validator
             ->requirePresence('referencia', 'create')

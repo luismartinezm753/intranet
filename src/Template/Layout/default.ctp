@@ -13,11 +13,16 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'Intranet';
+$cakeDescription = 'KenpoNet';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <?= 
         $this->Html->script(array(
         'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
@@ -35,6 +40,7 @@ $cakeDescription = 'Intranet';
     <?= $this->Html->meta('icon') ?>
     
     <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('sb-admin.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -43,17 +49,104 @@ $cakeDescription = 'Intranet';
 <body>
     <header>
     </header>
-    <div id="container">
-
-        <div id="content">
-            <?= $this->Flash->render() ?>
-            <?= $this->Flash->render('auth') ?>
-            <div class="row">
-                <?= $this->fetch('content') ?>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">KenpoNet</a>
             </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=  $this->request->session()->read('Auth.User.username')?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <?php if ($this->request->session()->read('Auth.User.username')): ?>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="index.html"><i class="fa fa-fw fa-user"></i> Usuarios</a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-shopping-cart"></i> Pedidos</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-money"></i> Pagos</a>
+                    </li>
+                    <!--<li>
+                        <?= $this->Html->image("whitebelt.jpg", [
+                            "alt" => "Brownies",
+                            'url' => '#',
+                            'width'=>'24',
+                            'height'=>'24'
+                        ]); ?>
+                    </li>-->
+                </ul>
+            </div>
+            <?php endif; ?>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <!--<div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-file"></i> Blank Page
+                            </li>
+                        </ol>
+                    </div>-->
+                    <div id="container">
+
+                        <div id="content">
+                            <?= $this->Flash->render() ?>
+                            <?= $this->Flash->render('auth') ?>
+                            <div class="row">
+                                <?= $this->fetch('content') ?>
+                            </div>
+                        </div>
+                        <footer>
+                        </footer>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
         </div>
-        <footer>
-        </footer>
+        <!-- /#page-wrapper -->
+
     </div>
 </body>
 </html>
