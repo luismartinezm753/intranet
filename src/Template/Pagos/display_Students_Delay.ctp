@@ -24,7 +24,7 @@
 	</div>
 	<div>
 		<?= $this->Form->create('Pagos',['url' => ['action' => 'exportToExcel']]); ?>
-		<?= $this->Form->button('Exportar a Excel',['type'=>'button','onclick'=>'export_to_excel()']); ?>
+		<?= $this->Form->button('Exportar a Excel',['type'=>'button','onclick'=>'export_to_excel()'],['class'=>'btn btn-primary']); ?>
 		<?= $this->Form->end(); ?>
 	</div>
 </div>

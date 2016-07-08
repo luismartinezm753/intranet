@@ -1,48 +1,42 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Acciones') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Nuevo pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
-        <?php if( isset($is_admin) && $is_admin == 1 ) { ?>
-        <li><?= $this->Html->link(__('Editar Grado'), ['action' => 'edit', $grado->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Borrar Grado'), ['action' => 'delete', $grado->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grado->id)]) ?> </li>
-        <li><?= $this->Html->link(__('Lista de Grados'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Nuevo Grado'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('Lista Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Nuevo Usuario'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <?php } ?>
-    </ul>
-</div>
-<div class="grados view large-10 medium-9 columns">
-    <h2><?= h($grado->id) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Grado') ?></h6>
-            <p><?= h($grado->grado) ?></p>
-            <h6 class="subheader"><?= __('Programa') ?></h6>
-            <p><?= $this->Html->link('Descargar Programa', ['controller' => 'Grados', 'action' => 'downloadFile', $grado->id]) ?></p>
-            <h6 class="subheader"><?= __('Video') ?></h6>
-            <iframe width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe>
+<div class="col-lg-offset-1">
+    <h2><?= __('Cinturón '.h($grado->grado))?></h2>
+    <div class="col-lg-7 panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Información</strong></div>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th><?= __('Programa') ?></th>
+                        <td><?= $this->Html->link('Descargar Programa', ['controller' => 'Grados', 'action' => 'downloadFile', $grado->id]) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= __('Duracion en Meses') ?></th>
+                        <td><?= $this->Number->format($grado->duracion_mes) ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Duracion en Meses') ?></h6>
-            <p><?= $this->Number->format($grado->duracion_mes) ?></p>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Videos</strong></div>
+            <div class="panel-body"><iframe class="embed-responsive-item" width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe></div>
         </div>
     </div>
 </div>
+
 <?php if( isset($is_admin) && $is_admin == 1 ): ?>
-<div class="related row">
+<div class="col-md-offset-1 col-lg-10">
     <div class="column large-12">
-    <h4 class="subheader"><?= __('Usuarios') ?></h4>
+    <h4 class="subheader"><?= __('Alumnos en el grado') ?></h4>
     <?php if (!empty($grado->users)): ?>
-    <table cellpadding="0" cellspacing="0">
+    <table class="table table-bordered table-responsive">
         <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('Username') ?></th>
-            <th><?= __('Email') ?></th>
-            <th><?= __('Nombre') ?></th>
-            <th><?= __('Fecha Ult Acenso') ?></th>
-            <th><?= __('Fecha Nac') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
+            <th class="bg-primary"><?= __('Id') ?></th>
+            <th class="bg-primary"><?= __('Username') ?></th>
+            <th class="bg-primary"><?= __('Email') ?></th>
+            <th class="bg-primary"><?= __('Nombre') ?></th>
+            <th class="bg-primary"><?= __('Fecha Ult Acenso') ?></th>
+            <th class="bg-primary"><?= __('Fecha Nac') ?></th>
+            <th class="bg-primary"><?= __('Actions') ?></th>
         </tr>
         <?php foreach ($grado->users as $users): ?>
         <tr>
