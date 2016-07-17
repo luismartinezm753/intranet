@@ -88,22 +88,36 @@ $cakeDescription = 'KenpoNet';
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="index.html"><i class="fa fa-fw fa-user"></i> Usuarios</a>
+                        <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
+                            <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
+                                'controller' => 'users',
+                                'action' => 'index'
+                            ],['escape' => false]); ?>
+                        <?php else: ?>
+                            <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
+                                'controller' => 'users',
+                                'action' => 'view',
+                                $this->request->session()->read('Auth.User.id')
+                            ],['escape' => false]); ?>
+                        <?php endif ?>
                     </li>
                     <li>
                         <a href="charts.html"><i class="fa fa-fw fa-shopping-cart"></i> Pedidos</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-money"></i> Pagos</a>
+                        <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
+                            <?php echo $this->Html->link("<i class='fa fa-money'></i> Pagos", [
+                                'controller' => 'pagos',
+                                'action' => 'index'
+                            ],['escape' => false]); ?>
+                        <?php endif ?>
                     </li>
-                    <!--<li>
-                        <?= $this->Html->image("whitebelt.jpg", [
-                            "alt" => "Brownies",
-                            'url' => '#',
-                            'width'=>'24',
-                            'height'=>'24'
+                    <li>
+                        <?= $this->Html->image("white-belt.ico", [
+                        "alt" => "Grado",
+                        'url' => ['controller' => 'Grados', 'action' => 'index']
                         ]); ?>
-                    </li>-->
+                    </li>
                 </ul>
             </div>
             <?php endif; ?>

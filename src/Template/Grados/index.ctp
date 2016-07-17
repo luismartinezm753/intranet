@@ -1,4 +1,5 @@
 <div class="col-lg-offset-1 col-lg-8">
+    <legend><?= __('Lista de Grados') ?></legend>
     <table class="table table-bordered ">
     <thead>
         <tr>

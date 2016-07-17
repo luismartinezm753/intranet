@@ -1,4 +1,5 @@
 <div class="pagos index col-lg-offset-1 col-lg-10">
+    <h2>Pagos Registrados</h2>
     <table class="table table-bordered table-striped">
     <thead>
         <tr>
