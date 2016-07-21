@@ -5,6 +5,8 @@ use Cake\Validation\Validator;
 use App\Controller\AppController;
 use Cake\I18n\Time;
 use Cake\Network\Email\Email;
+use Cake\ORM\TableRegistry;
+
 /** Include path **/
 ini_set('include_path', ini_get('include_path').';../Classes/');
 
@@ -75,7 +77,7 @@ class PagosController extends AppController
                 $this->Flash->error(__('The pago could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Pagos->Users->find('list', ['limit' => 200]);
+        $users = $this->Pagos->Users->find('list');
         $this->set(compact('pago', 'users'));
         $this->set('_serialize', ['pago']);
     }
@@ -227,6 +229,16 @@ class PagosController extends AppController
         $this->autoRender = false;
         $this->response->body($path);
         return $this->response;
+    }
+    public function addMulti(){
+        $pays = TableRegistry::get('Pagos');
+        if ($this->request->is('post')) {
+            $entities = $pays->newEntities($this->request->data());
+            debug($this->request->data());die;
+        }
+        $users = $this->Pagos->Users->find('all');
+        $this->set(compact('pays', 'users'));
+        $this->set('_serialize', ['pays']);
     }
 
     public function isAuthorized($user)

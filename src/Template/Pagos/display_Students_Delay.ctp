@@ -1,7 +1,6 @@
 <div class="col-lg-offset-1 col-lg-10">
 	<table class="table table-bordered">
 	<?php
-	echo $this->Html->script('js');
 	echo $this->Html->tableHeaders(['Nombre','Ultimo Pago Registrado','Email','Monto Adeudado','Número de Meses','Enviar Notificación'],['class'=>'bg-primary']);
 	foreach ($result as $payment) {
 		echo $this->Html->tableCells([
@@ -19,12 +18,12 @@
 	</div>
 	<div class="users form large-9 medium-9 columns">
 		<?= $this->Form->create('Pagos'); ?>
-		<?= $this->Form->button('Escoger Otra Fecha',['controller' => 'Pagos', 'action' => 'studentsDelay']); ?>
+		<?= $this->Form->button('Escoger Otra Fecha',['controller' => 'Pagos', 'action' => 'studentsDelay','class'=>'btn btn-primary']); ?>
 		<?= $this->Form->end(); ?>
 	</div>
 	<div>
 		<?= $this->Form->create('Pagos',['url' => ['action' => 'exportToExcel']]); ?>
-		<?= $this->Form->button('Exportar a Excel',['type'=>'button','onclick'=>'export_to_excel()'],['class'=>'btn btn-primary']); ?>
+		<?= $this->Form->button('Exportar a Excel',['onclick'=>'export_to_excel()','class'=>'btn btn-primary']); ?>
 		<?= $this->Form->end(); ?>
 	</div>
 </div>
