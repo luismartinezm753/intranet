@@ -201,7 +201,6 @@ class PagosController extends AppController
 
     public function sendEmailPayment($payment,$month,$year){
         $user=json_decode($payment, true);
-        //debug($user);die;
         $email = new Email();
         $email->transport('mailjet');
         $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
@@ -213,7 +212,6 @@ class PagosController extends AppController
         $this->autoRender = false;
         $this->Flash->success(__('Email de notificación enviado.'));
         return $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
-        //return $this->redirect('/pagos/studentsDelay');
     }
     public function exportToExcel(){
         $payments=$this->request->data['payments'];
@@ -233,12 +231,39 @@ class PagosController extends AppController
     public function addMulti(){
         $pays = TableRegistry::get('Pagos');
         if ($this->request->is('post')) {
-            $entities = $pays->newEntities($this->request->data());
-            debug($this->request->data());die;
+            $data=array();
+            $selected=$this->request->data('selected');
+            $user_pay=$this->request->data('users');
+            foreach ($selected as $id=>$select){
+                if ($select == 1){
+                    $user_pay[$id]['fecha_pago']=Time::now();
+                    $user_pay[$id]['año']=$user_pay[$id]['año']['year'];
+                    $user_pay[$id]['mes']=$user_pay[$id]['mes']['month'];
+                    $user_pay[$id]['user_id']=$id;
+                    array_push($data,$user_pay[$id]);
+                }
+            }
+            $entities = $pays->newEntities($data);
+            foreach ($entities as $entity){
+               if ($this->Pagos->save($entity)) {
+                   $this->Flash->success(__('El pago ha sido guardado'));
+               } else {
+                   $this->Flash->error(__('El pago no puede ser guardado'));
+               }
+            }
         }
-        $users = $this->Pagos->Users->find('all');
-        $this->set(compact('pays', 'users'));
-        $this->set('_serialize', ['pays']);
+        $query_pagos_user=$this->Pagos->find();
+        $query_pagos_user->select(['max_month' => $query_pagos_user->func()->max('mes'),'pagos.año','users.id','users.monto_paga','users.nombre','users.apellido'])
+            ->hydrate(false)
+            ->join([
+                'table' => 'users',
+                'type' => 'RIGHT',
+                'conditions' => 'users.id = pagos.user_id',
+            ])
+            ->group('users.id');
+        $pagos_user=$query_pagos_user->toArray();
+        $this->set(compact('pays', 'pagos_user'));
+        $this->set('_serialize', ['pays','pagos_user']);
     }
 
     public function isAuthorized($user)

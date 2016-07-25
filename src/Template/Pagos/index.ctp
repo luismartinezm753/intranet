@@ -43,4 +43,5 @@
     </div>
     <?= $this->Html->link(_('Agregar Pago'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
     <?= $this->Html->link(_('Ver Morosidades'),['action' => 'studentsDelay'],['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(_('Agregar Multiples Pagos'),['action' => 'addMulti'],['class'=>'btn btn-primary']) ?>
 </div>
