@@ -113,10 +113,10 @@ $cakeDescription = 'KenpoNet';
                         <?php endif ?>
                     </li>
                     <li>
-                        <?= $this->Html->image("white-belt.ico", [
-                        "alt" => "Grado",
-                        'url' => ['controller' => 'Grados', 'action' => 'index']
-                        ]); ?>
+                            <?= $this->Html->image("white-belt.ico", [
+                            "alt" => "Grado",
+                            'url' => ['controller' => 'Grados', 'action' => 'index']
+                            ]); ?>
                     </li>
                 </ul>
             </div>

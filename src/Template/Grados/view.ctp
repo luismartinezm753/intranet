@@ -16,10 +16,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading"><strong>Videos</strong></div>
-            <div class="panel-body"><iframe class="embed-responsive-item" width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe></div>
-        </div>
+        <?php if(!empty($grado->video)): ?>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><strong>Videos</strong></div>
+                <div class="panel-body"><iframe class="embed-responsive-item" width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe></div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -43,7 +45,7 @@
             <td><?= h($users->id) ?></td>
             <td><?= h($users->username) ?></td>
             <td><?= h($users->email) ?></td>
-            <td><?= h($users->nombre) ?></td>
+            <td><?= h($users->full_name) ?></td>
             <td><?= h($users->fecha_ult_acenso) ?></td>
             <td><?= h($users->fecha_nac) ?></td>
 

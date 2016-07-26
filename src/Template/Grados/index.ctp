@@ -1,6 +1,6 @@
 <div class="col-lg-offset-1 col-lg-8">
     <legend><?= __('Lista de Grados') ?></legend>
-    <table class="table table-bordered ">
+    <table class="table table-bordered table-striped ">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('grado') ?></th>
@@ -32,4 +32,5 @@
         <p><?= $this->Paginator->counter() ?></p>
     </div>
     <?= $this->Html->link(_('Agregar Grado'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(_('Ver Alumnos para Examen'),['controller'=>'Users','action' => 'studentsToExam'],['class'=>'btn btn-primary']) ?>
 </div>

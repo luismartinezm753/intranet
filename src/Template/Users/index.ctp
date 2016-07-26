@@ -23,7 +23,7 @@
                 <?= $this->Html->link(__(''), ['action' => 'view', $user->id],['class'=>'fa fa-search']) ?>
                 <?= $this->Html->link(__(''), ['action' => 'edit', $user->id],['class'=>'fa fa-pencil']) ?>
                 <?= $this->Html->link(__(''),['action'=>'archiveUser',$user->id],['class'=>'fa fa-archive']) ?>
-                <?= $this->Form->postLink(__(''), ['action' => 'delete', $user->id], ['class'=>'fa fa-trash'],['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                <?= $this->Form->postLink(__(''), ['action' => 'delete', $user->id], ['class'=>'fa fa-trash'],['confirm' => __('¿Está seguro que desea eliminar al usuario {0}?', $user->full_name)]) ?>
             </td>
         </tr>
 
