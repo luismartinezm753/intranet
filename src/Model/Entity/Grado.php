@@ -17,7 +17,6 @@ class Grado extends Entity
     protected $_accessible = [
         'grado' => true,
         'programa' => true,
-        'video' => true,
         'duracion_mes' => true,
         'users' => true,
     ];

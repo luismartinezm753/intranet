@@ -29,6 +29,7 @@ class GradosTable extends Table
         $this->hasMany('Users', [
             'foreignKey' => 'grado_id'
         ]);
+        $this->hasMany('Videos',['foreignKey'=>'grado_id']);
     }
 
     /**
@@ -49,13 +50,9 @@ class GradosTable extends Table
             
         $validator
             ->add('programa','extension',['rule'=>['extension','pdf']])
-            ->add('programa','size',['rule'=>['fileSize','4MB']])
+            ->add('programa','size',['rule'=>['fileSize','5MB']])
             ->requirePresence('programa', 'create')
             ->notEmpty('programa');
-            
-        $validator
-            ->add('vide','url',['rule'=>'url'])
-            ->allowEmpty('video');
             
         $validator
             ->add('duracion_mes', 'valid', ['rule' => 'numeric'])

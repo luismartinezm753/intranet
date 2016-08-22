@@ -16,10 +16,12 @@
                 </tbody>
             </table>
         </div>
-        <?php if(!empty($grado->video)): ?>
+        <?php if(!empty($grado->videos)):?>
             <div class="panel panel-primary">
-                <div class="panel-heading"><strong>Videos</strong></div>
-                <div class="panel-body"><iframe class="embed-responsive-item" width="420" height="315" src=<?= $grado->video ?> frameborder="0" allowfullscreen></iframe></div>
+            <div class="panel-heading"><strong>Videos</strong></div>
+                <?php foreach ($grado->videos as $video):?>
+                    <div class="panel-body"><iframe class="embed-responsive-item" width="420" height="315" src=<?= $video->url ?> frameborder="0" allowfullscreen></iframe></div>
+                <?php endforeach;?>
             </div>
         <?php endif; ?>
     </div>

@@ -44,7 +44,7 @@ class AppController extends Controller
     public function initialize()
     {
         $this->loadComponent('Flash');
-        $this->loadComponent('Csrf');
+        //$this->loadComponent('Csrf');
         $this->loadComponent('Auth', [
             'authError'=>'No estas autorizado a ver esta página',
             'authorize' => ['Controller'],

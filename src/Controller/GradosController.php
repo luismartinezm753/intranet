@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Utility\Security;
+use Cake\ORM\TableRegistry;
 
 
 /**
@@ -43,7 +45,7 @@ class GradosController extends AppController
             $this->set('is_admin',0);
         }
         $grado = $this->Grados->get($id, [
-            'contain' => ['Users']
+            'contain' => ['Users','Videos']
         ]);
         $this->set('grado', $grado);
         $this->set('_serialize', ['grado']);
@@ -64,13 +66,26 @@ class GradosController extends AppController
      * @return void Redirects on successful add, renders view otherwise.
      */
     public function add(){
-        $grado = $this->Grados->newEntity();
+        $gradosTable = TableRegistry::get('Grados');
+        $videosTable = TableRegistry::get('Videos');
+        $grado = $gradosTable->newEntity();
         if ($this->request->is('post') || $this->request->is('put')) {
-            $grado = $this->Grados->patchEntity($grado, $this->request->data);
+            $grado = $this->Grados->patchEntity($grado, $this->request->data,['associated' => ['Videos']]);
             $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
             move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
             $grado->set('programa',$filename);
+            //debug($grado);debug($this->request->data);die;
             if ($this->Grados->save($grado)) {
+                $videos=$videosTable->newEntities($this->request->data['video']);
+                foreach ($videos as $video) {
+                    $video->grado_id=$grado->id;
+                    $video->url=str_replace('watch?v=','/embed/',$video->url);
+                    if ($videosTable->save($video)) {
+                        $this->Flash->success(__('Videos Agregados'));
+                    } else {
+                        $this->Flash->error(__('El pago no puede ser guardado'));
+                    }
+                }
                 $this->Flash->success(__('Nuevo Grado Agregado'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -91,7 +106,7 @@ class GradosController extends AppController
     public function edit($id = null)
     {
         $grado = $this->Grados->get($id, [
-            'contain' => []
+            'contain' => ['Videos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);

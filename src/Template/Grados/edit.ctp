@@ -1,4 +1,3 @@
-
 <div class="col-md-offset-1 col-lg-7">
     <?= $this->Form->create($grado) ?>
     <fieldset>
@@ -6,7 +5,9 @@
         <?php
             echo $this->Form->input('grado');
             echo $this->Form->input('programa');
-            echo $this->Form->input('video');
+            foreach ($grado->videos as $video){
+                echo $this->Form->input('video.url');
+            }
             echo $this->Form->input('duracion_mes');
         ?>
     </fieldset>
