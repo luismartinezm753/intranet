@@ -4,11 +4,11 @@
         <legend><?= __('Editar Grado') ?></legend>
         <?php
             echo $this->Form->input('grado');
-            echo $this->Form->input('programa');
+            echo $this->Form->file('programa');
             foreach ($grado->videos as $video){
-                echo $this->Form->input('video.url');
+                echo $this->Form->input('video.url',['label'=>'Video']);
             }
-            echo $this->Form->input('duracion_mes');
+            echo $this->Form->input('duracion_mes',['label'=>'Duración en meses']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Enviar'),['class'=>'btn btn-primary']) ?>

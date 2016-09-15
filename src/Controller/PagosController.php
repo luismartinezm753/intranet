@@ -150,13 +150,21 @@ class PagosController extends AppController
      * @param $year
      */
     public function displayStudentsDelay($month, $year){
-        $query = $this->Pagos->find();
-        $query->select(['users.id','users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
-        $query->rightjoin(
+        /**
+         *  SELECT t.* FROM (SELECT users.id AS `users__id`, users.nombre AS `users__nombre`, MAX(pagos.mes) AS `pagos__mes`, pagos.año AS `pagos__año`, users.email AS `users__email`, users.monto_paga AS `users__monto_paga`, users.fecha_ing AS `users__fecha_ing` FROM pagos RIGHT JOIN users  ON pagos.user_id = users.id GROUP by user_id) AS t WHERE (t.`pagos_mes` IS NULL OR (t.`pagos_mes` < 7 AND t.`pagos_año` >= 2016))
+         */
+        $subquery = $this->Pagos->find();
+        $subquery->select(['users.id','users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
+        $subquery->rightjoin(
             ['users','pagos'],
             ['pagos.user_id = users.id']);
-        $query->where(['OR'=>['pagos.mes IS NULL',['AND'=>['pagos.mes <'=>$month,'pagos.año >='=>$year]]]]);
-        $result=$query->toArray();
+        //$query->where(['OR'=>['pagos.mes IS NULL',['AND'=>['pagos.mes <'=>$month,'pagos.año >='=>$year]]]]);
+        $query2=$this->Pagos->find()
+            ->select(['t.users__id','t.users__nombre','t.pagos__mes','t.pagos__año','t.users__email','t.users__monto_paga','t.users__fecha_ing'])
+            ->from(['t'=>$subquery])
+            ->where(['OR'=>['t.pagos__mes IS NULL',['AND'=>['t.pagos__mes <'=>$month,'t.pagos__año >='=>$year]]]]);
+        //debug($query2);die;
+        $result=$query2->toArray();
         $result=$this->calculateDebtAndMonths($result,$month,$year);
         $this->set(compact('result'));
         $this->set(compact('month'));

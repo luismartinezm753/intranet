@@ -71,10 +71,9 @@ class GradosController extends AppController
         $grado = $gradosTable->newEntity();
         if ($this->request->is('post') || $this->request->is('put')) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data,['associated' => ['Videos']]);
-            $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
+            $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->changeFileName($this->request->data['programa']['name']);
             move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
             $grado->set('programa',$filename);
-            //debug($grado);debug($this->request->data);die;
             if ($this->Grados->save($grado)) {
                 $videos=$videosTable->newEntities($this->request->data['video']);
                 foreach ($videos as $video) {
@@ -110,7 +109,7 @@ class GradosController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $grado = $this->Grados->patchEntity($grado, $this->request->data);
-            $filename = WWW_ROOT.'files'.DS.'programas'.DS.$this->request->data['programa']['name'];
+            $filename = WWW_ROOT.'files'.DS.'programas'.DS.changeFileName($this->request->data['programa']['name']);
             move_uploaded_file($this->request->data['programa']['tmp_name'],$filename);
             $grado->set('programa',$filename);
             if ($this->Grados->save($grado)) {
@@ -122,6 +121,11 @@ class GradosController extends AppController
         }
         $this->set(compact('grado'));
         $this->set('_serialize', ['grado']);
+    }
+    public function changeFileName($file){
+        $names=explode('.',$file);
+        $names[0]=$names[0].bin2hex(Security::randomBytes(5));
+        return $names[0].'.'.$names[1];
     }
 
     /**

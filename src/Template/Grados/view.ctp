@@ -34,7 +34,6 @@
     <?php if (!empty($grado->users)): ?>
     <table class="table table-bordered table-responsive">
         <tr>
-            <th class="bg-primary"><?= __('Id') ?></th>
             <th class="bg-primary"><?= __('Username') ?></th>
             <th class="bg-primary"><?= __('Email') ?></th>
             <th class="bg-primary"><?= __('Nombre') ?></th>
@@ -44,7 +43,6 @@
         </tr>
         <?php foreach ($grado->users as $users): ?>
         <tr>
-            <td><?= h($users->id) ?></td>
             <td><?= h($users->username) ?></td>
             <td><?= h($users->email) ?></td>
             <td><?= h($users->full_name) ?></td>
@@ -52,11 +50,11 @@
             <td><?= h($users->fecha_nac) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+                <?= $this->Html->link(__('Ver'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
 
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
+                <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
 
             </td>
         </tr>
