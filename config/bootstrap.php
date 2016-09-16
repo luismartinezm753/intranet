@@ -206,4 +206,4 @@ Plugin::load('BootstrapUI', []);
 
 Plugin::load('BootstrapUI', []);
 
-Plugin::load('DegubKit');
+Plugin::load('DegubKit', ['bootstrap' => true]);
