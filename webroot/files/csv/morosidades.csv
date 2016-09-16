@@ -1,0 +1,8 @@
+sep=,
+nombre,email,mensualidad,"fecha de ingreso","mes ultimo pago","año ultimo pago",deuda,"meses de deuda"
+"Luis Martinez",l_martinez92@hotmail.com,5000,2015-07-16,Enero,2016,30000,6
+"Luis Martinez",l_martinez92@hotmail.com,5000,2015-07-16,Marzo,2016,20000,4
+"daniela flores",dflores@yopmail.com,20000,2015-09-14,"No registra pagos",,200000,10
+"jorge martinez",jmartinez@yopmail.com,0,2015-10-03,"No registra pagos",,0,9
+"Andres Flores",kenpo.martinez@gmail.com,20000,2015-10-14,"No registra pagos",,180000,9
+"negri flores",luis.martinez.m753@gmail.com,24000,2016-06-17,"No registra pagos",,24000,1

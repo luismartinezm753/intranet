@@ -924,20 +924,21 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.2.9",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "5c351136576b05a386eb2bbb02267529123edf7b"
+                "reference": "6902a58633d763f85d8f627efe0993b19d9c4b1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/5c351136576b05a386eb2bbb02267529123edf7b",
-                "reference": "5c351136576b05a386eb2bbb02267529123edf7b",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6902a58633d763f85d8f627efe0993b19d9c4b1b",
+                "reference": "6902a58633d763f85d8f627efe0993b19d9c4b1b",
                 "shasum": ""
             },
             "require": {
                 "cakephp/cakephp": ">=3.1.0 <4.0",
+                "cakephp/plugin-installer": "*",
                 "jdorn/sql-formatter": "~1.2"
             },
             "require-dev": {
@@ -976,7 +977,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2016-05-28 15:47:46"
+            "time": "2016-09-02 00:51:04"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

@@ -11,8 +11,7 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "phpoffice/phpexcel": "^1.8",
-        "friendsofcake/bootstrap-ui": "^0.5.0",
-        "cakephp/debug_kit": "2.2.*"
+        "friendsofcake/bootstrap-ui": "^0.5.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

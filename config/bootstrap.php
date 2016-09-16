@@ -183,7 +183,6 @@ Plugin::load('Migrations');
 Plugin::load('UserPermissions', ['autoload' => true]);
 Plugin::load('Ajax');
 
-Configure::write('debug', 2);
 // Only try to load DebugKit in development mode
 // Debug Kit should not be installed on a production system
 if (Configure::read('debug')) {
