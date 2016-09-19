@@ -205,5 +205,3 @@ Type::build('datetime')->useLocaleParser();
 Plugin::load('BootstrapUI', []);
 
 Plugin::load('BootstrapUI', []);
-
-Plugin::load('DegubKit', ['bootstrap' => true]);
