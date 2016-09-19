@@ -31,7 +31,6 @@ class AppController extends Controller
 {
     public $components = array(
         'UserPermissions.UserPermissions',
-        'DebugKit.Toolbar',
     );
 
 
