@@ -168,7 +168,8 @@ class UsersController extends AppController
     {
         //$hash =$user['token'];
         $hash = $user['token'];
-        $url= 'http://localhost:8765/users/verify/'.$hash;
+        $host = $this->request->host();
+        $url= $host.'/users/verify/'.$hash;
         $email = new Email();
         $email->transport('mailjet');
         $email->viewVars(['user'=>$user, 'url'=>$url]);
