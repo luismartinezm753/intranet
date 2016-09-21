@@ -10,11 +10,6 @@ use Cake\ORM\TableRegistry;
 /** Include path **/
 ini_set('include_path', ini_get('include_path').';../Classes/');
 
-/** PHPExcel */
-include 'C:\xampp\htdocs\intranet\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
-
-/** PHPExcel_Writer_Excel2007 */
-include 'C:\xampp\htdocs\intranet\vendor\phpoffice\phpexcel\Classes\PHPExcel/Writer/Excel2007.php';
 
 /**
  * Pagos Controller

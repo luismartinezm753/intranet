@@ -43,6 +43,10 @@ Router::defaultRouteClass('Route');
 Router::extensions('json', 'xml');
 
 Router::scope('/', function ($routes) {
+    $routes->connect('/', ['controller' => 'Users', 'action' => 'index']);
+});
+
+Router::scope('/', function ($routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
