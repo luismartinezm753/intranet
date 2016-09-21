@@ -91,7 +91,7 @@ $cakeDescription = 'KenpoNet';
                         <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
                             <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
                                 'controller' => 'users',
-                                'action' => 'index'
+                                'action' => 'list_users'
                             ],['escape' => false]); ?>
                         <?php else: ?>
                             <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
