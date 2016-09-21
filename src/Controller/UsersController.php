@@ -103,7 +103,7 @@ class UsersController extends AppController
                 $this->Users->save($user);
                 $this->sendRegisterNotify($user);
                 $this->Flash->success(__('El usuario ha sido agregado'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'listUsers']);
             } else {
                 $this->Flash->error(__('No se pudo guardar el usuario, intente de nuevo.'));
             }
