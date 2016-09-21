@@ -43,7 +43,11 @@ Router::defaultRouteClass('Route');
 Router::extensions('json', 'xml');
 
 Router::scope('/', function ($routes) {
-    $routes->connect('/', ['controller' => 'Users', 'action' => 'index']);
+    $routes->connect('/users/', ['controller' => 'Users', 'action' => 'index']);
+});
+
+Router::scope('/', function ($routes) {
+    $routes->connect('/grados/', ['controller' => 'Grados', 'action' => 'index']);
 });
 
 Router::scope('/', function ($routes) {
