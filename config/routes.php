@@ -42,13 +42,11 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('Route');
 Router::extensions('json', 'xml');
 
-Router::scope('/', function ($routes) {
-    $routes->connect('/users/', ['controller' => 'Users', 'action' => 'index']);
-});
+Router::connect('/users', ['controller' => 'Users', 'action' => 'index']);
 
-Router::scope('/', function ($routes) {
-    $routes->connect('/grados/', ['controller' => 'Grados', 'action' => 'index']);
-});
+Router::connect('/pagos', ['controller' => 'Pagos', 'action' => 'index']);
+
+Router::connect('/grados', ['controller' => 'Grados', 'action' => 'view']);
 
 Router::scope('/', function ($routes) {
     /**
