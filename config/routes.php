@@ -42,7 +42,7 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('Route');
 Router::extensions('json', 'xml');
 
-Router::connect('/users', ['controller' => 'Users', 'action' => 'listUsers']);
+Router::connect('/users', ['controller' => 'Users', 'action' => 'index']);
 
 Router::connect('/pagos', ['controller' => 'Pagos', 'action' => 'index']);
 

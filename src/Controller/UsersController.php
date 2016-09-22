@@ -31,7 +31,7 @@ class UsersController extends AppController
      *
      * @return void
      */
-    public function listUsers($archived=1)
+    public function index($archived=1)
     {
         $this->paginate = [
             'contain' => ['Grados']
