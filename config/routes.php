@@ -42,6 +42,12 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('Route');
 Router::extensions('json', 'xml');
 
+Router::connect('/users', ['controller' => 'Users', 'action' => 'listUsers']);
+
+Router::connect('/pagos', ['controller' => 'Pagos', 'action' => 'index']);
+
+Router::connect('/grados', ['controller' => 'Grados', 'action' => 'index']);
+
 Router::scope('/', function ($routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',

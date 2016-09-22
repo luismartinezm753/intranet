@@ -93,7 +93,7 @@ $cakeDescription = 'KenpoNet';
                     </li>
                     <?php endif ?>
                     <li>
-                        <a href="#"> Pedidos</a>
+                        <a href="charts.html"><i class="fa fa-fw fa-shopping-cart"></i> Pedidos</a>
                     </li>
                     <li>
                         <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>

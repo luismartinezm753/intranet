@@ -31,7 +31,7 @@ class UsersController extends AppController
      *
      * @return void
      */
-    public function index($archived=1)
+    public function listUsers($archived=1)
     {
         $this->paginate = [
             'contain' => ['Grados']
@@ -103,7 +103,7 @@ class UsersController extends AppController
                 $this->Users->save($user);
                 $this->sendRegisterNotify($user);
                 $this->Flash->success(__('El usuario ha sido agregado'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'listUsers']);
             } else {
                 $this->Flash->error(__('No se pudo guardar el usuario, intente de nuevo.'));
             }
@@ -168,7 +168,8 @@ class UsersController extends AppController
     {
         //$hash =$user['token'];
         $hash = $user['token'];
-        $url= 'http://localhost:8765/users/verify/'.$hash;
+        $host = $this->request->host();
+        $url= $host.'/users/verify/'.$hash;
         $email = new Email();
         $email->transport('mailjet');
         $email->viewVars(['user'=>$user, 'url'=>$url]);
