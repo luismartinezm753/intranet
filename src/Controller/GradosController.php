@@ -152,7 +152,7 @@ class GradosController extends AppController
         if ($user['rol']=='Instructor') {
             return true;
         }else if ($user['rol']!='Instructor') {
-            if (in_array($action, ['view','downloadFile'])) {
+            if (in_array($action, ['view','downloadFile','index'])) {
                 return true;
             }
             return false;

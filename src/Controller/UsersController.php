@@ -249,7 +249,7 @@ class UsersController extends AppController
                     $this->Auth->setUser($user);
                     if ($this->Auth->user('rol') != 'Instructor') {
                         $this->request->session()->write('User.isAdmin', 0);
-                        $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
+                        return $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{
                         $this->request->session()->write('User.isAdmin', 1);
                         return $this->redirect($this->Auth->redirectUrl());
@@ -358,28 +358,21 @@ class UsersController extends AppController
                 }
             }
             if (in_array($action, ['edit'])){
-              if ($current_user['id'] == $user['id']){
-                  return true;
-              }
+                if ($current_user['id'] == $user['id']){
+                    return true;
+                }
             }
             return false;
         }
         return parent::isAuthorized($user);
     }
 
-    public function checkEdit()
+    public function beforeFilter(Event $event)
     {
-        if ($this->Auth->user('rol') == 'Instructor') {
-            return true;
-        }
-        return $this->Auth->user('id') == $this->request->params['pass'][0];
-    }
-
-    public function checkView()
-    {
-        if ($this->Auth->user('rol')!= 'Alumno') {
-            return true;
-        }
-        return $this->Auth->user('id') == $this->request->params['pass'][0];
+        parent::beforeFilter($event);
+        // Allow users to register and logout.
+        // You should not add the "login" action to allow list. Doing so would
+        // cause problems with normal functioning of AuthComponent.
+        $this->Auth->allow(['logout']);
     }
 }

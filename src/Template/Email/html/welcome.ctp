@@ -7,7 +7,8 @@
  */
 ?>
 
-<h2>Estimado/a <?= $user['nombre']?>:</h2>
+<h2>Estimado/a <?= $user['full_name']?>:</h2>
 <p>Te damos la bienvenida a Kenpo Martinez, para poder activar tu cuenta en la intranet haz click en el siguiente link </p>
+<strong>Nombre de Usuario:</strong><?=$user['username']?>
 <a href="<?= $url ?>">INTRANET</a>
 <p>Saluda atte<br>Kenpo Martinez</p>

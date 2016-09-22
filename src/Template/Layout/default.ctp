@@ -60,7 +60,11 @@ $cakeDescription = 'KenpoNet';
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">KenpoNet</a>
+                <?php echo $this->Html->link("KenpoNet", [
+                    'controller' => 'users',
+                    'action' => 'view',
+                    $this->request->session()->read('Auth.User.id')
+                ],['escape' => false,'class'=>'navbar-brand']); ?>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -68,17 +72,10 @@ $cakeDescription = 'KenpoNet';
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=  $this->request->session()->read('Auth.User.username')?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <?php echo $this->Html->link('<i class="fa fa-fw fa-power-off"></i>Salir', [
+                                'controller' => 'users',
+                                'action' => 'logout'
+                            ],['escape' => false]); ?>
                         </li>
                     </ul>
                 </li>
@@ -87,36 +84,30 @@ $cakeDescription = 'KenpoNet';
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
+                    <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
                     <li>
-                        <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
-                            <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
-                                'controller' => 'users',
-                                'action' => 'index'
-                            ],['escape' => false]); ?>
-                        <?php else: ?>
-                            <?php echo $this->Html->link("<i class='fa fa-user'></i> Usuarios", [
-                                'controller' => 'users',
-                                'action' => 'view',
-                                $this->request->session()->read('Auth.User.id')
-                            ],['escape' => false]); ?>
-                        <?php endif ?>
+                        <?php echo $this->Html->link("Usuarios", [
+                            'controller' => 'users',
+                            'action' => 'index'
+                        ],['escape' => false]); ?>
                     </li>
+                    <?php endif ?>
                     <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-shopping-cart"></i> Pedidos</a>
+                        <a href="#"> Pedidos</a>
                     </li>
                     <li>
                         <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
-                            <?php echo $this->Html->link("<i class='fa fa-money'></i> Pagos", [
+                            <?php echo $this->Html->link("Pagos", [
                                 'controller' => 'pagos',
                                 'action' => 'index'
                             ],['escape' => false]); ?>
                         <?php endif ?>
                     </li>
                     <li>
-                            <?= $this->Html->image("white-belt.ico", [
-                            "alt" => "Grado",
-                            'url' => ['controller' => 'Grados', 'action' => 'index']
-                            ]); ?>
+                        <?php echo $this->Html->link("Grados", [
+                            'controller' => 'Grados',
+                            'action' => 'index'
+                        ],['escape' => false]); ?>
                     </li>
                 </ul>
             </div>
@@ -125,7 +116,8 @@ $cakeDescription = 'KenpoNet';
         </nav>
 
         <div id="page-wrapper">
-
+            <?= $this->Flash->render() ?>
+            <?= $this->Flash->render('auth') ?>
             <div class="container-fluid">
 
                 <!-- Page Heading -->

@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\I18n\Time;
+use Cake\Routing\Router;
 
 
 /**
@@ -44,7 +45,7 @@ class AppController extends Controller
     public function initialize()
     {
         $this->loadComponent('Flash');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Csrf');
         $this->loadComponent('Auth', [
             'authError'=>'No estas autorizado a ver esta página',
             'authorize' => ['Controller'],
@@ -56,13 +57,21 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
-            'unauthorizedRedirect'=>$this->referer()
+            'unauthorizedRedirect'=>$this->request->session()->read('lastUrl'),
+            'flash' => [
+                'element' => 'error',
+                'key' => 'auth'
+            ]
         ]);
     }
 
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow(['verify','changePassword']);
+        $url = Router::url(NULL, true); //complete url
+        if (!preg_match('/login|logout/i', $url)){
+            $this->request->session()->write('lastUrl', $url);
+        }
     }
 
     public function isAuthorized($user)
