@@ -4,9 +4,8 @@
 	echo $this->Html->tableHeaders(['Nombre','Ultimo Pago Registrado','Email','Monto Adeudado','Número de Meses','Enviar Notificación'],['class'=>'bg-primary']);
 	foreach ($result as $payment) {
 		echo $this->Html->tableCells([
-			[$this->html->link($payment['users']['nombre'],['controller'=>'Users','action'=>'view',$payment['users']['id']]), $payment['pagos']['mes']." ".$payment['pagos']['año'], $payment['users']['email'], $payment['pagos']['deuda'],$payment['pagos']['meses_deuda'],$this->Html->link('Enviar Mail',['controller' => 'Pagos', 'action' => 'sendEmailPayment',json_encode($payment),$month,$year])]
+			[$this->html->link($payment['pay_info']['users__nombre'].' '.$payment['pay_info']['users__apellido'],['controller'=>'Users','action'=>'view',$payment['pay_info']['users__id']]), $payment['pay_info']['pagos__mes']." ".$payment['pay_info']['pagos__año'], $payment['pay_info']['users__email'], $payment['pay_info']['deuda'],$payment['pay_info']['meses_deuda'],$this->Html->link('Enviar Mail',['controller' => 'Pagos', 'action' => 'sendEmailPayment',http_build_query(['debt_info'=>['month'=>$month,'year'=>$year,'payment'=>$payment->toArray()]])])]
 		]);
-		//echo $student;
 	}
 	?>
 	</table>
@@ -17,9 +16,7 @@
 		?>
 	</div>
 	<div class="users form large-9 medium-9 columns">
-		<?= $this->Form->create('Pagos'); ?>
-		<?= $this->Form->button('Escoger Otra Fecha',['controller' => 'Pagos', 'action' => 'studentsDelay','class'=>'btn btn-primary']); ?>
-		<?= $this->Form->end(); ?>
+		<?= $this->Html->link(__('Escoger Otra Fecha'), ['action' => 'studentsDelay'],['class'=>'btn btn-primary']) ?>
 	</div>
 	<div>
 		<?= $this->Form->create('Pagos',['url' => ['action' => 'exportToExcel']]); ?>
@@ -34,14 +31,15 @@
 			url: "<?php echo $this->Url->build([
 				"controller" => "Pagos",
 				"action" => "exportToExcel",
-			]);?>" ,
-			data:{"payments":<?php echo json_encode($result);?>},
+				'ext'=>'json'
+			],true);?>" ,
+			data: {'debt_info':'HOLA'},
 			success: function(url){
 				//TODO: Change to the correct url
 				window.location= "http://localhost/intranet/webroot/files/csv/morosidades.csv";
 			},
 			error: function (error) {
-				alert(error);
+				console.log(error);
 			}
 		});
 	}
