@@ -217,18 +217,18 @@ class PagosController extends AppController
         return $this->redirect('/pagos/displayStudentsDelay/'.$debt_info['month'].'/'.$debt_info['year']);
     }
     public function exportToExcel(){
-        debug($this->request);
-        debug($_POST);die;
         $payments=$this->request->data['debt_info'];
         $path=WWW_ROOT .'files/csv/morosidades.csv';
         $file = fopen($path,"w");
         fputs($file,"sep=,\n");
-        $headers=array('nombre','email','mensualidad','fecha de ingreso','mes ultimo pago','año ultimo pago','deuda','meses de deuda');
+        $headers=array('id','nombre','apellido','mes último pago','año último pago','email','mensualidad','fecha de ingreso','deuda','meses de deuda');
         fputcsv($file,$headers);
         foreach ($payments as $payment) {
             fputcsv($file,array_merge($payment['pay_info']));
         }
         fclose($file);
+        $this->set(compact('path'));
+        $this->set('_serialize', 'path');
         $this->autoRender = false;
         $this->response->body($path);
         return $this->response;

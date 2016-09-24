@@ -19,9 +19,7 @@
 		<?= $this->Html->link(__('Escoger Otra Fecha'), ['action' => 'studentsDelay'],['class'=>'btn btn-primary']) ?>
 	</div>
 	<div>
-		<?= $this->Form->create('Pagos',['url' => ['action' => 'exportToExcel']]); ?>
 		<?= $this->Form->button('Exportar a Excel',['onclick'=>'export_to_excel()','class'=>'btn btn-primary']); ?>
-		<?= $this->Form->end(); ?>
 	</div>
 </div>
 <script>
@@ -30,10 +28,12 @@
 			type:"POST",
 			url: "<?php echo $this->Url->build([
 				"controller" => "Pagos",
-				"action" => "exportToExcel",
-				'ext'=>'json'
-			],true);?>" ,
-			data: {'debt_info':'HOLA'},
+				"action" => "exportToExcel"
+			]);?>" ,
+			data: {'debt_info':<?php echo json_encode($result);?>},
+			beforeSend: function(xhr){
+				xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken'));?>);
+			},
 			success: function(url){
 				//TODO: Change to the correct url
 				window.location= "http://localhost/intranet/webroot/files/csv/morosidades.csv";
