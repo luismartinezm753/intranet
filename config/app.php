@@ -1,5 +1,6 @@
 <?php
 $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+$key_google_maps ='AIzaSyDjkNU1uLAhCg7ILYM34yLwB-Vdx_XWNGE';
 return [
     /**
      * Debug Level:

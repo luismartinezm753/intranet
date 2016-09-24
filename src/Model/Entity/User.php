@@ -58,7 +58,7 @@ class User extends Entity
 
     protected function _getFullName()
     {
-        return $this->_properties['nombre'] . '  ' .
+        return $this->_properties['nombre'] . ' ' .
         $this->_properties['apellido'];
     }
 }
