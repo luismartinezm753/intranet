@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\User;
 
 /**
  * Eventos Controller
@@ -123,5 +124,11 @@ class EventosController extends AppController
             return false;
         }
         return parent::isAuthorized($user);
+    }
+    public function notifyEvent($event){
+        $users = TableRegistry::get('Users');
+        $query = $users->find();
+        $email = new Email();
+        $email->transport('mailjet');
     }
 }

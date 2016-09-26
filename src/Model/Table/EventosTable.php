@@ -61,8 +61,8 @@ class EventosTable extends Table
             ->allowEmpty('fecha_termino');
 
         $validator
-            ->requirePresence('ubicacion', 'create')
-            ->notEmpty('ubicacion');
+            ->add('precio', 'valid', ['rule' => 'numeric'])
+            ->add('precio', 'gtzero', ['rule'=>['comparison','>=',0]]);
 
         $validator
             ->requirePresence('descripcion', 'create')
