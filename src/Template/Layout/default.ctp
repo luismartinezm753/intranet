@@ -84,7 +84,7 @@ $cakeDescription = 'KenpoNet';
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
+                    <?php if ($this->request->session()->read('Auth.User.rol')!=2):?>
                     <li>
                         <?php echo $this->Html->link("Usuarios", [
                             'controller' => 'users',
@@ -93,7 +93,7 @@ $cakeDescription = 'KenpoNet';
                     </li>
                     <?php endif ?>
                     <li>
-                        <?php if ($this->request->session()->read('Auth.User.rol')!='Alumno'):?>
+                        <?php if ($this->request->session()->read('Auth.User.rol')!=2):?>
                             <?php echo $this->Html->link("Pagos", [
                                 'controller' => 'pagos',
                                 'action' => 'index'

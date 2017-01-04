@@ -55,7 +55,7 @@ class EventosController extends AppController
                 $this->Flash->success(__('Se ha agregado el evento'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The evento could not be saved. Please, try again.'));
+                $this->Flash->error(__('No se pudo guardar el evento.'));
             }
         }
         $this->set(compact('evento'));

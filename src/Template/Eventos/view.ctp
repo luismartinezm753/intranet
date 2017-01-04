@@ -1,38 +1,56 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Evento'), ['action' => 'edit', $evento->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Evento'), ['action' => 'delete', $evento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $evento->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Eventos'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Evento'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="eventos view large-9 medium-8 columns content">
-    <h3><?= h($evento->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th><?= __('Nombre') ?></th>
-            <td><?= h($evento->nombre) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Ubicacion') ?></th>
-            <td><?= h($evento->ubicacion) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($evento->id) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Fecha Inicio') ?></th>
-            <td><?= h($evento->fecha_inicio) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Fecha Termino') ?></th>
-            <td><?= h($evento->fecha_termino) ?></td>
-        </tr>
-    </table>
-    <div class="row">
-        <h4><?= __('Descripcion') ?></h4>
-        <?= $this->Text->autoParagraph(h($evento->descripcion)); ?>
+<div class="col-md-offset-1">
+    <div class="col-lg-7">
+        <h3><?= h($evento->nombre) ?></h3>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Información</strong></div>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <div class="panel-body"><?= $this->Text->autoParagraph(h($evento->descripcion)); ?></div>
+                    <tr>
+                        <th><?= __('Fecha Inicio') ?></th>
+                        <td><?= h($evento->fecha_inicio) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= __('Fecha Termino') ?></th>
+                        <td><?= h($evento->fecha_termino) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= __('Precio') ?></th>
+                        <td><?= h($evento->fecha_termino) ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Ubicación</strong></div>
+            <div class="panel-body"><?= h($evento->ubicacion); ?></div>
+            <div id="map" style="height:350px;width:565px"></div>
+        </div>
     </div>
 </div>
+<script type="text/javascript">
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 14
+        });
+        var geocoder = new google.maps.Geocoder();
+        geocodeAddress(geocoder, map);
+    }
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = "<?= h($evento->ubicacion)?>"
+        geocoder.geocode({'address': address}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jCP7UmkIQtVdLorJ0-tpHlVX-j6skUo&callback=initMap" async defer></script>

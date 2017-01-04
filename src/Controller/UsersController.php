@@ -52,7 +52,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        if($this->getRole() == 'Instructor') {
+        if($this->getRole() == 0) {
             // set the view variable here
             $this->set('is_admin', 1);
         }else{
@@ -87,7 +87,7 @@ class UsersController extends AppController
      */
     public function add()
     {
-        if($this->getRole() == 'Instructor') {
+        if($this->getRole() == 0) {
             // set the view variable here
             $this->set('is_admin', 1);
         }else{
@@ -190,7 +190,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        if($this->getRole() == 'Instructor') {
+        if($this->getRole() == 0) {
             // set the view variable here
             $this->set('is_admin', 1);
         }else{
@@ -248,7 +248,7 @@ class UsersController extends AppController
                     $this->Flash->error(__('Su cuenta no esta Activa!'));
                 }else{
                     $this->Auth->setUser($user);
-                    if ($this->Auth->user('rol') != 'Instructor') {
+                    if ($this->Auth->user('rol') != 0) {
                         $this->request->session()->write('User.isAdmin', 0);
                         return $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{
@@ -346,9 +346,9 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
         $current_user=$this->Auth->user();
-        if ($current_user['rol']=='Instructor') {
+        if ($current_user['rol']==0) {
             return true;
-        }else if ($current_user['rol']!='Instructor') {
+        }else if ($current_user['rol']!=0) {
             $action = $this->request->params['action'];
             if (!empty($this->request->params['pass'])){
                 $user=$this->Users->get($this->request->params['pass']);

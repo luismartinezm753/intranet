@@ -8,6 +8,9 @@
             echo $this->Form->input('fecha_termino', ['empty' => true]);
             echo $this->Form->input('ubicacion');
             echo $this->Form->input('descripcion');
+            echo $this->Form->input('price',['label'=>'Precio']);
+            echo $this->Form->input('user_rol',['label'=>'Tipo de Usuario','options'=>['Instructor', 'Monitor','Alumno']]);
+            echo $this->Form->input('notify_users',['label'=>'Notificar Usuarios','type'=>'checkbox'])
         ?>
     </fieldset>
     <?= $this->Form->button(__('Agregar'),['class'=>'btn btn-primary']) ?>
