@@ -67,6 +67,15 @@ class EventosTable extends Table
         $validator
             ->requirePresence('descripcion', 'create')
             ->notEmpty('descripcion');
+        $validator
+            ->requirePresence('region','create')
+            ->notEmpty('region');
+        $validator
+            ->requirePresence('comuna','create')
+            ->notEmpty('comuna');
+        $validator
+            ->requirePresence('direccion','create')
+            ->notEmpty('direccion');
 
         return $validator;
     }

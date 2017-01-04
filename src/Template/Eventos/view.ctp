@@ -23,7 +23,7 @@
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading"><strong>Ubicación</strong></div>
-            <div class="panel-body"><?= h($evento->ubicacion); ?></div>
+            <div class="panel-body"><?= h($evento->FullAddress); ?></div>
             <div id="map" style="height:350px;width:565px"></div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         geocodeAddress(geocoder, map);
     }
     function geocodeAddress(geocoder, resultsMap) {
-        var address = "<?= h($evento->ubicacion)?>"
+        var address = "<?= h($evento->FullAddress)?>"
         geocoder.geocode({'address': address}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 resultsMap.setCenter(results[0].geometry.location);

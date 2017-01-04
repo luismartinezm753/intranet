@@ -3,6 +3,10 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\User;
+use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
+use Cake\Network\Email\Email;
+
 
 /**
  * Eventos Controller
@@ -53,6 +57,9 @@ class EventosController extends AppController
         if ($this->request->is('post')) {
             $evento = $this->Eventos->patchEntity($evento, $this->request->data);
             if ($this->Eventos->save($evento)) {
+                if ($this->request->data['notify_users']==1){
+                    $this->notifyEvent($evento);
+                }
                 $this->Flash->success(__('Se ha agregado el evento'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -110,9 +117,9 @@ class EventosController extends AppController
     public function isAuthorized($user)
     {
         $current_user=$this->Auth->user();
-        if ($current_user['rol']=='Instructor') {
+        if ($current_user['rol']==0) {
             return true;
-        }else if ($current_user['rol']!='Instructor') {
+        }else if ($current_user['rol']!=0) {
             $action = $this->request->params['action'];
             if (!empty($this->request->params['pass'])){
                 $user=$this->Users->get($this->request->params['pass']);
@@ -128,7 +135,27 @@ class EventosController extends AppController
     public function notifyEvent($event){
         $users = TableRegistry::get('Users');
         $query = $users->find();
+        $query->where(['rol <='=>$event->user_rol]);
+        foreach ($query as $user){
+            $this->sendEventEmail($event, $user);
+        }
+    }
+
+    /**
+     * @param $event
+     * @param $user
+     */
+    public function sendEventEmail($event, $user)
+    {
+        $url=$this->request->host().'/eventos/view/'.$event->id;
         $email = new Email();
         $email->transport('mailjet');
+        $email->viewVars(['event' => $event, 'user' => $user,'url'=>$url]);
+        $email->template('event_notification');
+        $email->emailFormat('html');
+        $email->from(['kenpo.martinez@gmail.com' => 'Kenpo Martinez'])
+            ->to([$user['email'] => 'My Website'])
+            ->subject('Nuevo Evento: '.$event->nombre)
+            ->send();
     }
 }
