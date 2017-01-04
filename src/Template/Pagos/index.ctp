@@ -16,7 +16,7 @@
     <?php foreach ($pagos as $pago): ?>
         <tr>
             <td>
-                <?= $pago->has('user') ? $this->Html->link($pago->user->nombre, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?>
+                <?= $pago->has('user') ? $this->Html->link($pago->user->full_name, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?>
             </td>
             <td><?= h($pago->mes) ?></td>
             <td><?= h($pago->año)?></td>

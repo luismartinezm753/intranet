@@ -106,6 +106,12 @@ $cakeDescription = 'KenpoNet';
                             'action' => 'index'
                         ],['escape' => false]); ?>
                     </li>
+                    <li>
+                        <?php echo $this->Html->link("Eventos", [
+                            'controller' => 'Eventos',
+                            'action' => 'index'
+                        ],['escape' => false]); ?>
+                    </li>
                 </ul>
             </div>
             <?php endif; ?>

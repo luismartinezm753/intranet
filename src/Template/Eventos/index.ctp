@@ -16,7 +16,7 @@
                 <td><?= h($evento->nombre) ?></td>
                 <td><?= h($evento->fecha_inicio) ?></td>
                 <td><?= h($evento->fecha_termino) ?></td>
-                <td><?= h($evento->ubicacion) ?></td>
+                <td><?= h($evento->FullAddress) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['action' => 'view', $evento->id]) ?>
                     <?= $this->Html->link(__('Editar'), ['action' => 'edit', $evento->id]) ?>

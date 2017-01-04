@@ -205,3 +205,7 @@ Type::build('datetime')->useLocaleParser();
 Plugin::load('BootstrapUI', []);
 
 Plugin::load('BootstrapUI', []);
+
+$key_google_maps ='AIzaSyAkPc3tMImOFR0wSh-xngu8di8PyPMpXq4';
+
+Configure::write('google_maps_key',$key_google_maps);

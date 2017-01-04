@@ -145,20 +145,16 @@ class PagosController extends AppController
      * @param $year
      */
     public function displayStudentsDelay($month, $year){
-        /**
-         *  SELECT t.* FROM (SELECT users.id AS `users__id`, users.nombre AS `users__nombre`, MAX(pagos.mes) AS `pagos__mes`, pagos.año AS `pagos__año`, users.email AS `users__email`, users.monto_paga AS `users__monto_paga`, users.fecha_ing AS `users__fecha_ing` FROM pagos RIGHT JOIN users  ON pagos.user_id = users.id GROUP by user_id) AS t WHERE (t.`pagos_mes` IS NULL OR (t.`pagos_mes` < 7 AND t.`pagos_año` >= 2016))
-         */
         $subquery = $this->Pagos->find();
-        $subquery->select(['users.id','users.nombre','pagos.mes','pagos.año','users.email','users.monto_paga','users.fecha_ing']);
+        $subquery->select(['users.id','users.nombre','users.apellido','pagos__mes'=>$subquery->func()->max('pagos.mes'),'pagos.año','users.email','users.monto_paga','users.fecha_ing']);
         $subquery->rightjoin(
             ['users','pagos'],
             ['pagos.user_id = users.id']);
-        //$query->where(['OR'=>['pagos.mes IS NULL',['AND'=>['pagos.mes <'=>$month,'pagos.año >='=>$year]]]]);
+        $subquery->group('pagos.user_id');
         $query2=$this->Pagos->find()
-            ->select(['t.users__id','t.users__nombre','t.pagos__mes','t.pagos__año','t.users__email','t.users__monto_paga','t.users__fecha_ing'])
-            ->from(['t'=>$subquery])
-            ->where(['OR'=>['t.pagos__mes IS NULL',['AND'=>['t.pagos__mes <'=>$month,'t.pagos__año >='=>$year]]]]);
-        //debug($query2);die;
+            ->select(['pay_info.users__id','pay_info.users__nombre','pay_info.users__apellido','pay_info.pagos__mes','pay_info.pagos__año','pay_info.users__email','pay_info.users__monto_paga','pay_info.users__fecha_ing'])
+            ->from(['pay_info'=>$subquery])
+            ->where(['OR'=>['pay_info.pagos__mes IS NULL',['AND'=>['pay_info.pagos__mes <'=>$month,'pay_info.pagos__año >='=>$year]]]]);
         $result=$query2->toArray();
         $result=$this->calculateDebtAndMonths($result,$month,$year);
         $this->set(compact('result'));
@@ -172,12 +168,12 @@ class PagosController extends AppController
         $numberStudents=0;
         foreach ($result as $payment) {
             $numberStudents++;
-            if (is_null($payment['pagos']['mes'])){
-                $payment['pagos']['mes'] = 'No registra pagos';
+            if (is_null($payment['pay_info']['pagos__mes'])){
+                $payment['pay_info']['pagos__mes'] = 'No registra pagos';
                 $total_debt=$total_debt+$this->calculateDebt($payment,$month,$year);
             }else{
                 $total_debt=$total_debt+$this->calculateDebt($payment,$month,$year);
-                $payment['pagos']['mes']=$this->getMonthName($payment['pagos']['mes']);
+                $payment['pay_info']['pagos__mes']=$this->getMonthName($payment['pay_info']['pagos__mes']);
             }
         }
         $this->set(compact('total_debt'));
@@ -188,45 +184,51 @@ class PagosController extends AppController
     }
 
     public function calculateDebt($payment,$month,$year){
-        $fecha_pago = new \DateTime($year.'-'.$month.'-1');
-        if (strcmp($payment['pagos']['mes'],'No registra pagos')==0) {
+        $fecha_pago = new \DateTime($year.'-'.$month);
+        $fecha_pago->format('Y-M-D');
+        if (strcmp($payment['pay_info']['pagos__mes'],'No registra pagos')==0) {
             $fecha_ult_pago = new \DateTime($payment['users']['fecha_ing']);
             $diff=$fecha_ult_pago->diff($fecha_pago)->m + ($fecha_ult_pago->diff($fecha_pago)->y*12)+1;
         }else{
-            $fecha_ult_pago= new \DateTime($payment['pagos']['año'].'-'.$payment['pagos']['mes'].'-1');
+            $fecha_ult_pago= new \DateTime($payment['pay_info']['pagos__año'].'-'.$payment['pay_info']['pagos__mes'].'-1');
             $diff=$fecha_ult_pago->diff($fecha_pago)->m + ($fecha_ult_pago->diff($fecha_pago)->y*12);
         }
-        $debt=$diff*$payment['users']['monto_paga'];
-        $payment['pagos']['deuda']=$debt;
-        $payment['pagos']['meses_deuda']=$diff;
+        $debt=$diff*$payment['pay_info']['users__monto_paga'];
+        $payment['pay_info']['deuda']=$debt;
+        $payment['pay_info']['meses_deuda']=$diff;
         return $debt;
     }
 
-    public function sendEmailPayment($payment,$month,$year){
-        $user=json_decode($payment, true);
+    public function sendEmailPayment($debt_info){
+        parse_str($debt_info);
+        $payment=$debt_info['payment'];
+        //debug($payment);debug($debt_info);die;
+        //debug($payment);debug($user);die;
         $email = new Email();
         $email->transport('mailjet');
         $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
-                  ->to([$user['users']['email'] => 'My Website'])
+                  ->to([$payment['pay_info']['users__email'] => 'My Website'])
                   ->subject('Deuda Mensualidad')                   
-                  ->send('Estimado '.$user['users']['nombre'].":\n
-        Registras una morosidad de ".$user['pagos']['meses_deuda']." meses, por favor cancele a la brevedad su deuda.\n Ante cualquier duda escribanos a kenpo.martinez@gmail.com\n
+                  ->send('Estimado '.$payment['pay_info']['users__nombre'].' '.$payment['pay_info']['users__apellido'].":\n
+        Registras una morosidad de ".$payment['pay_info']['meses_deuda']." meses, por favor cancele a la brevedad su deuda.\n Ante cualquier duda escribanos a kenpo.martinez@gmail.com\n
         Saluda atte\n Kenpo Martinez");
         $this->autoRender = false;
         $this->Flash->success(__('Email de notificación enviado.'));
-        return $this->redirect('/pagos/displayStudentsDelay/'.$month.'/'.$year);
+        return $this->redirect('/pagos/displayStudentsDelay/'.$debt_info['month'].'/'.$debt_info['year']);
     }
     public function exportToExcel(){
-        $payments=$this->request->data['payments'];
+        $payments=$this->request->data['debt_info'];
         $path=WWW_ROOT .'files/csv/morosidades.csv';
         $file = fopen($path,"w");
         fputs($file,"sep=,\n");
-        $headers=array('nombre','email','mensualidad','fecha de ingreso','mes ultimo pago','año ultimo pago','deuda','meses de deuda');
+        $headers=array('id','nombre','apellido','mes último pago','año último pago','email','mensualidad','fecha de ingreso','deuda','meses de deuda');
         fputcsv($file,$headers);
         foreach ($payments as $payment) {
-            fputcsv($file,array_merge($payment['users'],$payment['pagos']));
+            fputcsv($file,array_merge($payment['pay_info']));
         }
         fclose($file);
+        $this->set(compact('path'));
+        $this->set('_serialize', 'path');
         $this->autoRender = false;
         $this->response->body($path);
         return $this->response;

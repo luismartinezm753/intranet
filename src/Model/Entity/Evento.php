@@ -29,4 +29,10 @@ class Evento extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getFullAddress(){
+        return $this->_properties['direccion'] . ', ' . $this->_properties['comuna'].', '.$this->_properties['region'];
+    }
+
+
 }
