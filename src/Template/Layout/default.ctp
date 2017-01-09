@@ -108,7 +108,7 @@ $cakeDescription = 'KenpoNet';
                     </li>
                     <li>
                         <?php echo $this->Html->link("Eventos", [
-                            'controller' => 'Eventos',
+                            'controller' => 'FullCalendar',
                             'action' => 'index'
                         ],['escape' => false]); ?>
                     </li>

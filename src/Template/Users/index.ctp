@@ -1,6 +1,6 @@
 <div class="users index large-10 medium-9 columns col-md-offset-1">
     <h1>Lista de Usuarios</h1>
-    <table cellpadding="0" cellspacing="0" class="table table-responsive">
+    <table cellpadding="0" cellspacing="0" class="table table-responsive table-striped table-bordered">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('username') ?></th>
@@ -18,7 +18,7 @@
             <td><?= h($user->full_name) ?></td>
             <td><?= h($user->telefono) ?></td>
             <td><?= h($user->rol) ?></td>
-            <td><?= h($user->fecha_ing) ?></td>
+            <td style="white-space: nowrap"><?= h($user->fecha_ing) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__(''), ['action' => 'view', $user->id],['class'=>'fa fa-search']) ?>
                 <?= $this->Html->link(__(''), ['action' => 'edit', $user->id],['class'=>'fa fa-pencil']) ?>

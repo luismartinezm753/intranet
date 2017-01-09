@@ -417,11 +417,14 @@ optgroup {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  width:100%;
 }
 
-td,
+td{
+  white-space: nowrap;
+}
 th {
-  padding: 0;
+  white-space: nowrap;
 }
 
 /*
