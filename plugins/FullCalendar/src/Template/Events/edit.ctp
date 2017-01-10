@@ -11,28 +11,23 @@
  */
 ?>
 
-<div class="actions small-12 medium-4 large-3 columns">
-	<h4>Actions</h4>
-	<ul class="no-bullet">
-		<li><?= $this->Html->link(__('View Event', true), ['action' => 'view', $event->id]); ?></li>
-		<li><?= $this->Html->link(__('Manage Events', true), ['action' => 'index']);?></li>
-		<li><?= $this->Html->link(__('Manage Event Types', true), ['controller' => 'event_types', 'action' => 'index']);?></li>
-		<li><?= $this->Html->link(__('Add an Event', true), ['action' => 'add']); ?></li>
-		<li><li><?= $this->Html->link(__('View Calendar', true), ['controller' => 'full_calendar']); ?></li>
-	</ul>
-</div>
-<div class="float-none form small-12 medium-8 large-9 columns">
+<div class="col-md-offset-1 col-lg-7">
 	<?= $this->Form->create($event, ['type' => 'file']);?>
 		<fieldset>
-	 		<legend><?= __('Edit Event'); ?></legend>
+	 		<legend><?= __('Editar Evento'); ?></legend>
 		<?php
 			echo $this->Form->input('id');
-			echo $this->Form->input('event_type_id');
-			echo $this->Form->input('title');
-			echo $this->Form->input('details');
-			echo $this->Form->input('start', ['interval' => 15, 'timeFormat' => 12]);
-			echo $this->Form->input('end', ['interval' => 15, 'timeFormat' => 12]);
-			echo $this->Form->input('all_day');
+			echo $this->Form->input('event_type_id',['label'=>'Tipo de Evento']);
+			echo $this->Form->input('title',['label'=>'Titulo']);
+			echo $this->Form->input('details',['label'=>'Detalles']);
+			echo $this->Form->input('start', ['interval' => 15, 'timeFormat' => 24,'label'=>'Inicio']);
+			echo $this->Form->input('end', ['interval' => 15, 'timeFormat' => 24,'label'=>'Termino']);
+			echo $this->Form->input('all_day',['label'=>'Todo el Día']);
+            echo $this->Form->input('price',['label'=>'Precio']);
+            echo $this->Form->input('region',['label'=>'Región']);
+            echo $this->Form->input('comuna',['label'=>'Comuna']);
+            echo $this->Form->input('address',['label'=>'Dirección']);
+            echo $this->Form->input('user_type',['label'=>'Tipo de Usuario','options'=>['Instructor', 'Monitor','Alumno']]);
 			echo $this->Form->input('status', ['options' => [
 						'Scheduled' => 'Scheduled','Confirmed' => 'Confirmed','In Progress' => 'In Progress',
 						'Rescheduled' => 'Rescheduled','Completed' => 'Completed'
@@ -41,6 +36,7 @@
 				);
 		?>
 		</fieldset>
-	<?= $this->Form->button(__('Submit', true));?>
+    <?= $this->Form->button(__('Guardar'),['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Cancelar'), ['action' => 'index'],['class'=>'btn btn-danger']) ?>
 	<?= $this->Form->end(); ?>
 </div>

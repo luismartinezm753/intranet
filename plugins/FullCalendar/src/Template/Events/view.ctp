@@ -43,6 +43,7 @@
             <div class="panel-body"><?= h($event->FullAddress); ?></div>
             <div id="map" style="height:350px;width:565px"></div>
         </div>
+        <?= $this->Html->link(__('Volver'), ['action' => 'index'],['class'=>'btn btn-primary']) ?>
     </div>
 </div>
 <script type="text/javascript">
@@ -55,7 +56,7 @@
         geocodeAddress(geocoder, map);
     }
     function geocodeAddress(geocoder, resultsMap) {
-        var address = "<?= h($evento->FullAddress)?>"
+        var address = "<?= h($event->FullAddress)?>"
         geocoder.geocode({'address': address}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 resultsMap.setCenter(results[0].geometry.location);

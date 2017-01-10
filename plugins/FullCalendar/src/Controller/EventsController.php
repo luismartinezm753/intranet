@@ -79,9 +79,10 @@ class EventsController extends FullCalendarAppController
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->data);
             if ($this->Events->save($event)) {
-                /*if ($this->request->data['notify_users']==1){
+                debug($this->request->data['notify_users']);
+                if ($this->request->data['notify_users']==1){
                     $this->notifyEvent($event);
-                }*/
+                }
                 $this->Flash->success(__('The event has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -183,7 +184,7 @@ class EventsController extends FullCalendarAppController
     public function notifyEvent($event){
         $users = TableRegistry::get('Users');
         $query = $users->find();
-        $query->where(['rol <='=>$event->user_rol]);
+        $query->where(['rol <='=>$event->user_type]);
         foreach ($query as $user){
             $this->sendEventEmail($event, $user);
         }
@@ -195,7 +196,7 @@ class EventsController extends FullCalendarAppController
      */
     public function sendEventEmail($event, $user)
     {
-        $url=$this->request->host().'/eventos/view/'.$event->id;
+        $url=Router::url(['controller' => 'Event', 'action' => 'view', 'id' => $event->id,'_full'=>true]);
         $email = new Email();
         $email->transport('mailjet');
         $email->viewVars(['event' => $event, 'user' => $user,'url'=>$url]);

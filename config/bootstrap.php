@@ -183,7 +183,6 @@ Plugin::load('Migrations');
 Plugin::load('UserPermissions', ['autoload' => true]);
 Plugin::load('Ajax');
 Plugin::load('FullCalendar', ['autoload' => true, 'bootstrap' => false, 'routes' => true]);
-
 // Only try to load DebugKit in development mode
 // Debug Kit should not be installed on a production system
 /*if (Configure::read('debug')) {

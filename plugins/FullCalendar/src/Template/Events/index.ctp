@@ -52,6 +52,8 @@
 			</tr>
 		<?php endforeach; ?>
 	</table>
+    <?= $this->Html->link(__('Agregar Evento'), ['action' => 'add'],['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Ver Calendario'), ['controller'=>'FullCalendar','action' => 'index'],['class'=>'btn btn-primary']) ?>
 </div>
 <div class="paginator small-12 small-centered medium-8 medium-centered large-6 large-centered columns text-center">
     <ul class="pagination">

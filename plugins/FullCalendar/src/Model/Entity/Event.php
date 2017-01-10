@@ -16,14 +16,7 @@ class Event extends Entity
      */
     protected $_accessible = [
         'id' => false,
-        'event_type_id' => true,
-        'title' => true,
-        'details' => true,
-        'start' => true,
-        'end' => true,
-        'all_day' => true,
-        'status' => true,
-        'active' => true,
+        '*' => true,
     ];
 
     protected function _getFullAddress(){

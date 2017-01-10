@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "662f119ccfa79429dd1713df0fece855",
-    "content-hash": "e752ba3da056139f434e9c9b42dc7601",
+    "hash": "a1fd4c28d544fcd19be0fcfcd96ac784",
+    "content-hash": "661d837cf8eb15a1e506cde748e6278c",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -128,16 +128,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.3.10",
+            "version": "3.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "135dd3b7e2dcd09a887f472ceb6bdee3fa39ada6"
+                "reference": "e5e3dfbc48e3db858fa2adb4dcd7957a688bc61d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/135dd3b7e2dcd09a887f472ceb6bdee3fa39ada6",
-                "reference": "135dd3b7e2dcd09a887f472ceb6bdee3fa39ada6",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/e5e3dfbc48e3db858fa2adb4dcd7957a688bc61d",
+                "reference": "e5e3dfbc48e3db858fa2adb4dcd7957a688bc61d",
                 "shasum": ""
             },
             "require": {
@@ -157,6 +157,7 @@
                 "cakephp/datasource": "self.version",
                 "cakephp/event": "self.version",
                 "cakephp/filesystem": "self.version",
+                "cakephp/form": "self.version",
                 "cakephp/i18n": "self.version",
                 "cakephp/log": "self.version",
                 "cakephp/orm": "self.version",
@@ -197,20 +198,20 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-12-12 03:46:25"
+            "time": "2016-12-27 21:17:03"
         },
         {
             "name": "cakephp/chronos",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "e08b87dba94a4a8d46cda6529806674ec55c9e6c"
+                "reference": "16753ad209f5b478dd35caadcd609104762fc157"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/e08b87dba94a4a8d46cda6529806674ec55c9e6c",
-                "reference": "e08b87dba94a4a8d46cda6529806674ec55c9e6c",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/16753ad209f5b478dd35caadcd609104762fc157",
+                "reference": "16753ad209f5b478dd35caadcd609104762fc157",
                 "shasum": ""
             },
             "require": {
@@ -252,26 +253,26 @@
                 "datetime",
                 "time"
             ],
-            "time": "2016-12-09 06:28:06"
+            "time": "2017-01-09 02:11:45"
         },
         {
             "name": "cakephp/migrations",
-            "version": "1.6.4",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "a7d36f1e3897f05a4d70eef82ce188d74befa8cc"
+                "reference": "f2a5e2915f8924bd36979a1001edeef7cd455f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/a7d36f1e3897f05a4d70eef82ce188d74befa8cc",
-                "reference": "a7d36f1e3897f05a4d70eef82ce188d74befa8cc",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/f2a5e2915f8924bd36979a1001edeef7cd455f89",
+                "reference": "f2a5e2915f8924bd36979a1001edeef7cd455f89",
                 "shasum": ""
             },
             "require": {
                 "cakephp/cakephp": "~3.1",
                 "php": ">=5.4",
-                "robmorgan/phinx": "0.5.3"
+                "robmorgan/phinx": "0.6.5"
             },
             "require-dev": {
                 "cakephp/bake": "@stable",
@@ -302,7 +303,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2016-11-14 21:54:46"
+            "time": "2017-01-07 16:45:31"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -346,16 +347,16 @@
         },
         {
             "name": "friendsofcake/bootstrap-ui",
-            "version": "v0.5.1",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/bootstrap-ui.git",
-                "reference": "8da53d632361c5cfe39dc51e0418614be627f16d"
+                "reference": "aebc4794d63c4e2b2956de7d500746099776fbf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/bootstrap-ui/zipball/8da53d632361c5cfe39dc51e0418614be627f16d",
-                "reference": "8da53d632361c5cfe39dc51e0418614be627f16d",
+                "url": "https://api.github.com/repos/FriendsOfCake/bootstrap-ui/zipball/aebc4794d63c4e2b2956de7d500746099776fbf4",
+                "reference": "aebc4794d63c4e2b2956de7d500746099776fbf4",
                 "shasum": ""
             },
             "require": {
@@ -393,7 +394,7 @@
                 "cakephp",
                 "twitter"
             ],
-            "time": "2016-09-23 06:49:59"
+            "time": "2017-01-02 09:41:34"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -548,16 +549,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.5.3",
+            "version": "v0.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "4e7fee7792f4bf3dbf55ee29001850ba26c86a88"
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/4e7fee7792f4bf3dbf55ee29001850ba26c86a88",
-                "reference": "4e7fee7792f4bf3dbf55ee29001850ba26c86a88",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/6943cb4bb78bf9d3964967a032220b7c793b97b7",
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7",
                 "shasum": ""
             },
             "require": {
@@ -567,7 +568,7 @@
                 "symfony/yaml": "~2.8|~3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^3.7|^4.0|^5.0"
+                "phpunit/phpunit": "^4.8.26|^5.0"
             },
             "bin": [
                 "bin/phinx"
@@ -584,15 +585,20 @@
             ],
             "authors": [
                 {
-                    "name": "Rob Morgan",
-                    "email": "robbym@gmail.com",
-                    "homepage": "http://robmorgan.id.au",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Woody Gilk",
                     "email": "woody.gilk@gmail.com",
                     "homepage": "http://shadowhand.me",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Rob Morgan",
+                    "email": "robbym@gmail.com",
+                    "homepage": "https://robmorgan.id.au",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
                     "role": "Developer"
                 }
             ],
@@ -605,7 +611,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2016-03-07 14:09:22"
+            "time": "2016-10-27 10:16:12"
         },
         {
             "name": "symfony/config",
@@ -948,16 +954,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.3.7",
+            "version": "1.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "969ff423d3f201da3ff718a5831bb999bb0669b0"
+                "reference": "d9c1fd7c4b024179d49faf367da544b4eef7cfe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/969ff423d3f201da3ff718a5831bb999bb0669b0",
-                "reference": "969ff423d3f201da3ff718a5831bb999bb0669b0",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/d9c1fd7c4b024179d49faf367da544b4eef7cfe8",
+                "reference": "d9c1fd7c4b024179d49faf367da544b4eef7cfe8",
                 "shasum": ""
             },
             "require": {
@@ -969,7 +975,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6 || ^5.5",
-                "squizlabs/php_codesniffer": "^2.3.1"
+                "zendframework/zend-coding-standard": "~1.0.0"
             },
             "type": "library",
             "extra": {
@@ -994,22 +1000,22 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-10-11 13:25:21"
+            "time": "2017-01-05 21:44:28"
         }
     ],
     "packages-dev": [
         {
             "name": "cakephp/bake",
-            "version": "1.2.9",
+            "version": "1.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "e0bf5c06712e21b20e9503e3d04b1cb8011499e6"
+                "reference": "f3a149a21da2d49afd86119ac8ab5683f9062e16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/e0bf5c06712e21b20e9503e3d04b1cb8011499e6",
-                "reference": "e0bf5c06712e21b20e9503e3d04b1cb8011499e6",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/f3a149a21da2d49afd86119ac8ab5683f9062e16",
+                "reference": "f3a149a21da2d49afd86119ac8ab5683f9062e16",
                 "shasum": ""
             },
             "require": {
@@ -1043,64 +1049,7 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2016-12-20 01:46:26"
-        },
-        {
-            "name": "cakephp/debug_kit",
-            "version": "3.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/7e806572be46795664fe97478a0dc1b22bdf1a2d",
-                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/cakephp": ">=3.1.0 <4.0",
-                "cakephp/plugin-installer": "*",
-                "jdorn/sql-formatter": "~1.2"
-            },
-            "require-dev": {
-                "cakephp/cakephp-codesniffer": "dev-master",
-                "phpunit/phpunit": "4.1.*"
-            },
-            "suggest": {
-                "ext-sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
-            },
-            "type": "cakephp-plugin",
-            "autoload": {
-                "psr-4": {
-                    "DebugKit\\": "src",
-                    "DebugKit\\Test\\Fixture\\": "tests\\Fixture"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Story",
-                    "homepage": "http://mark-story.com",
-                    "role": "Author"
-                },
-                {
-                    "name": "CakePHP Community",
-                    "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
-                }
-            ],
-            "description": "CakePHP Debug Kit",
-            "homepage": "https://github.com/cakephp/debug_kit",
-            "keywords": [
-                "cakephp",
-                "debug",
-                "kit"
-            ],
-            "time": "2016-09-17 01:43:23"
+            "time": "2017-01-04 07:52:22"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1221,56 +1170,6 @@
                 }
             ],
             "time": "2015-04-20 18:58:01"
-        },
-        {
-            "name": "jdorn/sql-formatter",
-            "version": "v1.2.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jdorn/sql-formatter.git",
-                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/64990d96e0959dff8e059dfcdc1af130728d92bc",
-                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Dorn",
-                    "email": "jeremy@jeremydorn.com",
-                    "homepage": "http://jeremydorn.com/"
-                }
-            ],
-            "description": "a PHP SQL highlighting library",
-            "homepage": "https://github.com/jdorn/sql-formatter/",
-            "keywords": [
-                "highlight",
-                "sql"
-            ],
-            "time": "2014-01-12 16:20:24"
         },
         {
             "name": "nikic/php-parser",

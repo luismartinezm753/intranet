@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d7c638708d97cc9e79b95ea795b25aca",
-    "content-hash": "1704bcbc5b7fa1107604ba8553685846",
+    "hash": "11c23db3372d49e47082189c2c1f8011",
+    "content-hash": "47da7f4a861bf33415da5c1bdd6de30e",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -125,6 +125,51 @@
                 "localization"
             ],
             "time": "2014-08-24 00:00:00"
+        },
+        {
+            "name": "cakephp/acl",
+            "version": "0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakephp/acl.git",
+                "reference": "2ea8277dd60d3f03e4e6d5891d229c14fb331bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakephp/acl/zipball/2ea8277dd60d3f03e4e6d5891d229c14fb331bb0",
+                "reference": "2ea8277dd60d3f03e4e6d5891d229c14fb331bb0",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^3.1.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^2.0",
+                "phpunit/phpunit": ">= 4.2"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Acl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CakePHP Community",
+                    "homepage": "https://github.com/cakephp/acl/graphs/contributors"
+                }
+            ],
+            "description": "Acl Plugin for CakePHP 3.x framework",
+            "homepage": "http://cakephp.org",
+            "keywords": [
+                "acl",
+                "cakephp"
+            ],
+            "time": "2016-08-24 09:27:47"
         },
         {
             "name": "cakephp/cakephp",
@@ -256,20 +301,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-ajax.git",
-                "reference": "14915af3a721f60bc1bad350422f1fe620c20e5e"
+                "reference": "10589034529e382391dfda7bbff10bdf3c4f418a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-ajax/zipball/e9e79a45ceb14808a55c793baa94392b8ed9b4cd",
-                "reference": "14915af3a721f60bc1bad350422f1fe620c20e5e",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-ajax/zipball/10589034529e382391dfda7bbff10bdf3c4f418a",
+                "reference": "10589034529e382391dfda7bbff10bdf3c4f418a",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": "~3.0",
-                "php": ">=5.4"
+                "cakephp/cakephp": "~3.2",
+                "php": ">=5.5"
             },
             "require-dev": {
-                "dereuromark/cakephp-tools": "dev-master"
+                "dereuromark/cakephp-tools": "dev-master",
+                "fig-r/psr2r-sniffer": "dev-master"
             },
             "type": "cakephp-plugin",
             "autoload": {
@@ -297,7 +343,7 @@
                 "plugin",
                 "view"
             ],
-            "time": "2016-01-12 22:58:01"
+            "time": "2016-09-21 22:03:23"
         },
         {
             "name": "friendsofcake/bootstrap-ui",

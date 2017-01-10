@@ -65,6 +65,18 @@ class EventsTable extends Table
         $validator
             ->requirePresence('status', 'create')
             ->notEmpty('status');
+        $validator
+            ->requirePresence('region','create')
+            ->notEmpty('region');
+        $validator
+            ->requirePresence('comuna','create')
+            ->notEmpty('comuna');
+        $validator
+            ->requirePresence('address','create')
+            ->notEmpty('address');
+        $validator
+            ->add('price', 'valid', ['rule' => 'numeric'])
+            ->add('price', 'gtzero', ['rule'=>['comparison','>=',0]]);
 
         return $validator;
     }
