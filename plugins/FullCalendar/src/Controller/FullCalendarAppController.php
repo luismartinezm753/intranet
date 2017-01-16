@@ -18,4 +18,10 @@ use App\Controller\AppController;
 class FullCalendarAppController extends AppController
 {
 	public $helpers = ['Html', 'Form'];
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
 }

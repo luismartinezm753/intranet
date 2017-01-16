@@ -14,10 +14,10 @@
             <td><?= h($grado->grado) ?></td>
             <td><?= $this->Number->format($grado->duracion_mes) ?></td>
             <td class="Acciones">
-                <?= $this->Html->link(__('Ver'), ['action' => 'view', $grado->id]) ?>
-                <?php if ($this->request->session()->read('User.isAdmin')==1):?>
-                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $grado->id]) ?>
-                <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $grado->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grado->id)]) ?>
+                <?= $this->Html->link(__(''), ['action' => 'view', $grado->id],['class'=>'fa fa-search']) ?>
+                <?php if ($this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')):?>
+                    <?= $this->Html->link(__(''), ['action' => 'edit', $grado->id],['class'=>'fa fa-pencil']) ?>
+                    <?= $this->Form->postLink(__(''), ['action' => 'delete', $grado->id], ['class'=>'fa fa-trash'],['confirm' => __('¿Está seguro que desea eliminar al usuario {0}?', $grado->nombre)]) ?>
                 <?php endif; ?>
             </td>
         </tr>
@@ -33,7 +33,7 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-    <?php if ($this->request->session()->read('User.isAdmin')==1):?>
+    <?php if ($this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')):?>
     <?= $this->Html->link(_('Agregar Grado'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
     <?= $this->Html->link(_('Ver Alumnos para Examen'),['controller'=>'Users','action' => 'studentsToExam'],['class'=>'btn btn-primary']) ?>
     <?php endif; ?>

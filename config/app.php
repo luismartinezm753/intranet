@@ -1,6 +1,19 @@
 <?php
+define('ROLE_ADMIN',0);
+define('ROLE_DIRECTOR',1);
+define('ROLE_INSTRUCTOR', 2);
+define('ROLE_MONITOR', 3);
+define('ROLE_STUDENT', 4);
+
 $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
 return [
+    'Roles' => [
+        'admin' => ROLE_ADMIN,
+        'director' => ROLE_DIRECTOR,
+        'instructor' => ROLE_INSTRUCTOR,
+        'monitor'=>ROLE_MONITOR,
+        'estudiante'=>ROLE_STUDENT
+    ],
     /**
      * Debug Level:
      *

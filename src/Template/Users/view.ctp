@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Rol') ?></th>
-                        <td><?= h($user->rol) ?></td>
+                        <td><?= h($user->role_id) ?></td>
                     </tr>
                     <tr>
                         <th><?= __('Grado') ?></th>
@@ -50,7 +50,7 @@
                         <th class="subheader"><?= __('Fecha Nacimiento') ?></th>
                         <td><?= h($user->fecha_nac) ?></td>
                     </tr>
-                    <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                    <?php if( $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')): ?>
                         <tr>
                             <th class="subheader"><?= __('Observaciones de salud') ?></th>
                             <td><?= $this->Text->autoParagraph(h($user->nota_salud)) ?></td>
@@ -128,7 +128,7 @@
 
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['controller' => 'Pagos', 'action' => 'view', $pagos->id]) ?>
-                    <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                    <?php if(  $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director') ): ?>
                     <?= $this->Html->link(__('Editar'), ['controller' => 'Pagos', 'action' => 'edit', $pagos->id]) ?>
 
                     <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Pagos', 'action' => 'delete', $pagos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagos->id)]) ?>
@@ -172,7 +172,7 @@
 
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['controller' => 'Pedidos', 'action' => 'view', $pedidos->id]) ?>
-                    <?php if( isset($is_admin) && $is_admin == 1 ): ?>
+                    <?php if(  $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')): ?>
                     <?= $this->Html->link(__('Editar'), ['controller' => 'Pedidos', 'action' => 'edit', $pedidos->id]) ?>
 
                     <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Pedidos', 'action' => 'delete', $pedidos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pedidos->id)]) ?>

@@ -27,6 +27,13 @@ class EventsController extends FullCalendarAppController
 {
     public $name = 'Events';
     public $paginate = ['limit' => 15];
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
+
     /**
      * Index method
      *
@@ -34,6 +41,7 @@ class EventsController extends FullCalendarAppController
      */
     public function index()
     {
+        $user= $this->Auth->user();
         $events = $this->Events->find('all')->contain(['EventTypes']);
         if ($this->request->is('requested')) {
             $this->paginate = [
@@ -139,9 +147,10 @@ class EventsController extends FullCalendarAppController
 
     // The feed action is called from "webroot/js/ready.js" to get the list of events (JSON)
     public function feed($id=null) {
+        $user=$this->Auth->user();
         $this->viewBuilder()->layout('ajax');
         $vars = $this->request->query([]);
-        $conditions = ['UNIX_TIMESTAMP(start) >=' => $vars['start'], 'UNIX_TIMESTAMP(start) <=' => $vars['end']];
+        $conditions = ['UNIX_TIMESTAMP(start) >=' => $vars['start'], 'UNIX_TIMESTAMP(start) <=' => $vars['end'],'user_type >='=>$user['role_id']];
         $events = $this->Events->find('all', $conditions)->contain(['EventTypes']);
         foreach($events as $event) {
             if($event->all_day === 1) {
@@ -207,4 +216,5 @@ class EventsController extends FullCalendarAppController
             ->subject('Nuevo Evento: '.$event->nombre)
             ->send();
     }
+
 }

@@ -110,8 +110,4 @@ class VideosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-
-    public function isAuthorized($user){
-        return true;
-    }
 }

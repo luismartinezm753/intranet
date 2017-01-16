@@ -49,19 +49,17 @@ class AppController extends Controller
         $this->loadComponent('Csrf');
         $this->loadComponent('Auth', [
             'authError'=>'No estas autorizado a ver esta página',
-            'authorize' => ['Controller'],
+            'flash' => [
+                'element' => 'error',
+                'key' => 'auth'
+            ],
             'loginRedirect' => [
                 'controller' => 'Users',
                 'action' => 'index'
             ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
             'unauthorizedRedirect'=>$this->request->session()->read('lastUrl'),
-            'flash' => [
-                'element' => 'error',
-                'key' => 'auth'
+            'authorize' => [
+                'TinyAuth.Tiny'
             ]
         ]);
     }
@@ -77,12 +75,7 @@ class AppController extends Controller
 
     public function isAuthorized($user)
     {
-        // Admin can access every action
-        if (isset($user['rol']) && $user['rol'] === 0) {
-            return true;
-        }
-        // Default deny
-        return false;
+        return true;
     }
 
     public function getRole(){

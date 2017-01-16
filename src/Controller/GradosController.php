@@ -18,6 +18,13 @@ class GradosController extends AppController
         'UserPermissions.UserPermissions'
     );
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
+
     /**
      * Index method
      *
@@ -147,16 +154,4 @@ class GradosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function isAuthorized($user){
-        $action = $this->request->params['action'];
-        if ($user['rol']=='Instructor') {
-            return true;
-        }else if ($user['rol']!='Instructor') {
-            if (in_array($action, ['view','downloadFile','index'])) {
-                return true;
-            }
-            return false;
-        }
-        return parent::isAuthorized($user);
-    }
 }

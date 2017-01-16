@@ -12,7 +12,7 @@
                     echo $this->Form->input('username',['label'=>'Nombre de Usuario']);
                     echo $this->Form->input('email');
                     echo $this->Form->input('telefono');
-                    echo $this->Form->input('rol', ['options' =>['Instructor', 'Monitor','Alumno']]);
+                    echo $this->Form->input('rol_id', ['options' =>['Director','Instructor', 'Monitor','Alumno']]);
                     echo $this->Form->input('fecha_ing',['label'=>'Fecha de Ingreso']);
                     echo $this->Form->input('profesion');
                     echo $this->Form->input('grado_id', ['options' => $grados]);

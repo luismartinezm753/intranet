@@ -105,5 +105,4 @@ jQuery(document).ready(function ($) {
             $.post(url, function (data){});
         }
     })
-    alert('Hola');
 });

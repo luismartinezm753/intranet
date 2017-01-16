@@ -9,7 +9,7 @@
                 'maxYear' => date('Y') - 4 ]);
             echo $this->Form->input('email');
             echo $this->Form->input('telefono');
-            if( isset($is_admin) && $is_admin == 1 ) {
+            if( $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')) {
                 echo $this->Form->input('username',['label'=>'Nombre de Usuario']);
                 echo $this->Form->input('rol', ['options' =>['Alumno'=>'Alumno', 'Monitor'=>'Monitor','Instructor'=>'Instructor']]);
                 echo $this->Form->input('fecha_ing',['label'=>'Fecha de Ingreso']);

@@ -8,6 +8,9 @@ use Cake\Network\Email\Email;
 use Cake\Validation\Validator;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Cake\Core\Configure\Engine\PhpConfig;
 
 /**
  * Users Controller
@@ -24,6 +27,7 @@ class UsersController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
     }
 
     /**
@@ -52,12 +56,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        if($this->getRole() == 0) {
-            // set the view variable here
-            $this->set('is_admin', 1);
-        }else{
-            $this->set('is_admin',0);
-        }
+        $this->checkOwner($id,'view');
         $user = $this->Users->get($id, [
             'contain' => ['Grados', 'Clases', 'ConveniosUsuarios', 'Desvinculaciones', 'HistorialAlumnos', 'Pagos', 'Pedidos']
         ]);
@@ -87,12 +86,6 @@ class UsersController extends AppController
      */
     public function add()
     {
-        if($this->getRole() == 0) {
-            // set the view variable here
-            $this->set('is_admin', 1);
-        }else{
-            $this->set('is_admin',0);
-        }
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -181,6 +174,23 @@ class UsersController extends AppController
                   ->send();
     }
 
+    public function checkOwner($id,$method){
+        if ($this->AuthUser->hasRole('estudiante')){
+            $isMe = $this->AuthUser->isMe($id);
+            if (!$isMe){
+                $this->Flash->error(__('No puedes ver esta página!'));
+                return $this->redirect(Router::url(['controller' => 'Users', 'action' => $method,$this->AuthUser->id()],true ));
+            }
+        }
+    }
+    public function checkLevel($id,$method){
+        $user = $this->Users->get($id);
+        if ($this->AuthUser->roles()<$user->id){
+            $this->Flash->error(__('No puedes ver esta página!'));
+            return $this->redirect(Router::url(['controller' => 'Users', 'action' => $method,$this->AuthUser->id()],true ));
+        }
+    }
+
     /**
      * Edit method
      *
@@ -190,12 +200,8 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        if($this->getRole() == 0) {
-            // set the view variable here
-            $this->set('is_admin', 1);
-        }else{
-            $this->set('is_admin',0);
-        }
+        $this->checkOwner($id,'edit');
+        $this->checkLevel($id,'edit');
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
@@ -248,7 +254,7 @@ class UsersController extends AppController
                     $this->Flash->error(__('Su cuenta no esta Activa!'));
                 }else{
                     $this->Auth->setUser($user);
-                    if ($this->Auth->user('rol') != 0) {
+                    if ($this->Auth->user('rol') >= Configure::read('Roles.instructor')) {
                         $this->request->session()->write('User.isAdmin', 0);
                         return $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{
@@ -343,29 +349,9 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function isAuthorized($user)
-    {
-        $current_user=$this->Auth->user();
-        if ($current_user['rol']==0) {
-            return true;
-        }else if ($current_user['rol']!=0) {
-            $action = $this->request->params['action'];
-            if (!empty($this->request->params['pass'])){
-                $user=$this->Users->get($this->request->params['pass']);
-            }
-            if (in_array($action, ['view'])) {
-                if ($current_user['id'] == $user['id'] || $current_user['rol']!='Alumno'){
-                    return true;
-                }
-            }
-            if (in_array($action, ['edit'])){
-                if ($current_user['id'] == $user['id']){
-                    return true;
-                }
-            }
-            return false;
-        }
-        return parent::isAuthorized($user);
+    public function isAuthorized($user){
+        debug($this->request);die;
+
     }
 
     public function beforeFilter(Event $event)

@@ -274,9 +274,9 @@ class PagosController extends AppController
     public function isAuthorized($user)
     {
         $userid=$this->Auth->user('id');
-        if ($user['rol']=='Instructor') {
+        if ($user['rol']==0) {
             return true;
-        }else if ($user['rol']!='Instructor') {
+        }else if ($user['rol']!=0) {
             $action = $this->request->params['action'];
             if (in_array($action, ['view'])) {
                 if (!empty($this->request->params['pass'])){

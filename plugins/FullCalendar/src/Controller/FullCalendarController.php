@@ -20,7 +20,7 @@ class FullCalendarController extends FullCalendarAppController
 {
 	public $name = 'FullCalendar';
 
-	public function index() {
+    public function index() {
 
 	}
 
