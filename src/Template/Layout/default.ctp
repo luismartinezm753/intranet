@@ -84,7 +84,7 @@ $cakeDescription = 'KenpoNet';
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <?php if (!$this->AuthUser->hasRole('estudiante')):?>
+                    <?php if (!($this->AuthUser->hasRole(ROLE_STUDENT))):?>
                         <li>
                             <?php echo $this->Html->link("Usuarios", [
                                 'controller' => 'users',
@@ -99,15 +99,7 @@ $cakeDescription = 'KenpoNet';
                                 $this->AuthUser->id()
                             ],['escape' => false]); ?>
                         </li>
-                    <?php endif ?>
-                    <li>
-                        <?php if (!$this->AuthUser->hasRole('estudiante')):?>
-                            <?php echo $this->Html->link("Pagos", [
-                                'controller' => 'pagos',
-                                'action' => 'index'
-                            ],['escape' => false]); ?>
-                        <?php endif ?>
-                    </li>
+                    <?php endif; ?>
                     <li>
                         <?php echo $this->Html->link("Grados", [
                             'controller' => 'Grados',
@@ -120,6 +112,14 @@ $cakeDescription = 'KenpoNet';
                             'action' => 'index'
                         ],['escape' => false]); ?>
                     </li>
+                    <?php if (!$this->AuthUser->hasRole(ROLE_STUDENT)):?>
+                        <li>
+                            <?php echo $this->Html->link("Pagos", [
+                                'controller' => 'pagos',
+                                'action' => 'index'
+                            ],['escape' => false]); ?>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </div>
             <?php endif; ?>

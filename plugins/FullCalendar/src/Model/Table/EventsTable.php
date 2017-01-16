@@ -93,4 +93,10 @@ class EventsTable extends Table
         $rules->add($rules->existsIn(['event_type_id'], 'EventTypes'));
         return $rules;
     }
+
+    public function findUserType(Query $query, array $options)
+    {
+        $user = $options['user'];
+        return $query->where(['user_type >=' => $user['role_id']]);
+    }
 }

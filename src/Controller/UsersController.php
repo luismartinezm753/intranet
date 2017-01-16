@@ -183,6 +183,7 @@ class UsersController extends AppController
             }
         }
     }
+
     public function checkLevel($id,$method){
         $user = $this->Users->get($id);
         if ($this->AuthUser->roles()<$user->id){

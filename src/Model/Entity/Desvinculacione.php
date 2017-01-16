@@ -17,8 +17,6 @@ class Desvinculacione extends Entity
     protected $_accessible = [
         'user_id' => true,
         'fecha_egreso' => true,
-        'motivo' => true,
-        'descripcion' => true,
         'monto_deuda' => true,
         'observaciones' => true,
         'user' => true,

@@ -6,6 +6,7 @@ use App\Controller\AppController;
 use Cake\I18n\Time;
 use Cake\Network\Email\Email;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /** Include path **/
 ini_set('include_path', ini_get('include_path').';../Classes/');
@@ -22,6 +23,7 @@ class PagosController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
     }
     
     /**
@@ -47,6 +49,7 @@ class PagosController extends AppController
      */
     public function view($id = null)
     {
+        $this->checkOwner($id);
         $pago = $this->Pagos->get($id, [
             'contain' => ['Users']
         ]);
@@ -202,8 +205,6 @@ class PagosController extends AppController
     public function sendEmailPayment($debt_info){
         parse_str($debt_info);
         $payment=$debt_info['payment'];
-        //debug($payment);debug($debt_info);die;
-        //debug($payment);debug($user);die;
         $email = new Email();
         $email->transport('mailjet');
         $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
@@ -271,23 +272,14 @@ class PagosController extends AppController
         $this->set('_serialize', ['pays','pagos_user']);
     }
 
-    public function isAuthorized($user)
-    {
-        $userid=$this->Auth->user('id');
-        if ($user['rol']==0) {
-            return true;
-        }else if ($user['rol']!=0) {
-            $action = $this->request->params['action'];
-            if (in_array($action, ['view'])) {
-                if (!empty($this->request->params['pass'])){
-                    $pago=$this->Pagos->get($this->request->params['pass']);
-                }
-                if ($userid == $pago['user_id']){
-                    return true;
-                }
+    public function checkOwner($id){
+        if ($this->AuthUser->hasRole('estudiante')){
+            $pay=$this->Pagos->get($id);
+            $isMe = $this->AuthUser->isMe($pay['user_id']);
+            if (!$isMe){
+                $this->Flash->error(__('No puedes ver esta página!'));
+                return $this->redirect(Router::url(['controller' => 'Users', 'action' => 'view',$this->AuthUser->id()],true ));
             }
-            return false;
         }
-        return parent::isAuthorized($user);
     }
 }

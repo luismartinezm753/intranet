@@ -46,14 +46,6 @@ class DesvinculacionesTable extends Table
         $validator
             ->add('fecha_egreso', 'valid', ['rule' => 'date'])
             ->allowEmpty('fecha_egreso');
-            
-        $validator
-            ->add('motivo', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('motivo');
-            
-        $validator
-            ->allowEmpty('descripcion');
-            
         $validator
             ->add('monto_deuda', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('monto_deuda');

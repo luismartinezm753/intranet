@@ -127,11 +127,10 @@
                 <td><?= h($pagos->forma_pago) ?></td>
 
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['controller' => 'Pagos', 'action' => 'view', $pagos->id]) ?>
+                    <?= $this->Html->link(__(''), ['controller'=>'Pagos','action' => 'view', $pagos->id],['class'=>'fa fa-search']) ?>
                     <?php if(  $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director') ): ?>
-                    <?= $this->Html->link(__('Editar'), ['controller' => 'Pagos', 'action' => 'edit', $pagos->id]) ?>
-
-                    <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Pagos', 'action' => 'delete', $pagos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagos->id)]) ?>
+                        <?= $this->Html->link(__(''), ['controller'=>'Pagos','action' => 'edit', $pagos->id],['class'=>'fa fa-pencil']) ?>
+                        <?= $this->Form->postLink(__(''), ['controller'=>'Pagos','action' => 'delete', $pagos->id], ['class'=>'fa fa-trash'],['confirm' => __('¿Está seguro que desea eliminar el pago del {0}-{1}?', $pagos->mes,$pagos->año)]) ?>
                     <?php endif; ?>
                 </td>
             </tr>

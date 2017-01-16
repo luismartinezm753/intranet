@@ -43,7 +43,10 @@
             <div class="panel-body"><?= h($event->FullAddress); ?></div>
             <div id="map" style="height:350px;width:565px"></div>
         </div>
-        <?= $this->Html->link(__('Volver'), ['action' => 'index'],['class'=>'btn btn-primary']) ?>
+        <?= $this->Html->link(__('Volver'), ['controller'=>'FullCalendar','action' => 'index'],['class'=>'btn btn-primary']) ?>
+        <?php if( $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')):?>
+            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $event->id],['class'=>'btn btn-primary']) ?>
+        <?php endif;?>
     </div>
 </div>
 <script type="text/javascript">

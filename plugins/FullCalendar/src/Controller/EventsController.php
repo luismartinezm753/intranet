@@ -150,8 +150,9 @@ class EventsController extends FullCalendarAppController
         $user=$this->Auth->user();
         $this->viewBuilder()->layout('ajax');
         $vars = $this->request->query([]);
-        $conditions = ['UNIX_TIMESTAMP(start) >=' => $vars['start'], 'UNIX_TIMESTAMP(start) <=' => $vars['end'],'user_type >='=>$user['role_id']];
-        $events = $this->Events->find('all', $conditions)->contain(['EventTypes']);
+        $conditions = ['UNIX_TIMESTAMP(start) >=' => $vars['start'], 'UNIX_TIMESTAMP(start) <=' => $vars['end'],'user_type >=' =>$user['role_id']];
+        $events = $this->Events->find('usertype', ['user'=>$user])->contain(['EventTypes']);
+        //debug($events);die;
         foreach($events as $event) {
             if($event->all_day === 1) {
                 $allday = true;

@@ -15,9 +15,11 @@
         <div id="calendar"></div>
     </div>
     <div class="actions">
-        <?= $this->Html->link(__('Agregar Evento', true), ['controller' => 'events', 'action' => 'add'],['class'=>'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Administrar Eventos', true), ['controller' => 'events'],['class'=>'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Administrar tipos de Eventos', true), ['controller' => 'event_types'],['class'=>'btn btn-primary']) ?>
+        <?php if( $this->AuthUser->hasRole('instructor') || $this->AuthUser->hasRole('director')):?>
+            <?= $this->Html->link(__('Agregar Evento', true), ['controller' => 'events', 'action' => 'add'],['class'=>'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Administrar Eventos', true), ['controller' => 'events'],['class'=>'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Administrar tipos de Eventos', true), ['controller' => 'event_types'],['class'=>'btn btn-primary']) ?>
+        <?php endif;?>
     </div>
 </div>
 

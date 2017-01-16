@@ -5,11 +5,15 @@
             <tbody>
                 <tr>
                     <th class="subheader"><?= __('Usuario') ?></th>
-                    <td><?= $pago->has('user') ? $this->Html->link($pago->user->nombre, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?></td>
+                    <td><?= $pago->has('user') ? $this->Html->link($pago->user->fullName, ['controller' => 'Users', 'action' => 'view', $pago->user->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th class="subheader"><?= __('Mes') ?></th>
                     <td><?= h($pago->mes) ?></td>
+                </tr>
+                <tr>
+                    <th class="subheader"><?= __('Año') ?></th>
+                    <td><?= $this->Text->autoParagraph(h($pago->año)) ?></td>
                 </tr>
                 <tr>
                     <th class="subheader"><?= __('Forma Pago') ?></th>
@@ -23,11 +27,7 @@
                     <th class="subheader"><?= __('Fecha Pago') ?></th>
                     <td><?= h($pago->fecha_pago) ?></td>
                 </tr>
-                <tr>
-                    <th class="subheader"><?= __('Año') ?></th>
-                    <td><?= $this->Text->autoParagraph(h($pago->año)) ?></td>
-                </tr>
-                <?php if ($this->request->session()->read('User.isAdmin')==1):?>
+                <?php if (!$this->AuthUser->hasRole('estudiante')):?>
                     <tr>
                         <th class="subheader"><?= __('Observacion') ?></th>
                         <td><?= h($pago->observacion) ?></td>
@@ -35,6 +35,6 @@
                 <?php endif;?>
             </tbody>
         </table>
+        <?= $this->AuthUser->postLink('Editar', ['action' => 'edit', $pago->id],['class'=>'btn btn-primary']) ?>
     </div>
-    
 </div>
