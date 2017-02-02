@@ -34,5 +34,7 @@ class AppView extends View
     {
         $this->initializeUI(['layout'=>false]);
         $this->loadHelper('TinyAuth.AuthUser');
+        //$this->loadHelper('Bootstrap.BootstrapModal');
+        //$this->loadHelper('Bootstrap.BootstrapForm');
     }
 }

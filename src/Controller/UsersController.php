@@ -23,6 +23,7 @@ class UsersController extends AppController
         'UserPermissions.UserPermissions'
     );
 
+
     public function initialize()
     {
         parent::initialize();
@@ -66,12 +67,6 @@ class UsersController extends AppController
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
         $this->set('estado',$this->getState($user->estado));
-        if($this->getRole() == 'Instructor') {
-            // set the view variable here
-            $this->set('is_admin', 1);
-        }else{
-            $this->set('is_admin',0);
-        }
     }
 
     public function getState($state){
@@ -134,11 +129,42 @@ class UsersController extends AppController
      */
     public function archiveUser($id){
         $user=$this->Users->get($id);
+        $desvinculacionTable = TableRegistry::get('Desvinculaciones');
         $user->set('estado',0);
+        $desvinculado=$desvinculacionTable->newEntity($this->request->data);
+        $desvinculado->set('user_id',$id);
+        #debug($this->request);die;
+        if ($this->request->data('calculate_debt')==0){
+            $desvinculado->set('monto_deuda',$this->calculateDebt($user));
+        }
+        $desvinculacionTable->save($desvinculado);
         $this->Users->save($user);
         $this->autoRender=false;
         $this->Flash->success(__('El usuario ha sido archivado'));
         return $this->redirect(['action' => 'index']);
+    }
+    public function calculateDebt($user){
+        $pagosTable = TableRegistry::get('Pagos');
+        $month=date('m');
+        $year=date('Y');
+        $total_debt=0;
+        $query=$pagosTable->find();
+        $query->select(['max_pago'=>$query->func()->max('pagos.mes'),'pagos.año'])
+                ->where(['OR'=>['AND'=>['mes >='=>$month,'año <='=>$year,'user_id ='=>$user->id]]]);
+        $result=$query->toList();
+        $pago=$result[0];
+        $fecha_pago = new \DateTime();
+        $fecha_pago->setDate($pago['pagos']['año'],$pago['max_pago'],1);
+        $fecha_pago->format('Y-M-D');
+        if (is_null($pago['max_pago'])){
+            $fecha_ult_pago = new \DateTime($user['fecha_ing']);
+            $diff=$fecha_ult_pago->diff($fecha_pago)->m + ($fecha_ult_pago->diff($fecha_pago)->y*12)+1;
+        }else{
+            $fecha_ult_pago = new \DateTime($pago['año'].'-'.$pago['max_pago'].'-1');
+            $diff=$fecha_ult_pago->diff($fecha_pago)->m + ($fecha_ult_pago->diff($fecha_pago)->y*12);
+        }
+        $total_debt=$diff*$user['monto_paga'];
+        return $total_debt;
     }
 
     /**
@@ -175,7 +201,7 @@ class UsersController extends AppController
     }
 
     public function checkOwner($id,$method){
-        if ($this->AuthUser->hasRole('estudiante')){
+        if ($this->AuthUser->hasRole('estudiante') && !$this->AuthUser->hasRole('monitor')){
             $isMe = $this->AuthUser->isMe($id);
             if (!$isMe){
                 $this->Flash->error(__('No puedes ver esta página!'));
@@ -350,10 +376,6 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function isAuthorized($user){
-        debug($this->request);die;
-
-    }
 
     public function beforeFilter(Event $event)
     {
@@ -363,4 +385,8 @@ class UsersController extends AppController
         // cause problems with normal functioning of AuthComponent.
         $this->Auth->allow(['logout']);
     }
+    public function sendEmail(){
+
+    }
+
 }

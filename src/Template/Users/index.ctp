@@ -6,7 +6,6 @@
             <th><?= $this->Paginator->sort('username') ?></th>
             <th><?= $this->Paginator->sort('nombre') ?></th>
             <th><?= $this->Paginator->sort('telefono') ?></th>
-            <th><?= $this->Paginator->sort('rol') ?></th>
             <th><?= $this->Paginator->sort('fecha de ingreso') ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
@@ -17,16 +16,40 @@
             <td><?= h($user->username) ?></td>
             <td><?= h($user->full_name) ?></td>
             <td><?= h($user->telefono) ?></td>
-            <td><?= h($user->rol) ?></td>
             <td style="white-space: nowrap"><?= h($user->fecha_ing) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__(''), ['action' => 'view', $user->id],['class'=>'fa fa-search']) ?>
                 <?= $this->Html->link(__(''), ['action' => 'edit', $user->id],['class'=>'fa fa-pencil']) ?>
-                <?= $this->Html->link(__(''),['action'=>'archiveUser',$user->id],['class'=>'fa fa-archive']) ?>
-                <?= $this->Form->postLink(__(''), ['action' => 'delete', $user->id], ['class'=>'fa fa-trash'],['confirm' => __('¿Está seguro que desea eliminar al usuario {0}?', $user->full_name)]) ?>
+                <?= $this->Form->button('', [
+                    'data-toggle' => 'modal',
+                    'data-target' => '#ArchiveModal-'.$user->id,
+                    'class'=>'fa fa-archive'
+                ])?>
+            </td>
+            <td>
+                <div class=" col-sm-offset-2">
+                <?php
+                echo $this->Modal->create(['id' => 'ArchiveModal-'.$user->id]) ;
+                echo $this->Modal->header('Archivar Usuario '.$user->full_name, ['close' => false]) ;
+                #echo $this->Modal->body('El usuario no sera considerado como parte de la escuela y no podra acceder a la pagina', ['class' => 'my-body-class']) ;
+                echo "<div class='modal-body'>";
+                echo "<p> El usuario no sera considerado como parte de la escuela y no podra acceder a la página. </p>";
+                echo $this->Form->create($user,['url' => ['action' => 'archiveUser',$user->id],['id'=>$user->id]]);
+                echo $this->Form->input('observaciones', ['label'=>'Observaciones']);
+                echo $this->Form->input('fecha_egreso',['label'=>'Fecha de Egreso','type'=>'date']);
+                echo $this->Form->input('calculate_debt',['label'=>'Calcular deuda automaticamente','type'=>'checkbox']);
+                echo $this->Form->input('monto_deuda',['label'=>'Monto Adeudado']);
+                echo "</div>";
+                echo $this->Modal->footer([
+                    $this->Form->button('Archivar', ['class' => 'btn btn-primary']),
+                    $this->Form->button('Cancelar', ['data-dismiss' => 'modal','class'=>'btn btn-danger'])
+                ]) ;
+                echo $this->Form->end();
+                echo $this->Modal->end() ;
+                ?>
+                </div>
             </td>
         </tr>
-
     <?php endforeach; ?>
     </tbody>
     </table>

@@ -239,3 +239,14 @@ ul.alert-dropdown {
 .imgHolder-span{
     color: green;
 }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width:100%;
+}
+
+
+.modal-body .modal-content{
+
+}

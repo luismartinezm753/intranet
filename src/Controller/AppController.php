@@ -34,6 +34,12 @@ class AppController extends Controller
         'UserPermissions.UserPermissions',
     );
 
+    public $helpers = [
+        'Modal' => [
+            'className' => 'Bootstrap.BootstrapModal'
+        ]
+    ];
+
 
     /**
      * Initialization hook method.
@@ -72,16 +78,6 @@ class AppController extends Controller
             $this->request->session()->write('lastUrl', $url);
         }
     }
-
-    public function isAuthorized($user)
-    {
-        return true;
-    }
-
-    public function getRole(){
-        return $this->Auth->user('rol');
-    }
-
     public function getMonthName($month){
         $months = [
             'Enero',

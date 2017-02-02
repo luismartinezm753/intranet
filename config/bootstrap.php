@@ -212,3 +212,6 @@ Configure::write('google_maps_key',$key_google_maps);
 
 Plugin::load('TinyAuth');
 Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
+
+
+Plugin::load('Bootstrap');
