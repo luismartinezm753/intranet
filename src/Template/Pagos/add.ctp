@@ -9,7 +9,7 @@
             echo $this->Form->input('año', ['type' => 'year', [
                 'minYear' => date('Y')-2,
                 'maxYear' => date('Y')+2
-            ]]);
+            ],'selected'=>date('Y')]);
             echo $this->Form->input('fecha_pago');
             echo $this->Form->input('forma_pago', ['options'=>['Efectivo'=>'Efectivo','Transferencia'=>'Transferencia','Cheque'=>'Cheque']]);
             echo $this->Form->input('observacion');

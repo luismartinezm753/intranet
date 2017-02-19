@@ -10,6 +10,7 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+use App\Form\SendMailForm;
 use Cake\Core\Configure\Engine\PhpConfig;
 
 /**
@@ -133,7 +134,6 @@ class UsersController extends AppController
         $user->set('estado',0);
         $desvinculado=$desvinculacionTable->newEntity($this->request->data);
         $desvinculado->set('user_id',$id);
-        #debug($this->request);die;
         if ($this->request->data('calculate_debt')==0){
             $desvinculado->set('monto_deuda',$this->calculateDebt($user));
         }
@@ -266,6 +266,19 @@ class UsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    public function sendEmail(){
+        $query=$this->Users->find();
+        $query->select(['id', 'email', 'nombre','apellido']);
+        $users=['-1'=>'Todos','-2'=>'Instructores','-3'=>'Monitores','-4'=>'Alumnos'];
+        foreach ($query as $result){
+            $users[$result['id']]=$result['nombre'].' '.$result['apellido'];
+        }
+        if ($this->request->is('post')){
+            $this->sendEmailTo($this->request->data);
+
+        }
+        $this->set('users',$users);
+    }
 
 
     /**
@@ -384,9 +397,6 @@ class UsersController extends AppController
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
         $this->Auth->allow(['logout']);
-    }
-    public function sendEmail(){
-
     }
 
 }

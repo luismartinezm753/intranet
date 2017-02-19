@@ -17,9 +17,9 @@
 	</div>
 	<div class="users form large-9 medium-9 columns">
 		<?= $this->Html->link(__('Escoger Otra Fecha'), ['action' => 'studentsDelay'],['class'=>'btn btn-primary']) ?>
+        <?= $this->Form->button('Exportar a Excel',['onclick'=>'export_to_excel()','class'=>'btn btn-primary']); ?>
 	</div>
 	<div>
-		<?= $this->Form->button('Exportar a Excel',['onclick'=>'export_to_excel()','class'=>'btn btn-primary']); ?>
 	</div>
 </div>
 <script>
@@ -35,7 +35,12 @@
 				xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken'));?>);
 			},
 			success: function(url){
-				//TODO: Change to the correct url
+                //TODO: Change to the correct url
+                var currentTime = new Date();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                var year = currentTime.getFullYear();
+                var today=year.toString()+ month.toString()+day.toString();
 				window.location= "http://localhost/intranet/webroot/files/csv/morosidades.csv";
 			},
 			error: function (error) {

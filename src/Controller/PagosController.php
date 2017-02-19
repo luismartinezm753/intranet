@@ -67,7 +67,8 @@ class PagosController extends AppController
         $pago = $this->Pagos->newEntity();
         if ($this->request->is('post')) {
             $pago = $this->Pagos->patchEntity($pago, $this->request->data);
-            $pago->set(['año'=>$this->request->data['año']['year'],'mes'=>$this->request->data['mes']['month']]);
+            $pago->set('año',$this->request->data['año']['year']);
+            #debug($pago);die;
             if ($this->Pagos->save($pago)) {
                 $this->Flash->success(__('El pago ha sido guardado'));
                 return $this->redirect(['action' => 'index']);
@@ -154,11 +155,12 @@ class PagosController extends AppController
             ['users','pagos'],
             ['pagos.user_id = users.id']);
         $subquery->group('pagos.user_id');
+        #debug($subquery->toList());die;
         $query2=$this->Pagos->find()
             ->select(['pay_info.users__id','pay_info.users__nombre','pay_info.users__apellido','pay_info.pagos__mes','pay_info.pagos__año','pay_info.users__email','pay_info.users__monto_paga','pay_info.users__fecha_ing'])
-            ->from(['pay_info'=>$subquery])
-            ->where(['OR'=>['pay_info.pagos__mes IS NULL',['AND'=>['pay_info.pagos__mes <'=>$month,'pay_info.pagos__año >='=>$year]]]]);
+            ->from(['pay_info'=>$subquery]);
         $result=$query2->toArray();
+        #debug($result);die;
         $result=$this->calculateDebtAndMonths($result,$month,$year);
         $this->set(compact('result'));
         $this->set(compact('month'));

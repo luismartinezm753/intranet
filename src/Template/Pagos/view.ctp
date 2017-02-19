@@ -35,6 +35,7 @@
                 <?php endif;?>
             </tbody>
         </table>
-        <?= $this->AuthUser->postLink('Editar', ['action' => 'edit', $pago->id],['class'=>'btn btn-primary']) ?>
+        <?= $this->Html->link(_('Editar'), ['action' => 'edit', $pago->id],['class'=>'btn btn-primary']) ?>
+        <?= $this->Html->link(_('Volver'),['action' => 'index'],['class'=>'btn btn-primary']) ?>
     </div>
 </div>

@@ -27,7 +27,7 @@ class Pago extends Entity
         'año_pago'=>true
     ];
 
-    /*protected function _getMes($mes){
+    protected function _getMes($mes){
         if (!isset($mes)){
             $mes=1;
         }
@@ -46,5 +46,5 @@ class Pago extends Entity
             'Diciembre'
         ];
         return $months[$mes];
-    }*/
+    }
 }

@@ -6,7 +6,7 @@
                 <legend><?= __('Agregar Nuevo Usuario') ?></legend>
                 <?php
                     echo $this->Form->input('nombre', ['label'=>'Nombre']);
-                echo $this->Form->input('apellido', ['label'=>'Apellido']);
+                    echo $this->Form->input('apellido', ['label'=>'Apellido']);
                     echo $this->Form->input('fecha_nac',['label'=>'Fecha de Nacimiento', 'minYear' => date('Y') - 70,
                         'maxYear' => date('Y') - 4 ]);
                     echo $this->Form->input('username',['label'=>'Nombre de Usuario']);
