@@ -1,4 +1,4 @@
-<div class="col-lg-offset-2 col-lg-8">
+<div class="col-lg-offset-1 col-lg-8">
     <h2>Alumnos para Examen</h2>
 <table class="table table-bordered">
 <?php echo $this->Html->tableHeaders(['Nombre', 'Grado', 'Tiempo','Duracion del Grado'],['class'=>'bg-primary']);

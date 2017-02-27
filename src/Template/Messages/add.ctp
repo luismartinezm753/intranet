@@ -6,7 +6,7 @@
             echo $this->Form->input('header',['label'=>'Título']);
             echo $this->Form->input('sendto',['options'=>$users,'label'=>'Destinatarios','empty' => 'Selecciona los destinatarios','multiple'=>true]);
             echo $this->Form->input('message',['label'=>'Mensaje']);
-            echo $this->Form->input('file');
+            echo $this->Form->input('file',['label'=>'Adjuntar Archivo','type'=>'file']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Enviar Mensaje'),['class'=>'btn btn-primary']) ?>

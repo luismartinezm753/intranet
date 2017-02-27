@@ -71,8 +71,9 @@ class MessagesTable extends Table
             ->notEmpty('message');
 
         $validator
-            ->requirePresence('file', 'create')
-            ->notEmpty('file');
+            ->add('programa','extension',['rule'=>['extension','pdf']])
+            ->add('programa','size',['rule'=>['fileSize','5MB']])
+            ->allowEmpty('file');
 
         return $validator;
     }

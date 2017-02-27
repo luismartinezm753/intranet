@@ -28,8 +28,8 @@
                     echo $this->Form->file('foto');
                 ?>
             </fieldset>
-            <?= $this->Html->link(__('Cancelar'), ['action' => 'index'],['class'=>'btn btn-danger']) ?>
             <?= $this->Form->button(__('Agregar'),['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Cancelar'), ['action' => 'index'],['class'=>'btn btn-danger']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

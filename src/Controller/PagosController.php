@@ -25,7 +25,7 @@ class PagosController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('TinyAuth.AuthUser');
     }
-    
+
     /**
      * Index method
      *
@@ -36,10 +36,21 @@ class PagosController extends AppController
         $this->paginate = [
             'contain' => ['Users']
         ];
-        $this->set('pagos', $this->paginate($this->Pagos));
+        $pagos=$this->paginate($this->Pagos);
+        $total_expected=0;
+        $total_incomes=0;
+        foreach ($pagos as $pago){
+            $total_incomes=$total_incomes+$pago->monto;
+            $total_expected=$total_expected+$pago->user->monto_paga;
+        }
+        $this->set(['total_incomes','total_expected'],[$total_incomes,$total_expected]);
+        $this->set('pagos', $pagos);
         $this->set('_serialize', ['pagos']);
     }
 
+    public function filterPagos(){
+
+    }
     /**
      * View method
      *

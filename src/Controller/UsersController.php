@@ -294,7 +294,7 @@ class UsersController extends AppController
                     $this->Flash->error(__('Su cuenta no esta Activa!'));
                 }else{
                     $this->Auth->setUser($user);
-                    if ($this->Auth->user('rol') >= Configure::read('Roles.instructor')) {
+                    if ($this->Auth->user('role_id') > Configure::read('Roles.instructor')) {
                         $this->request->session()->write('User.isAdmin', 0);
                         return $this->redirect('/users'.DS.'view'.DS.$this->Auth->user('id'));
                     }else{

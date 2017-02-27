@@ -215,3 +215,4 @@ Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
 
 
 Plugin::load('Bootstrap');
+Plugin::load('Crud');

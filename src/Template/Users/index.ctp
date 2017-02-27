@@ -62,7 +62,7 @@
         <p><?= $this->Paginator->counter() ?></p>
     </div>
     <?= $this->Html->link(_('Agregar Usuario'),['action' => 'add'],['class'=>'btn btn-primary']) ?>
-    <?= $this->Html->link(_('Enviar Mensaje'),['action' => 'sendEmail'],['class'=>'btn btn-primary']) ?>
+    <?= $this->Html->link(_('Enviar Mensaje'),['controller'=>'messages','action' => 'add'],['class'=>'btn btn-primary']) ?>
     <?php if(abs($archived-1)==0){ ?>
         <?= $this->Html->link(_('Ver Usuarios Inactivos'),['action' => 'index',abs($archived-1)],['class'=>'btn btn-primary']) ?>
     <?php }else{ ?>

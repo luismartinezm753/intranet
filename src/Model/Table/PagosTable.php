@@ -99,4 +99,9 @@ class PagosTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
     }
+
+    public function findCustomQuery(Query $query, array $options){
+        $key=$options['key'];
+        $query->where(['OR'=>['monto_paga']]);
+    }
 }

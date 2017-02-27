@@ -13,51 +13,51 @@
     <h3><?= h($escuela->name) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('Name') ?></th>
+            <th scope="row"><?= __('Name') ?></th>
             <td><?= h($escuela->name) ?></td>
         </tr>
         <tr>
-            <th><?= __('Rut Tributario') ?></th>
+            <th scope="row"><?= __('Rut Tributario') ?></th>
             <td><?= h($escuela->rut_tributario) ?></td>
         </tr>
         <tr>
-            <th><?= __('Estilo') ?></th>
+            <th scope="row"><?= __('Estilo') ?></th>
             <td><?= h($escuela->estilo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Representante') ?></th>
+            <th scope="row"><?= __('Representante') ?></th>
             <td><?= h($escuela->representante) ?></td>
         </tr>
         <tr>
-            <th><?= __('Direccion') ?></th>
+            <th scope="row"><?= __('Direccion') ?></th>
             <td><?= h($escuela->direccion) ?></td>
         </tr>
         <tr>
-            <th><?= __('Email') ?></th>
+            <th scope="row"><?= __('Email') ?></th>
             <td><?= h($escuela->email) ?></td>
         </tr>
         <tr>
-            <th><?= __('Pagina Web') ?></th>
+            <th scope="row"><?= __('Pagina Web') ?></th>
             <td><?= h($escuela->pagina_web) ?></td>
         </tr>
         <tr>
-            <th><?= __('Telefono1') ?></th>
+            <th scope="row"><?= __('Telefono1') ?></th>
             <td><?= h($escuela->telefono1) ?></td>
         </tr>
         <tr>
-            <th><?= __('Telefono2') ?></th>
+            <th scope="row"><?= __('Telefono2') ?></th>
             <td><?= h($escuela->telefono2) ?></td>
         </tr>
         <tr>
-            <th><?= __('Comuna') ?></th>
+            <th scope="row"><?= __('Comuna') ?></th>
             <td><?= h($escuela->comuna) ?></td>
         </tr>
         <tr>
-            <th><?= __('Pais') ?></th>
+            <th scope="row"><?= __('Pais') ?></th>
             <td><?= h($escuela->pais) ?></td>
         </tr>
         <tr>
-            <th><?= __('Id') ?></th>
+            <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($escuela->id) ?></td>
         </tr>
     </table>
@@ -66,21 +66,21 @@
         <?php if (!empty($escuela->sedes)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Nombre') ?></th>
-                <th><?= __('Direccion') ?></th>
-                <th><?= __('Telefono') ?></th>
-                <th><?= __('Director') ?></th>
-                <th><?= __('Comuna') ?></th>
-                <th><?= __('Ciudad') ?></th>
-                <th><?= __('Fecha Inicio') ?></th>
-                <th><?= __('Monto Arriendo') ?></th>
-                <th><?= __('Nombre Arrendador') ?></th>
-                <th><?= __('Mail Arrendador') ?></th>
-                <th><?= __('Telefono Arrendador') ?></th>
-                <th><?= __('Logo') ?></th>
-                <th><?= __('Escuela Id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Nombre') ?></th>
+                <th scope="col"><?= __('Direccion') ?></th>
+                <th scope="col"><?= __('Telefono') ?></th>
+                <th scope="col"><?= __('Director') ?></th>
+                <th scope="col"><?= __('Comuna') ?></th>
+                <th scope="col"><?= __('Ciudad') ?></th>
+                <th scope="col"><?= __('Fecha Inicio') ?></th>
+                <th scope="col"><?= __('Monto Arriendo') ?></th>
+                <th scope="col"><?= __('Nombre Arrendador') ?></th>
+                <th scope="col"><?= __('Mail Arrendador') ?></th>
+                <th scope="col"><?= __('Telefono Arrendador') ?></th>
+                <th scope="col"><?= __('Logo') ?></th>
+                <th scope="col"><?= __('Escuela Id') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($escuela->sedes as $sedes): ?>
             <tr>

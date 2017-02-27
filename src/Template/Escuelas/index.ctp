@@ -11,19 +11,19 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('name') ?></th>
-                <th><?= $this->Paginator->sort('rut_tributario') ?></th>
-                <th><?= $this->Paginator->sort('estilo') ?></th>
-                <th><?= $this->Paginator->sort('representante') ?></th>
-                <th><?= $this->Paginator->sort('direccion') ?></th>
-                <th><?= $this->Paginator->sort('email') ?></th>
-                <th><?= $this->Paginator->sort('pagina_web') ?></th>
-                <th><?= $this->Paginator->sort('telefono1') ?></th>
-                <th><?= $this->Paginator->sort('telefono2') ?></th>
-                <th><?= $this->Paginator->sort('comuna') ?></th>
-                <th><?= $this->Paginator->sort('pais') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('rut_tributario') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('estilo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('representante') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('direccion') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('pagina_web') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('telefono1') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('telefono2') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('comuna') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('pais') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -52,10 +52,12 @@
     </table>
     <div class="paginator">
         <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>

@@ -28,8 +28,9 @@ use Cake\Routing\Router;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
+class AppController extends \Cake\Controller\Controller
 {
+    use \Crud\Controller\ControllerTrait;
     public $components = array(
         'UserPermissions.UserPermissions',
     );
@@ -68,6 +69,16 @@ class AppController extends Controller
                 'TinyAuth.Tiny'
             ]
         ]);
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'Crud.Index',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.View',
+                'Crud.Delete'
+            ]
+        ]);
+
     }
 
     public function beforeFilter(Event $event)

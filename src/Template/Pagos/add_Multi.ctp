@@ -24,6 +24,7 @@
             echo '</div>';
         endforeach;
         echo $this->Form->button(__('Agregar Pagos'),['class'=>'btn btn-primary']);
+        echo $this->Html->link(__('Cancelar'),['action'=>'index'],['class'=>'btn btn-danger']);
         echo $this->Form->end(); ?>
 </div>
 <script>

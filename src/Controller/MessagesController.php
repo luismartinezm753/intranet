@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Network\Email\Email;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Messages Controller
@@ -59,70 +62,49 @@ class MessagesController extends AppController
     {
         $message = $this->Messages->newEntity();
         if ($this->request->is('post')) {
-            $author=$this->Auth->identify();
+            $author=$this->Auth->user('id');
             $message = $this->Messages->patchEntity($message, $this->request->data);
-            if ($this->Messages->save($message)) {
-                $this->Flash->success(__('The message has been saved.'));
-
+            $message->set('author_id',$author);
+            if ($this->Messages->save($message) && !empty($this->request->data['sendto'])) {
+                $this->sendEmailTo($this->request->data['sendto'],$message);
+                $this->Flash->success(__('Los Mensaje han sido enviados y guardados'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The message could not be saved. Please, try again.'));
+                $this->Flash->error(__('No se puede enviar el mensaje, intente de nuevo.'));
             }
         }
-        $users = $this->Messages->Users->find('list', ['limit' => 200]);
-        $roles=$users=['-1'=>'Todos','-2'=>'Instructores','-3'=>'Monitores','-4'=>'Alumnos'];
-        $users=array_merge($roles,$users);
-        $this->set(compact('message', 'users'));
-        $this->set('_serialize', ['message']);
-    }
-
-    public function sendEmail(){
-        $query=$this->Users->find();
+        $usersTable=TableRegistry::get('users');
+        $query=$usersTable->find();
         $query->select(['id', 'email', 'nombre','apellido']);
         $users=['-1'=>'Todos','-2'=>'Instructores','-3'=>'Monitores','-4'=>'Alumnos'];
         foreach ($query as $result){
             $users[$result['id']]=$result['nombre'].' '.$result['apellido'];
         }
-        if ($this->request->is('post')){
-            $this->sendEmailTo($this->request->data);
-
-        }
-        $this->set('users',$users);
+        $this->set(compact('message', 'users'));
+        $this->set('_serialize', ['message']);
     }
 
-    public function sendEmailTo($data){
-        $sendto=$data['sendto'];
+    public function sendEmailTo($sendto,$message){
+        $usersTable=TableRegistry::get('users');
         foreach ($sendto as $key=>$value){
             if ($value<0){
-                $this->sendEmailGroup($data);
+                $this->sendEmailGroup($value,$message);
             }else{
-                $user=$this->Users->get($value);
-                $email = new Email();
-                $email->transport('mailjet');
-                $email->emailFormat('html');
-                $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
-                    ->to([$user['email'] => 'My Website'])
-                    ->subject($data['header'])
-                    ->send($data['message']);
+                $user=$usersTable->get($value);
+                $this->mailling($user, $message);
             }
         }
     }
 
-    public function sendEmailGroup($data){
-        $group=$data['sendto'];
-        if ($group==0){
-            $users=$this->Users->find();
+    public function sendEmailGroup($sendto,$message){
+        $usersTable=TableRegistry::get('users');
+        if ($sendto==0){
+            $users=$usersTable->find();
         }else{
-            $users=$this->Users->find()->where(['role_id ='=>abs($group)]);
+            $users=$usersTable->find()->where(['role_id ='=>abs($sendto)]);
         }
         foreach ($users as $user){
-            $email = new Email();
-            $email->transport('mailjet');
-            $email->emailFormat('html');
-            $email->from(['kenpo.martinez@gmail.com'=>'Kenpo Martinez'])
-                ->to([$user['email'] => 'My Website'])
-                ->subject($data['header'])
-                ->send($data['message']);
+            $this->mailling($user, $message);
         }
     }
 
@@ -146,5 +128,29 @@ class MessagesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * @param $user
+     * @param $data
+     */
+    protected function mailling($user, $message)
+    {
+        $sendTo=$this->Messages->Sendto->newEntity(['user_id'=>$user->id,'message_id'=>$message->id]);
+        if ($this->Messages->Sendto->save($sendTo)){
+            $email = new Email();
+            $email->transport('mailjet');
+            $email->emailFormat('html');
+            $email->from(['kenpo.martinez@gmail.com' => 'Kenpo Martinez'])
+                ->to([$user['email'] => 'My Website'])
+                ->subject('Kenponet- '.$message['header'])
+                ->send($message['message']);
+        }
+        else{
+            $this->Flash->error('Ha ocurrido un error.');
+        }
+    }
+    public function readMails(){
+
     }
 }
