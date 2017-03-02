@@ -1,12 +1,4 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Horarios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Clases'), ['controller' => 'Clases', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Clase'), ['controller' => 'Clases', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="horarios form large-9 medium-8 columns content">
+<div class="col-md-offset-1 col-lg-7">
     <?= $this->Form->create($horario) ?>
     <fieldset>
         <legend><?= __('Add Horario') ?></legend>

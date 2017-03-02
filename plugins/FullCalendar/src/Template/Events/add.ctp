@@ -22,6 +22,7 @@
 		echo $this->Form->input('end', ['timeFormat' => 24,'label'=>'Hora de Termino']);
 		echo $this->Form->input('all_day',['label'=>'Todo el Día']);
 		echo $this->Form->input('price',['label'=>'Precio']);
+		echo $this->Form->input('link',['label'=>'Link del Evento']);
         echo $this->Form->input('region',['label'=>'Región']);
         echo $this->Form->input('comuna',['label'=>'Comuna']);
         echo $this->Form->input('address',['label'=>'Dirección']);
@@ -32,7 +33,8 @@
 				]
 			]
 		);
-    echo $this->Form->input('notify_users',['label'=>'Notificar Usuarios','type'=>'checkbox'])
+        echo $this->Form->input('observation',['label'=>'Observaciones']);
+        echo $this->Form->input('notify_users',['label'=>'Notificar Usuarios','type'=>'checkbox'])
 	?>
 	</fieldset>
     <?= $this->Form->button(__('Agregar'),['class'=>'btn btn-primary']) ?>

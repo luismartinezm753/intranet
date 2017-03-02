@@ -17,6 +17,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\HasMany $HistorialAlumnos
  * @property \Cake\ORM\Association\HasMany $Pagos
  * @property \Cake\ORM\Association\HasMany $Pedidos
+ * @property \Cake\ORM\Association\HasMany $Coursesstudent
  */
 class UsersTable extends Table
 {
@@ -29,9 +30,9 @@ class UsersTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('users');
-        $this->displayField('full_name');
-        $this->primaryKey('id');
+        $this->setTable('users');
+        $this->setDisplayField('full_name');
+        $this->setPrimaryKey('id');
         $this->belongsTo('Grados', [
             'foreignKey' => 'grado_id',
             'joinType' => 'INNER'
@@ -42,9 +43,6 @@ class UsersTable extends Table
         ]);
         $this->hasMany('Users', [
             'foreignKey' => 'id_user_referencia'
-        ]);
-        $this->hasMany('Clases', [
-            'foreignKey' => 'user_id'
         ]);
         $this->hasMany('ConveniosUsuarios', [
             'foreignKey' => 'user_id'
@@ -61,6 +59,16 @@ class UsersTable extends Table
         $this->hasMany('Pedidos', [
             'foreignKey' => 'user_id'
         ]);
+        $this->hasMany('Clases', [
+            'foreignKey' => 'instructor_id'
+        ]);
+        $this->hasMany('Clases', [
+            'foreignKey' => 'ayudante1_id'
+        ]);
+        $this->hasMany('Clases', [
+            'foreignKey' => 'ayudante2_id'
+        ]);
+        $this->belongsToMany('Clases');
     }
     public function validationPassword(Validator $validator)
     {
@@ -148,12 +156,12 @@ class UsersTable extends Table
             ->notEmpty('telefono');
             
         $validator
-            ->add('rol', 'inList', [
-                'rule' => ['inList', [0,1,2]],
+            ->add('role_id', 'inList', [
+                'rule' => ['inList', [0,1,2,3,4]],
                 'message' => 'Seleccione un Rol valido'
             ])
-            ->requirePresence('rol', 'create')
-            ->notEmpty('rol');
+            ->requirePresence('role_id', 'create')
+            ->notEmpty('role_id');
             
         $validator
             ->add('fecha_ing', 'valid', ['rule' => 'date'])
@@ -287,5 +295,20 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['grado_id'], 'Grados'));
         return $rules;
+    }
+
+    public function findByClases(Query $query, array $options)
+    {
+        $clase=$options['clase'];
+        return $query->matching('Clases', function ($q) use ($clase) {
+            return $q->where(['Clases.id' => $clase]);
+        });
+        #return $query->innerJoin(['coursesstudent'],['users.id = coursesstudent.user_id'])->where(['coursesstudent.clase_id' => $clase]);
+    }
+
+    public function findByRole(Query $query, array $options)
+    {
+        $role=$options['role'];
+        return $query->where(['role_id' => $role]);
     }
 }

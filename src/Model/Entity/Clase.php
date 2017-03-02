@@ -2,6 +2,8 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Clase Entity
@@ -9,7 +11,6 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $sede_id
  * @property int $horario_id
- * @property int $user_id
  * @property int $instructor_id
  * @property int $ayudante1_id
  * @property int $ayudante2_id
@@ -36,4 +37,12 @@ class Clase extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getName(){
+        $sedes=TableRegistry::get('sedes');
+        $horarios=TableRegistry::get('horarios');
+        $sede=$sedes->get($this->_properties['sede_id']);
+        $horario=$horarios->get($this->_properties['horario_id']);
+        return $sede->nombre.' '.$horario->name;
+    }
 }

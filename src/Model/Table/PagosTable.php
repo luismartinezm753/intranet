@@ -100,8 +100,8 @@ class PagosTable extends Table
         return $rules;
     }
 
-    public function findCustomQuery(Query $query, array $options){
-        $key=$options['key'];
-        $query->where(['OR'=>['monto_paga']]);
+    public function findByClase(Query $query, array $options){
+        $clase=$options['clase'];
+        return $query->innerJoin(['coursesstudent'],['pagos.users_id = coursesstudent.user_id'])->where(['coursesstudent.clase_id' => $clase]);
     }
 }

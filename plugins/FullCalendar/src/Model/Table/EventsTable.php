@@ -61,7 +61,6 @@ class EventsTable extends Table
         $validator
             ->requirePresence('end', 'create')
             ->notEmpty('end', __('End time is required'));
-
         $validator
             ->requirePresence('status', 'create')
             ->notEmpty('status');
@@ -74,6 +73,9 @@ class EventsTable extends Table
         $validator
             ->requirePresence('address','create')
             ->notEmpty('address');
+        $validator
+            ->allowEmpty('link')
+            ->add('link','isurl',['rule'=>'url']);
         $validator
             ->add('price', 'valid', ['rule' => 'numeric'])
             ->add('price', 'gtzero', ['rule'=>['comparison','>=',0]]);

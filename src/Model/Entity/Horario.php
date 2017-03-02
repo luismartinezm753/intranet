@@ -2,6 +2,8 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\I18n\Time;
+
 
 /**
  * Horario Entity
@@ -38,4 +40,9 @@ class Horario extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getName(){
+        #Time::setToStringFormat('HH:MM');
+        return $this->_properties['dia1'].'-'.$this->_properties['horario_inicio1']->i18nFormat('HH:mm').' '.$this->_properties['dia2'].'-'.$this->_properties['horario_inicio2']->i18nFormat('HH:mm');
+    }
 }

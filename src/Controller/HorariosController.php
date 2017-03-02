@@ -11,6 +11,14 @@ use App\Controller\AppController;
 class HorariosController extends AppController
 {
 
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
+
     /**
      * Index method
      *

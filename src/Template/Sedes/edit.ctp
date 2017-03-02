@@ -22,7 +22,6 @@
             echo $this->Form->input('nombre');
             echo $this->Form->input('direccion');
             echo $this->Form->input('telefono');
-            echo $this->Form->input('director');
             echo $this->Form->input('comuna');
             echo $this->Form->input('ciudad');
             echo $this->Form->input('fecha_inicio');
@@ -32,6 +31,7 @@
             echo $this->Form->input('telefono_arrendador');
             echo $this->Form->input('logo');
             echo $this->Form->input('escuela_id', ['options' => $escuelas]);
+            echo $this->Form->input('director_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

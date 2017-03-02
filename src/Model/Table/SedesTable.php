@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Sedes Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Escuelas
+ * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\HasMany $Clases
  *
  * @method \App\Model\Entity\Sede get($primaryKey, $options = [])
@@ -18,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Sede|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Sede patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Sede[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Sede findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Sede findOrCreate($search, callable $callback = null, $options = [])
  */
 class SedesTable extends Table
 {
@@ -33,12 +34,16 @@ class SedesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('sedes');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('sedes');
+        $this->setDisplayField('nombre');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Escuelas', [
             'foreignKey' => 'escuela_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'director_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Clases', [
@@ -69,10 +74,6 @@ class SedesTable extends Table
         $validator
             ->requirePresence('telefono', 'create')
             ->notEmpty('telefono');
-
-        $validator
-            ->requirePresence('director', 'create')
-            ->notEmpty('director');
 
         $validator
             ->requirePresence('comuna', 'create')
@@ -120,6 +121,8 @@ class SedesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['escuela_id'], 'Escuelas'));
+        $rules->add($rules->existsIn(['director_id'], 'Users'));
+
         return $rules;
     }
 }

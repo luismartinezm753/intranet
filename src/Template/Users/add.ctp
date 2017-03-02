@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-7 col-md-offset-1">
         <div class="users form large-10 medium-9 columns">
             <?= $this->Form->create($user) ?>
             <fieldset>
@@ -12,11 +12,12 @@
                     echo $this->Form->input('username',['label'=>'Nombre de Usuario']);
                     echo $this->Form->input('email');
                     echo $this->Form->input('telefono');
-                    echo $this->Form->input('rol_id', ['options' =>['Director','Instructor', 'Monitor','Alumno']]);
+                    echo $this->Form->input('role_id', ['options' =>['Director','Instructor', 'Monitor','Alumno']]);
                     echo $this->Form->input('fecha_ing',['label'=>'Fecha de Ingreso']);
                     echo $this->Form->input('profesion');
                     echo $this->Form->input('grado_id', ['options' => $grados]);
-                    echo $this->Form->input('referencia');
+                    echo $this->Form->input('clases._ids',['options'=>$clases,'multiple'=>true]);
+                    echo $this->Form->input('referencia',['options'=>['Internet','Anuncio Revista/Diario','Recomendado','Flayer','Letreros','Local','Convenio','Evento/Presentación']]);
                     echo $this->Form->input('monto_paga',['label'=>'Mensualidad']);
                     echo $this->Form->input('fecha_ult_acenso', ['label'=>'Fecha último ascenso','empty' => true, 'default' => '']);
                     echo $this->Form->input('nombre_apoderado', ['empty' => true, 'default' => 'No tiene Apoderado']);

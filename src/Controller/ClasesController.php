@@ -11,6 +11,14 @@ use App\Controller\AppController;
 class ClasesController extends AppController
 {
 
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
+
     /**
      * Index method
      *
@@ -19,10 +27,9 @@ class ClasesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Sedes', 'Horarios', 'Users']
+            'contain' => ['Sedes', 'Horarios', 'User1','User2','User3']
         ];
-        $clases = $this->paginate($this->Clases);
-
+        $clases = $this->paginate($this->Clases->find('byInstructor',['instructor'=>$this->AuthUser->id()]));
         $this->set(compact('clases'));
         $this->set('_serialize', ['clases']);
     }
@@ -56,6 +63,7 @@ class ClasesController extends AppController
             $clase = $this->Clases->patchEntity($clase, $this->request->data);
             if ($this->Clases->save($clase)) {
                 $this->Flash->success(__('The clase has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The clase could not be saved. Please, try again.'));
@@ -84,6 +92,7 @@ class ClasesController extends AppController
             $clase = $this->Clases->patchEntity($clase, $this->request->data);
             if ($this->Clases->save($clase)) {
                 $this->Flash->success(__('The clase has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The clase could not be saved. Please, try again.'));
@@ -112,6 +121,7 @@ class ClasesController extends AppController
         } else {
             $this->Flash->error(__('The clase could not be deleted. Please, try again.'));
         }
+
         return $this->redirect(['action' => 'index']);
     }
 }

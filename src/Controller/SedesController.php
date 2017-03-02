@@ -11,6 +11,13 @@ use App\Controller\AppController;
 class SedesController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('TinyAuth.AuthUser');
+    }
+
     /**
      * Index method
      *
@@ -56,13 +63,16 @@ class SedesController extends AppController
             $sede = $this->Sedes->patchEntity($sede, $this->request->data);
             if ($this->Sedes->save($sede)) {
                 $this->Flash->success(__('The sede has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The sede could not be saved. Please, try again.'));
             }
         }
         $escuelas = $this->Sedes->Escuelas->find('list', ['limit' => 200]);
+        $users=$this->Sedes->Users->find('list');
         $this->set(compact('sede', 'escuelas'));
+        $this->set(compact('sede', 'users'));
         $this->set('_serialize', ['sede']);
     }
 
@@ -82,6 +92,7 @@ class SedesController extends AppController
             $sede = $this->Sedes->patchEntity($sede, $this->request->data);
             if ($this->Sedes->save($sede)) {
                 $this->Flash->success(__('The sede has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The sede could not be saved. Please, try again.'));
@@ -108,6 +119,7 @@ class SedesController extends AppController
         } else {
             $this->Flash->error(__('The sede could not be deleted. Please, try again.'));
         }
+
         return $this->redirect(['action' => 'index']);
     }
 }

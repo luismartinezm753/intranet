@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Coursesstudent;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Email\Email;
@@ -40,10 +41,9 @@ class UsersController extends AppController
     public function index($archived=1)
     {
         $this->paginate = [
-            'contain' => ['Grados']
+            'contain' => ['Grados','Clases.Sedes']
         ];
-        $this->set('users', $this->paginate($this->Users->find('all')
-                            ->where(['estado ='=>$archived])));
+        $this->set('users', $this->paginate($this->filterUserByClases()));
         $this->set('_serialize', ['users']);
         $this->set('archived',$archived);
     }
@@ -60,7 +60,7 @@ class UsersController extends AppController
     {
         $this->checkOwner($id,'view');
         $user = $this->Users->get($id, [
-            'contain' => ['Grados', 'Clases', 'ConveniosUsuarios', 'Desvinculaciones', 'HistorialAlumnos', 'Pagos', 'Pedidos']
+            'contain' => ['Grados', 'ConveniosUsuarios', 'Desvinculaciones', 'HistorialAlumnos', 'Pagos', 'Pedidos','Clases']
         ]);
         $UserRef= $this->Users->get($user->id_user_referencia);
         $nameUserRef=$UserRef->nombre;
@@ -84,24 +84,44 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->data,['associated' => ['Clases']]);
             $user->set('estado',0);
             $user->set('password',$this->generatePassword());
             if ($this->Users->save($user)) {
+                $this->sendRegisterNotify($user);
                 $this->addAutomaticValues($user);
                 $this->Users->save($user);
-                $this->sendRegisterNotify($user);
                 $this->Flash->success(__('El usuario ha sido agregado'));
-                return $this->redirect(['action' => 'listUsers']);
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('No se pudo guardar el usuario, intente de nuevo.'));
             }
         }
         $grados = $this->Users->Grados->find('list', ['limit' => 200]);
+        $clases = $this->filterClasesByRole();
         $id_users_ref = $this->Users->Users->find('list',['limit'=>200]);
         $this->set(compact('user', 'grados'));
+        $this->set(compact('user', 'clases'));
         $this->set(compact('user', 'id_users_ref'));
         $this->set('_serialize', ['user']);
+    }
+
+    private function filterClasesByRole(){
+        $clases=TableRegistry::get('Clases');
+        if ($this->AuthUser->hasrole('director')){
+            return $clases->find('list')->toArray();
+        }else{
+            return $clases->find('byInstructor',['instructor'=>$this->AuthUser->id()]);
+        }
+    }
+
+    private function filterUserByClases(){
+        if ($this->AuthUser->hasrole('director')){
+            return $this->Users->find('all');
+        }else{
+            $clase=$this->Users->Clases->find()->where(['instructor_id ='=>$this->AuthUser->id()])->toArray();
+            return $this->Users->find('byClases',['clase'=>$clase[0]->id]);
+        }
     }
 
     /**
@@ -115,8 +135,6 @@ class UsersController extends AppController
             $user->set('id_user_referencia',$user['id']);
         }
         if (empty($this->request->data['fecha_ult_acenso']['year'])) {
-            debug($this->request->data['fecha_ult_acenso']);
-            debug($this->request->data['fecha_ing']);
             $fecha_ult_ascenso = Time::create($this->request->data['fecha_ing']['year'],$this->request->data['fecha_ing']['month'],$this->request->data['fecha_ing']['day']);
             $user->set('fecha_ult_acenso',$fecha_ult_ascenso);
         }
@@ -171,7 +189,7 @@ class UsersController extends AppController
      * Generate a secure password for the user
      * @return password, the password chosen for the user
      */
-    public function generatePassword()
+    private function generatePassword()
     {
         $bytes=openssl_random_pseudo_bytes(9,$cstrong);
         $pass=bin2hex($bytes);
@@ -207,7 +225,14 @@ class UsersController extends AppController
                 $this->Flash->error(__('No puedes ver esta página!'));
                 return $this->redirect(Router::url(['controller' => 'Users', 'action' => $method,$this->AuthUser->id()],true ));
             }
+        }else{
+
         }
+    }
+    private function checkClase($id){
+        $clases=TableRegistry::get('Clases');
+
+
     }
 
     public function checkLevel($id,$method){

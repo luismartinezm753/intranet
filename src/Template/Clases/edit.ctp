@@ -23,7 +23,6 @@
         <?php
             echo $this->Form->input('sede_id', ['options' => $sedes]);
             echo $this->Form->input('horario_id', ['options' => $horarios]);
-            echo $this->Form->input('user_id');
             echo $this->Form->input('instructor_id');
             echo $this->Form->input('ayudante1_id');
             echo $this->Form->input('ayudante2_id', ['options' => $users, 'empty' => true]);

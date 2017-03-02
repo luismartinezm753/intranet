@@ -13,21 +13,21 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('nombre') ?></th>
-                <th><?= $this->Paginator->sort('direccion') ?></th>
-                <th><?= $this->Paginator->sort('telefono') ?></th>
-                <th><?= $this->Paginator->sort('director') ?></th>
-                <th><?= $this->Paginator->sort('comuna') ?></th>
-                <th><?= $this->Paginator->sort('ciudad') ?></th>
-                <th><?= $this->Paginator->sort('fecha_inicio') ?></th>
-                <th><?= $this->Paginator->sort('monto_arriendo') ?></th>
-                <th><?= $this->Paginator->sort('nombre_arrendador') ?></th>
-                <th><?= $this->Paginator->sort('mail_arrendador') ?></th>
-                <th><?= $this->Paginator->sort('telefono_arrendador') ?></th>
-                <th><?= $this->Paginator->sort('logo') ?></th>
-                <th><?= $this->Paginator->sort('escuela_id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nombre') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('direccion') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('telefono') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('comuna') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ciudad') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('fecha_inicio') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('monto_arriendo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nombre_arrendador') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('mail_arrendador') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('telefono_arrendador') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('logo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('escuela_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('director_id') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,6 @@
                 <td><?= h($sede->nombre) ?></td>
                 <td><?= h($sede->direccion) ?></td>
                 <td><?= h($sede->telefono) ?></td>
-                <td><?= h($sede->director) ?></td>
                 <td><?= h($sede->comuna) ?></td>
                 <td><?= h($sede->ciudad) ?></td>
                 <td><?= h($sede->fecha_inicio) ?></td>
@@ -47,6 +46,7 @@
                 <td><?= h($sede->telefono_arrendador) ?></td>
                 <td><?= h($sede->logo) ?></td>
                 <td><?= $sede->has('escuela') ? $this->Html->link($sede->escuela->name, ['controller' => 'Escuelas', 'action' => 'view', $sede->escuela->id]) : '' ?></td>
+                <td><?= $this->Number->format($sede->director_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $sede->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $sede->id]) ?>
@@ -58,10 +58,12 @@
     </table>
     <div class="paginator">
         <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>

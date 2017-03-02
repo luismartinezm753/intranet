@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property string $nombre
  * @property string $direccion
  * @property string $telefono
- * @property string $director
  * @property string $comuna
  * @property string $ciudad
  * @property \Cake\I18n\Time $fecha_inicio
@@ -20,6 +19,7 @@ use Cake\ORM\Entity;
  * @property string $telefono_arrendador
  * @property string $logo
  * @property int $escuela_id
+ * @property int $director_id
  *
  * @property \App\Model\Entity\Escuela $escuela
  * @property \App\Model\Entity\Clase[] $clases

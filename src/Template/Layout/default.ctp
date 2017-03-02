@@ -120,6 +120,14 @@ $cakeDescription = 'KenpoNet';
                             ],['escape' => false]); ?>
                         </li>
                     <?php endif ?>
+                    <?php if (!$this->AuthUser->hasRole(ROLE_STUDENT)):?>
+                        <li>
+                            <?php echo $this->Html->link("Clases", [
+                                'controller' => 'clases',
+                                'action' => 'index'
+                            ],['escape' => false]); ?>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </div>
             <?php endif; ?>

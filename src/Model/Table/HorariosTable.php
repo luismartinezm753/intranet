@@ -32,9 +32,9 @@ class HorariosTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('horarios');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('horarios');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->hasMany('Clases', [
             'foreignKey' => 'horario_id'

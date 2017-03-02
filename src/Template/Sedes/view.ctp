@@ -12,62 +12,62 @@
     </ul>
 </nav>
 <div class="sedes view large-9 medium-8 columns content">
-    <h3><?= h($sede->id) ?></h3>
+    <h3><?= h($sede->nombre) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('Nombre') ?></th>
+            <th scope="row"><?= __('Nombre') ?></th>
             <td><?= h($sede->nombre) ?></td>
         </tr>
         <tr>
-            <th><?= __('Direccion') ?></th>
+            <th scope="row"><?= __('Direccion') ?></th>
             <td><?= h($sede->direccion) ?></td>
         </tr>
         <tr>
-            <th><?= __('Telefono') ?></th>
+            <th scope="row"><?= __('Telefono') ?></th>
             <td><?= h($sede->telefono) ?></td>
         </tr>
         <tr>
-            <th><?= __('Director') ?></th>
-            <td><?= h($sede->director) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Comuna') ?></th>
+            <th scope="row"><?= __('Comuna') ?></th>
             <td><?= h($sede->comuna) ?></td>
         </tr>
         <tr>
-            <th><?= __('Ciudad') ?></th>
+            <th scope="row"><?= __('Ciudad') ?></th>
             <td><?= h($sede->ciudad) ?></td>
         </tr>
         <tr>
-            <th><?= __('Nombre Arrendador') ?></th>
+            <th scope="row"><?= __('Nombre Arrendador') ?></th>
             <td><?= h($sede->nombre_arrendador) ?></td>
         </tr>
         <tr>
-            <th><?= __('Mail Arrendador') ?></th>
+            <th scope="row"><?= __('Mail Arrendador') ?></th>
             <td><?= h($sede->mail_arrendador) ?></td>
         </tr>
         <tr>
-            <th><?= __('Telefono Arrendador') ?></th>
+            <th scope="row"><?= __('Telefono Arrendador') ?></th>
             <td><?= h($sede->telefono_arrendador) ?></td>
         </tr>
         <tr>
-            <th><?= __('Logo') ?></th>
+            <th scope="row"><?= __('Logo') ?></th>
             <td><?= h($sede->logo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Escuela') ?></th>
+            <th scope="row"><?= __('Escuela') ?></th>
             <td><?= $sede->has('escuela') ? $this->Html->link($sede->escuela->name, ['controller' => 'Escuelas', 'action' => 'view', $sede->escuela->id]) : '' ?></td>
         </tr>
         <tr>
-            <th><?= __('Id') ?></th>
+            <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($sede->id) ?></td>
         </tr>
         <tr>
-            <th><?= __('Monto Arriendo') ?></th>
+            <th scope="row"><?= __('Monto Arriendo') ?></th>
             <td><?= $this->Number->format($sede->monto_arriendo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Fecha Inicio') ?></th>
+            <th scope="row"><?= __('Director Id') ?></th>
+            <td><?= $this->Number->format($sede->director_id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Fecha Inicio') ?></th>
             <td><?= h($sede->fecha_inicio) ?></td>
         </tr>
     </table>
@@ -76,23 +76,21 @@
         <?php if (!empty($sede->clases)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Sede Id') ?></th>
-                <th><?= __('Horario Id') ?></th>
-                <th><?= __('User Id') ?></th>
-                <th><?= __('Instructor Id') ?></th>
-                <th><?= __('Ayudante1 Id') ?></th>
-                <th><?= __('Ayudante2 Id') ?></th>
-                <th><?= __('Fecha Inicio') ?></th>
-                <th><?= __('Fecha Termino') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Sede Id') ?></th>
+                <th scope="col"><?= __('Horario Id') ?></th>
+                <th scope="col"><?= __('Instructor Id') ?></th>
+                <th scope="col"><?= __('Ayudante1 Id') ?></th>
+                <th scope="col"><?= __('Ayudante2 Id') ?></th>
+                <th scope="col"><?= __('Fecha Inicio') ?></th>
+                <th scope="col"><?= __('Fecha Termino') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($sede->clases as $clases): ?>
             <tr>
                 <td><?= h($clases->id) ?></td>
                 <td><?= h($clases->sede_id) ?></td>
                 <td><?= h($clases->horario_id) ?></td>
-                <td><?= h($clases->user_id) ?></td>
                 <td><?= h($clases->instructor_id) ?></td>
                 <td><?= h($clases->ayudante1_id) ?></td>
                 <td><?= h($clases->ayudante2_id) ?></td>

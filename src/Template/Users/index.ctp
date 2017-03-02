@@ -1,12 +1,16 @@
-<div class="users index large-10 medium-9 columns col-md-offset-1">
-    <h1>Lista de Usuarios</h1>
-    <table cellpadding="0" cellspacing="0" class="table table-responsive table-striped table-bordered">
+<div class="col-lg-offset-1 col-lg-9">
+    <h2>Lista de Usuarios</h2>
+    <div class="form-group">
+        <input type="text" id="searchInput" placeholder="Filtrar" title="Type in a name" class="form-control">
+    </div>
+    <table class="table table-bordered table-striped" id="userTable">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('username') ?></th>
             <th><?= $this->Paginator->sort('nombre') ?></th>
             <th><?= $this->Paginator->sort('telefono') ?></th>
             <th><?= $this->Paginator->sort('fecha de ingreso') ?></th>
+            <th><?= $this->Paginator->sort('Sede') ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
     </thead>
@@ -16,14 +20,15 @@
             <td><?= h($user->username) ?></td>
             <td><?= h($user->full_name) ?></td>
             <td><?= h($user->telefono) ?></td>
-            <td style="white-space: nowrap"><?= h($user->fecha_ing) ?></td>
+            <td ><?= h($user->fecha_ing) ?></td>
+            <td><?= $this->Html->link($user->clases[0]['sede']['nombre'], ['controller' => 'Users', 'action' => 'view', $user->clases[0]['sede']['id']]) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__(''), ['action' => 'view', $user->id],['class'=>'fa fa-search']) ?>
                 <?= $this->Html->link(__(''), ['action' => 'edit', $user->id],['class'=>'fa fa-pencil']) ?>
                 <?= $this->Form->button('', [
                     'data-toggle' => 'modal',
                     'data-target' => '#ArchiveModal-'.$user->id,
-                    'class'=>'fa fa-archive'
+                    'class'=>'fa fa-archive btn-link'
                 ])?>
             </td>
             <td>
@@ -31,7 +36,6 @@
                 <?php
                 echo $this->Modal->create(['id' => 'ArchiveModal-'.$user->id]) ;
                 echo $this->Modal->header('Archivar Usuario '.$user->full_name, ['close' => false]) ;
-                #echo $this->Modal->body('El usuario no sera considerado como parte de la escuela y no podra acceder a la pagina', ['class' => 'my-body-class']) ;
                 echo "<div class='modal-body'>";
                 echo "<p> El usuario no sera considerado como parte de la escuela y no podra acceder a la página. </p>";
                 echo $this->Form->create($user,['url' => ['action' => 'archiveUser',$user->id],['id'=>$user->id]]);
@@ -69,3 +73,13 @@
         <?= $this->Html->link(_('Ver Usuarios Activos'),['action' => 'index',abs($archived-1)],['class'=>'btn btn-primary']) ?>
     <?php } ?>
 </div>
+<script>
+    var $rows = $('#userTable tr');
+    $('#searchInput').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
+</script>

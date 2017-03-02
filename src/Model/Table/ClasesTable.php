@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Clases Model
@@ -14,7 +16,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\HasMany $Coursesstudent
  *
  * @method \App\Model\Entity\Clase get($primaryKey, $options = [])
  * @method \App\Model\Entity\Clase newEntity($data = null, array $options = [])
@@ -22,7 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Clase|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Clase patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Clase[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Clase findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Clase findOrCreate($search, callable $callback = null, $options = [])
  */
 class ClasesTable extends Table
 {
@@ -37,9 +39,9 @@ class ClasesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('clases');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('clases');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Sedes', [
             'foreignKey' => 'sede_id',
@@ -49,19 +51,10 @@ class ClasesTable extends Table
             'foreignKey' => 'horario_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'instructor_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'ayudante1_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'ayudante2_id'
-        ]);
+        $this->belongsTo('User1',['foreignKey'=>'instructor_id','joinType'=>'LEFT','className'=>'users']);
+        $this->belongsTo('User2',['foreignKey'=>'ayudante1_id','joinType'=>'LEFT','className'=>'users']);
+        $this->belongsTo('User3',['foreignKey'=>'ayudante2_id','joinType'=>'LEFT','className'=>'users']);
+        #$this->belongsToMany('Users');
     }
 
     /**
@@ -98,10 +91,27 @@ class ClasesTable extends Table
     {
         $rules->add($rules->existsIn(['sede_id'], 'Sedes'));
         $rules->add($rules->existsIn(['horario_id'], 'Horarios'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['instructor_id'], 'Users'));
         $rules->add($rules->existsIn(['ayudante1_id'], 'Users'));
         $rules->add($rules->existsIn(['ayudante2_id'], 'Users'));
+
         return $rules;
+    }
+    public function findByInstructor(Query $query, array $options)
+    {
+        $instructor=$options['instructor'];
+        $users=TableRegistry::get('users');
+        $user=$users->get($instructor);
+        if ($user->role_id == ROLE_DIRECTOR){
+            return $query;
+        }else{
+            return $query->where(['instructor_id' => $instructor]);
+        }
+    }
+
+    public function findBySede(Query $query, array $options)
+    {
+        $sede=$options['sede'];
+        return $query->where(['sede_id' => $sede]);
     }
 }
